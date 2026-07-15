@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Checkout</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<link rel="stylesheet"
+href="checkout.css">
+
+</head>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+padding-bottom:100px;
+}
+
+/* HEADER */
+
+.topbar{
+height:60px;
+background:#fff;
+display:flex;
+align-items:center;
+padding:0 15px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.back-btn{
+    position: fixed;
+    top: 20px;
+    left: 15px;
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.topbar h2{
+font-size:20px;
+font-weight:600;
+}
+
+/* CARD */
+
+.card{
+background:#fff;
+margin:12px;
+padding:16px;
+border-radius:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h3{
+font-size:18px;
+margin-bottom:15px;
+color:#222;
+}
+
+/* ADDRESS */
+
+textarea{
+width:100%;
+height:90px;
+border:1px solid #ddd;
+border-radius:10px;
+padding:10px;
+resize:none;
+font-size:15px;
+outline:none;
+}
+
+.location-btn{
+width:100%;
+margin-top:10px;
+height:45px;
+border:none;
+background:#009688;
+color:#fff;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+/* PRODUCT */
+
+.product-box{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.product-box img{
+width:90px;
+height:90px;
+object-fit:cover;
+border-radius:12px;
+border:1px solid #ddd;
+}
+
+.product-box h4{
+font-size:16px;
+margin-bottom:8px;
+}
+
+.product-box p{
+font-size:20px;
+color:#009688;
+font-weight:bold;
+}
+
+/* ROW */
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:10px 0;
+font-size:16px;
+}
+
+.total{
+font-size:22px;
+font-weight:bold;
+color:#009688;
+}
+
+/* WALLET */
+
+.wallet{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#f8fff8;
+border:1px solid #bde7bd;
+padding:15px;
+border-radius:12px;
+margin-bottom:15px;
+}
+
+.wallet div:last-child{
+font-size:22px;
+font-weight:bold;
+color:#1b8e3e;
+}
+
+.coin-check{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.coin-check input{
+width:20px;
+height:20px;
+}
+
+/* PAY BUTTON */
+
+.pay-btn{
+position:fixed;
+bottom:40px;
+left:15px;
+right:15px;
+height:55px;
+border:none;
+background:#00a884;
+color:#fff;
+font-size:18px;
+font-weight:600;
+border-radius:15px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,.25);
+transition:.3s;
+}
+
+.pay-btn:hover{
+transform:scale(1.02);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:480px){
+
+.product-box img{
+width:75px;
+height:75px;
+}
+
+.product-box h4{
+font-size:15px;
+}
+
+.product-box p{
+font-size:18px;
+}
+
+.card{
+padding:14px;
+}
+
+.pay-btn{
+height:52px;
+font-size:17px;
+}
+
+}
+ </style>
+</head>
+<body>
+<!-- HEADER -->
+
+<div class="topbar">
+
+    <button class="back-btn" onclick="history.back()">
+        <i class="bi bi-arrow-left"></i>
+    </button>
+
+    <h2>Checkout</h2>
+
+</div>
+
+<!-- ADDRESS -->
+
+<div class="card">
+
+    <h3>
+        <i class="bi bi-geo-alt-fill"></i>
+        Delivery Address
+    </h3>
+
+    <textarea
+        id="address"
+        placeholder="Enter Delivery Address"></textarea>
+
+    <button
+        class="location-btn"
+        onclick="getCurrentLocation()">
+
+        <i class="bi bi-crosshair"></i>
+
+        Use Current Location
+
+    </button>
+
+</div>
+
+<!-- PRODUCT -->
+
+<div class="card">
+
+    <h3>Product Details</h3>
+
+    <div class="product-box">
+
+        <img id="productImg">
+
+        <div>
+
+            <h4 id="productName"></h4>
+
+            <p>₹<span id="productPrice">0</span></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- DELIVERY -->
+
+<div class="card">
+
+    <h3>Delivery Details</h3>
+
+    <div class="row">
+
+        <span>Delivery Charge</span>
+
+        <b>₹<span id="deliveryCharge">0</span></b>
+
+    </div>
+
+    <div class="row">
+
+        <span>Distance</span>
+
+        <b><span id="distance">0 km</span></b>
+
+    </div>
+
+</div>
+
+<!-- COINS -->
+
+<div class="card">
+
+    <h3>🪙 Local Coin Wallet</h3>
+
+    <div class="wallet">
+
+        <div>Available Coins</div>
+
+        <div>
+
+            🪙
+            <span id="coinBalance">0</span>
+
+        </div>
+
+    </div>
+
+    <label class="coin-check">
+
+        <input
+    type="checkbox"
+    id="useCoins"
+    onchange="calculateTotal()">
+
+        Use Coins
+
+    </label>
+
+</div>
+
+<!-- PAYMENT -->
+
+<div class="card">
+
+    <h3>Payment Summary</h3>
+
+    <div class="row">
+
+        <span>Product Price</span>
+
+        <b>₹<span id="summaryProduct">0</span></b>
+
+    </div>
+
+    <div class="row">
+
+        <span>Delivery Charge</span>
+
+        <b>₹<span id="summaryDelivery">0</span></b>
+
+    </div>
+
+    <div class="row">
+
+        <span>Coin Discount</span>
+
+        <b style="color:green;">
+            -₹<span id="coinUsed">0</span>
+        </b>
+
+    </div>
+
+    <hr>
+
+    <div class="row total">
+
+        <span>Total Payable</span>
+
+        <b>
+            ₹<span id="finalAmount">0</span>
+        </b>
+
+    </div>
+
+</div>
+
+<button
+    id="payBtn"
+    class="pay-btn"
+    onclick="startPayment()">
+
+    Proceed To Pay
+
+</button>
+
+
+
+
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+ const API = "https://local-dukan.onrender.com";
+
+const productId = localStorage.getItem("checkoutProductId");
+const retailerId = localStorage.getItem("userId");
+
+let product = null;
+
+let retailerProfile = null;
+
+let retailerLocation = null;
+
+let wholesalerLocation = null;
+
+let coinBalance = 0;
+
+let deliveryCharge = 0;
+
+let coinUsed = 0;
+
+let finalAmount = 0;
+
+/* ================= LOAD ================= */
+
+
+/* ================= PRODUCT ================= */
+
+async function loadProduct(){
+
+    try{
+
+        const res = await fetch(
+            `${API}/api/products/${productId}`
+        );
+
+        const data = await res.json();
+
+        if(!data.success){
+
+            alert("Product Not Found");
+            return;
+
+        }
+
+        product = data.product;
+
+        console.log("Product:", product);
+        console.log("WholesalerId:", product.wholesalerId);
+
+        document.getElementById("productImg").src =
+            product.images?.[0] || "";
+
+        document.getElementById("productName").innerText =
+            product.productName;
+
+        document.getElementById("productPrice").innerText =
+            product.price;
+
+        document.getElementById("summaryProduct").innerText =
+            product.price;
+
+        /* ===== LOAD WHOLESALER ===== */
+
+        const wRes = await fetch(
+            `${API}/api/wholesalers/profile/${product.wholesalerId}`
+        );
+
+        const wData = await wRes.json();
+
+        console.log("Wholesaler API:", wData);
+
+        if(wData.success){
+
+            wholesalerLocation =
+                wData.profile?.location || null;
+
+            console.log(
+                "Wholesaler Location:",
+                wholesalerLocation
+            );
+
+        }else{
+
+            console.log("Wholesaler API Failed");
+
+        }
+
+    }
+
+    catch(err){
+
+        console.log("Load Product Error:", err);
+
+    }
+
+}
+/* ================= PROFILE ================= */
+
+async function loadProfile(){
+
+    try{
+
+        const res = await fetch(
+            `${API}/api/retailers/profile/${retailerId}`
+        );
+
+        const data = await res.json();
+
+        if(!data.success){
+
+            return;
+
+        }
+
+        retailerProfile =
+        data.profile;
+
+        coinBalance =
+        retailerProfile.coins || 0;
+
+        retailerLocation =
+        retailerProfile.location;
+
+        document.getElementById("coinBalance").innerText =
+        coinBalance;
+
+        document.getElementById("address").value =
+        retailerProfile.address || "";
+
+        await calculateDelivery();
+              calculateTotal();
+
+    }
+
+    catch(err){
+
+        console.log(err);
+
+    }
+
+}
+
+/* ================= CURRENT LOCATION ================= */
+
+function getCurrentLocation(){
+
+    navigator.geolocation.getCurrentPosition(
+
+        async(position)=>{
+
+            retailerLocation={
+
+                lat:position.coords.latitude,
+
+                lng:position.coords.longitude
+
+            };
+
+            calculateDelivery();
+
+        },
+
+        ()=>{
+
+            alert("Location Permission Denied");
+
+        }
+
+    );
+
+    }
+ /* ================= DELIVERY ================= */
+
+async function calculateDelivery(){
+
+    if(!product) return;
+
+    if(!retailerLocation){
+        document.getElementById("deliveryCharge").innerText="0";
+        document.getElementById("summaryDelivery").innerText="0";
+        document.getElementById("distance").innerText="Location Required";
+        calculateTotal();
+        return;
+    }
+
+    if(!wholesalerLocation){
+        document.getElementById("deliveryCharge").innerText="0";
+        document.getElementById("summaryDelivery").innerText="0";
+        document.getElementById("distance").innerText="Wholesaler Missing";
+        calculateTotal();
+        return;
+    }
+
+    try{
+
+        const res = await fetch(
+            `${API}/api/delivery/calculate`,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+
+                    orderAmount:Number(product.price),
+
+                    vehicleType:"two_wheeler",
+
+                    retailerLocation,
+
+                    wholesalerLocation
+
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        console.log("Checkout API:",data);
+
+        if(data.success !== true){
+
+            document.getElementById("deliveryCharge").innerText="0";
+            document.getElementById("summaryDelivery").innerText="0";
+            document.getElementById("distance").innerText="Calculation Failed";
+
+            deliveryCharge=0;
+
+            calculateTotal();
+
+            return;
+        }
+
+        deliveryCharge = Number(data.retailerPays);
+
+        document.getElementById("deliveryCharge").innerText =
+        deliveryCharge;
+
+        document.getElementById("summaryDelivery").innerText =
+        deliveryCharge;
+
+        document.getElementById("distance").innerText =
+        Number(data.distanceKm).toFixed(2)+" km";
+
+        console.log("Delivery Charge =",deliveryCharge);
+
+        calculateTotal();
+
+    }
+    catch(err){
+
+        console.error(err);
+
+        document.getElementById("deliveryCharge").innerText="0";
+        document.getElementById("summaryDelivery").innerText="0";
+        document.getElementById("distance").innerText="Server Error";
+
+        deliveryCharge=0;
+
+        calculateTotal();
+
+    }
+
+}
+function calculateTotal() {
+
+    if (!product) return;
+
+    const productPrice =
+    Number(product.price || 0);
+
+    if (
+        document.getElementById("useCoins").checked
+    ) {
+
+        coinUsed = Math.min(
+            coinBalance,
+            productPrice + deliveryCharge
+        );
+
+    } else {
+
+        coinUsed = 0;
+
+    }
+
+    finalAmount =
+        productPrice +
+        deliveryCharge -
+        coinUsed;
+
+    if (finalAmount < 0) {
+        finalAmount = 0;
+    }
+
+    document.getElementById("coinUsed").innerText =
+        coinUsed;
+
+    document.getElementById("finalAmount").innerText =
+        finalAmount;
+
+    document.getElementById("summaryProduct").innerText =
+        productPrice;
+
+    document.getElementById("summaryDelivery").innerText =
+        deliveryCharge;
+
+    document.getElementById("coinUsed").innerText =
+coinUsed;
+
+document.getElementById("finalAmount").innerText =
+finalAmount;
+ }
+ /* ================= PAYMENT ================= */
+
+async function startPayment() {
+
+    if (!product) {
+        alert("Product not loaded");
+        return;
+    }
+
+    if (!retailerLocation) {
+        alert("Please select your location");
+        return;
+    }
+
+    if (!wholesalerLocation) {
+        alert("Wholesaler location not found");
+        return;
+    }
+
+    const address = document.getElementById("address").value.trim();
+
+    if (!address) {
+        alert("Please enter delivery address");
+        return;
+    }
+
+    const useCoins = document.getElementById("useCoins").checked;
+
+    try {
+
+        // ================= FULL COIN PAYMENT =================
+
+        if (useCoins && coinBalance >= finalAmount) {
+
+            const coinRes = await fetch(
+                `${API}/api/orders/pay-with-coins`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+
+                        retailerId,
+                        wholesalerId: product.wholesalerId,
+                        productId: product._id,
+
+                        address,
+                        deliveryAddress: address,
+
+                        retailerLocation,
+                        wholesalerLocation,
+
+                        vehicleType: "two_wheeler",
+
+                        deliveryCharge,
+                        retailerDeliveryPay: deliveryCharge,
+                        wholesalerDeliveryPay: 0,
+
+                        useCoins: true
+
+                    })
+                }
+            );
+
+            const coinData = await coinRes.json();
+
+            if (!coinData.success) {
+                alert(coinData.message);
+                return;
+            }
+
+            alert("✅ Order Placed Successfully");
+
+            localStorage.removeItem("checkoutProductId");
+
+            location.href = "retailer.html";
+
+            return;
+        }
+
+        // ================= RAZORPAY =================
+
+        const res = await fetch(
+            `${API}/api/orders/pay-and-create`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+
+                    amount: finalAmount,
+
+                    notes: {
+
+                        type: "direct",
+
+                        productId: product._id,
+
+                        retailerId,
+                        wholesalerId: product.wholesalerId,
+
+                        address,
+                        deliveryAddress: address,
+
+                        retailerLocation,
+                        wholesalerLocation,
+
+                        useCoins,
+                        coinUsed,
+
+                        deliveryCharge,
+                        retailerDeliveryPay: deliveryCharge,
+                        wholesalerDeliveryPay: 0,
+
+                        vehicleType: "two_wheeler"
+
+                    }
+
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if (!data.success) {
+
+            alert("Payment Order Failed");
+            return;
+
+        }
+
+        const options = {
+
+            key: data.key,
+
+            amount: data.amount,
+
+            currency: "INR",
+
+            order_id: data.orderId,
+
+            name: "Local Dukan",
+
+            description: product.productName,
+
+            handler: verifyPayment,
+
+            theme: {
+                color: "#ff6b00"
+            }
+
+        };
+
+        new Razorpay(options).open();
+
+    }
+
+    catch (err) {
+
+    console.error("Payment Error:", err);
+
+    alert(err.message || "Server Error");
+
+}
+
+    
+
+}
+/* ================= VERIFY PAYMENT ================= */
+
+
+ /* ================= ADDRESS ================= */
+
+async function saveAddress() {
+
+    const address =
+    document.getElementById("address").value.trim();
+
+    if (!address) {
+        alert("Enter delivery address");
+        return;
+    }
+
+    if (!retailerLocation) {
+        alert("Please select current location");
+        return;
+    }
+
+    try {
+
+        const res = await fetch(
+            `${API}/api/retailers/save-address`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+
+                    retailerId,
+
+                    address,
+
+                    location: retailerLocation
+
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if (data.success) {
+
+            alert("✅ Address Saved");
+
+        } else {
+
+            alert("Failed to save address");
+
+        }
+
+    } catch (err) {
+
+        console.log(err);
+
+        alert("Server Error");
+
+    }
+
+}
+
+/* ================= CHANGE ADDRESS ================= */
+
+function changeAddress() {
+
+    document.getElementById("address")
+        .removeAttribute("readonly");
+
+    document.getElementById("address")
+        .focus();
+
+}
+
+/* ================= CURRENT LOCATION ================= */
+
+async function useCurrentLocation() {
+
+    navigator.geolocation.getCurrentPosition(
+
+        async(pos)=>{
+
+            retailerLocation = {
+
+                lat: pos.coords.latitude,
+
+                lng: pos.coords.longitude
+
+            };
+
+            await calculateDelivery();
+
+        },
+
+        ()=>{
+
+            alert("Location Permission Denied");
+
+        }
+
+    );
+
+}
+
+/* ================= PLACE ORDER ================= */
+
+document
+.getElementById("payBtn")
+.onclick = startPayment;
+
+/* ================= AUTO LOAD ================= */
+
+window.onload = async () => {
+
+    await loadProduct();
+
+    await loadProfile();
+
+    await calculateDelivery();
+
+    calculateTotal();
+
+};
+</script>
+</body>
+</html>
