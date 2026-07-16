@@ -1299,7 +1299,53 @@ background:#f2f2f2;
 </head>
 
 <body>
+    <!-- ==================== NAVBAR ==================== -->
+<nav class="navbar">
+    <div class="navbar-wrapper">
 
+        <a href="/" class="navbar-brand">
+            📦 PRINTiZY
+        </a>
+
+        <div class="navbar-icons">
+
+            <button class="nav-btn" onclick="openRetailerProfile()" title="Profile">
+                <i class="bi bi-person"></i>
+            </button>
+
+            <button class="nav-btn" onclick="openOrderStatus()" title="Orders">
+                <i class="bi bi-bag"></i>
+            </button>
+
+            <button class="nav-btn" onclick="openCart()" title="Cart">
+                <i class="bi bi-cart3"></i>
+                <span class="badge" id="cartBadge">0</span>
+            </button>
+
+            <button class="nav-btn" onclick="openDeliveryDetails()" title="Delivery">
+                <i class="bi bi-truck"></i>
+            </button>
+
+        </div>
+
+    </div>
+</nav>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <div class="main-container">
+        
+
+        <!-- Search Section -->
+<div class="search-section">
+
+    <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="🔍 Search Products, Category, Shop..."
+        onkeyup="searchProducts()">
+
+</div>
 <div class="main">
   <div class="topbar">
   <button class="back-btn" onclick="goBack()">
@@ -1312,82 +1358,358 @@ background:#f2f2f2;
   <button class="back-btn" style="margin-left:auto" onclick="toggleSearch()">
     <i class="bi bi-search"></i>
   </button>
-</div>
-
-<!-- 🔍 SEARCH BOX (hidden by default) -->
-<div id="searchBox" style="
-  display:none;
-  margin-top:10px;
-  background:#fff;
-  padding:10px;
-  border-radius:10px;
-  box-shadow:0 5px 12px rgba(0,0,0,.1);
-">
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="🔍 Product name search करें..."
-    oninput="filterProducts()"
-    style="
-      width:100%;
-      padding:10px;
-      border-radius:8px;
-      border:1px solid #cbd5e1;
-      font-size:14px;
-    "
-  />
-</div>
-</div>
-  <div class="products-grid" id="products"></div>
-</div>
-
-<!-- PRODUCT DETAIL MODAL -->
-<div class="modal" id="detailModal">
-  <div class="modal-content">
-    <h3 id="dName"></h3>
-
-    <div class="slider" id="dImages"></div>
-    <div class="dots" id="dDots"></div>
-
-    <p id="dDesc" class="desc short"></p>
-    <span id="descToggle" class="desc-toggle" onclick="toggleDesc()">More ⬇</span>
-
-    <div class="price-value" id="dPrice"></div>
-
-    <select id="vehicleType" onchange="updateDelivery()">
-  <option value="">Select Vehicle</option>
-  <option value="two_wheeler">Two Wheeler</option>
-  <option value="three_wheeler">Three Wheeler</option>
-  <option value="four_wheeler">Four Wheeler</option>
-</select>
-
-<div id="deliveryBox" style="
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
-  background:#f8fafc;
-  box-shadow:0 6px 14px rgba(0,0,0,.08);
-  display:none;
-">
-  <div id="deliveryText">🚚 Delivery: ₹0</div>
-  <div id="totalText" style="font-weight:600;margin-top:4px">
-    💰 Total: ₹0
   </div>
+    
+        <!-- Categories -->
+        <div class="category-section">
+            <div class="section-title">
+                <i class="bi bi-grid-3x2-gap"></i> Categories
+            </div>
+            <div class="categories-slider" id="categories"></div>
+        </div>
+
+        <div id="loader" style="display:none;">
+    <div class="spinner"></div>
+    </div>
+
+        <!-- Featured -->
+        <!-- ================= ALL PRODUCTS ================= -->
+
+<div class="category-section">
+
+    <div class="section-title">
+        <i class="bi bi-box-seam"></i>
+        All Products
+    </div>
+
+    <div class="products-grid" id="allProducts"></div>
+
 </div>
 
-<br>
-<button class="buy-btn" onclick="directBuy(event)">⚡ Buy Now</button>
-<button onclick="closeAll()">❌ Close</button>
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h2 class="modal-title" id="dName"></h2>
+                <button class="close-btn" onclick="closeAll()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <div class="gallery-slider">
+                <div class="swiper" id="detailSwiper">
+                    <div class="swiper-wrapper" id="dImageGallery"></div>
+                </div>
+            </div>
+
+            <div class="gallery-dots" id="dDots"></div>
+
+            <div class="detail-rating" id="dRating"></div>
+
+            <div class="detail-price-box">
+                <div class="price-big" id="dPrice">₹0</div>
+                <span class="price-old" id="dOriginalPrice">₹0</span>
+                <span class="price-off" id="dDiscount">0% off</span>
+            </div>
+
+            <div class="delivery-info" id="dDelivery">🚚 Free delivery on orders above ₹500</div>
+
+            <select id="vehicleType" class="detail-input" onchange="updateDelivery()">
+                <option value="">Select Vehicle Type</option>
+                <option value="two_wheeler">🏍️ Two Wheeler</option>
+                <option value="three_wheeler">🛺 Three Wheeler</option>
+                <option value="four_wheeler">🚗 Four Wheeler</option>
+            </select>
+
+            <p class="detail-desc" id="dDesc"></p>
+
+            <div style="flex: 1;"></div>
+
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-primary" style="flex: 1; margin: 0;" onclick="directBuy()">
+                    <i class="bi bi-lightning"></i> Buy
+                </button>
+                <button class="btn-secondary" style="flex: 1; margin: 0;" onclick="addToCart()">
+                    <i class="bi bi-cart-plus"></i> Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+     
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h2 class="modal-title">🛒 My Cart</h2>
+                <button class="close-btn" onclick="closeAll()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <div class="cart-items-list" id="cartItems"></div>
+
+            <select id="cartVehicle" class="detail-input" onchange="updateCartDelivery()">
+                <option value="">🚚 Select Vehicle</option>
+                <option value="two_wheeler">🏍️ Two Wheeler - ₹50</option>
+                <option value="three_wheeler">🛺 Three Wheeler - ₹100</option>
+                <option value="four_wheeler">🚗 Four Wheeler - ₹150</option>
+            </select>
+
+            <div class="cart-summary" id="cartSummaryBox" style="display: none;">
+                <div class="summary-row">
+                    <span class="summary-label">Subtotal</span>
+                    <span class="summary-value" id="cartSubtotal">₹0</span>
+                </div>
+                <div class="summary-row" id="cartDeliveryRow" style="display: none;">
+                    <span class="summary-label">Delivery</span>
+                    <span class="summary-value" id="cartDeliveryAmount">₹0</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <span id="cartTotal">₹0</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="payCart()">
+                💳 Pay & Order
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <!-- ================= PROFILE MODAL ================= -->
+<div class="modal" id="profileModal">
+
+  <div class="modal-sheet profile-sheet">
+
+    <div class="modal-header">
+      <h2 class="modal-title">👤 My Account</h2>
+
+      <button class="close-btn" onclick="closeAll()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+
+    <!-- USER INFO -->
+    <div class="profile-card">
+
+      <div class="profile-avatar">
+        <i class="bi bi-person-circle"></i>
+      </div>
+
+      <div class="profile-user">
+
+        <input id="profileName"
+               class="profile-input"
+               placeholder="Shop Name">
+
+        <input id="profileMobile"
+               class="profile-input"
+               placeholder="Mobile Number">
+
+      </div>
+
+    </div>
+
+    <!-- COIN WALLET -->
+
+    <div class="wallet-card">
+
+      <div class="wallet-left">
+        <div class="wallet-title">
+          💰 Local Wallet
+        </div>
+
+        <div class="wallet-sub">
+          
+        </div>
+      </div>
+
+      <div class="wallet-right">
+
+        <div class="coin-value">
+          🪙
+          <span id="coinBalance">
+            100
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- REFER -->
+
+    
+    <!-- LOCATION -->
+
+    <div class="location-group">
+
+      <label>
+        📍 Current Location
+      </label>
+
+      <input id="profileLocation"
+             class="location-read"
+             readonly>
+
+      <small id="locationTimer"
+             class="location-timer">
+      </small>
+
+      <button class="location-btn"
+              onclick="getRetailerLocation()">
+
+        <i class="bi bi-geo-alt"></i>
+
+        Set Location
+
+      </button>
+
+    </div>
+
+    <!-- MENU -->
+
+    <div class="profile-menu">
+     
+      <div class="menu-item"
+           onclick="openOrderStatus()">
+
+        📦
+        My Orders
+
+        <i class="bi bi-chevron-right"></i>
+
+      </div>
+
+      <div class="menu-item"
+           onclick="openWishlist()">
+
+        ❤️
+        Wishlist
+
+        <i class="bi bi-chevron-right"></i>
+
+      </div>
+
+      <div class="menu-item"
+           onclick="openNotifications()">
+
+        🔔
+        Notifications
+
+        <i class="bi bi-chevron-right"></i>
+
+      </div>
+
+      <div class="menu-item"
+           onclick="openCoinHistory()">
+
+        🪙
+        Coin History
+
+        <i class="bi bi-chevron-right"></i>
+
+      </div>
+
+      <div class="menu-item"
+           onclick="contactAdminForLocation()">
+
+        🆘
+        Help & Support
+
+        <i class="bi bi-chevron-right"></i>
+
+      </div>
+
+    </div>
+
+    <button class="btn-primary"
+            onclick="saveProfile()">
+
+      Save Profile
+
+    </button>
+
   </div>
+
 </div>
 
-<!-- IMAGE MODAL -->
-<div class="modal" id="imageModal">
-  <div class="modal-content" style="background:#000">
-    <img id="fullImg" style="width:100%">
-    <button onclick="closeAll()" style="margin-top:10px">Close</button>
-  </div>
+    <!-- Order Status Modal -->
+    <div class="modal" id="orderStatusModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h2 class="modal-title">📦 Orders</h2>
+                <button class="close-btn" onclick="closeAll()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <div id="orderStatusData" style="flex: 1; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- Delivery Modal -->
+    <div class="modal" id="deliveryModal">
+        <div class="modal-sheet">
+            <div class="modal-header">
+                <h2 class="modal-title">🚚 Deliveries</h2>
+                <button class="close-btn" onclick="closeAll()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <div id="deliveryData" style="flex: 1; overflow-y: auto;"></div>
+        </div>
+    </div>
+     <div class="modal" id="coinHistoryModal">
+
+<div class="modal-sheet">
+
+<div class="modal-header">
+
+<h3>🪙 Coin History</h3>
+
+<button class="close-btn"
+onclick="closeCoinHistory()">
+
+✖
+
+</button>
+
 </div>
+
+<div id="coinHistoryBody">
+
+</div>
+
+</div>
+
+     
+    <!-- Charge Info Modal -->
+    <div class="modal" id="chargeInfoModal">
+        <div class="modal-sheet" style="max-width: 100%; border-radius: 16px 16px 0 0;">
+            <div class="modal-header">
+                <h2 class="modal-title">💰 Delivery Charges</h2>
+                <button class="close-btn" onclick="closeChargeModal()">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <div id="chargeList" style="flex: 1; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 PRINTiZY - Smart Marketplace</p>
+    </div>
+
+
 
 <script>
 const API = "https://printizyserver.onrender.com";
