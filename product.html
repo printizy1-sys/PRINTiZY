@@ -15,7 +15,101 @@ padding:0;
 box-sizing:border-box;
 font-family:Poppins,sans-serif;
 }
+/* =========================
+   PRINTiZY PREMIUM THEME
+========================= */
 
+:root{
+
+  /* Brand Colors */
+  --primary: #5B21B6;
+  --primary-dark: #4C1D95;
+  --primary-light: #EDE9FE;
+
+  /* Accent */
+  --secondary: #06B6D4;
+  --success: #16A34A;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+  /* Background */
+  --bg: #F8FAFC;
+  --card: #FFFFFF;
+  --card-light: #F1F5F9;
+
+  /* Text */
+  --text: #111827;
+  --text-light: #6B7280;
+  --white: #FFFFFF;
+
+  /* Border */
+  --border: #E5E7EB;
+
+  /* Shadow */
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
+
+  /* Radius */
+  --radius: 12px;
+  --radius-lg: 18px;
+
+  /* Gradient */
+  --gradient: linear-gradient(135deg,#5B21B6,#7C3AED,#06B6D4);
+
+}
+        body{
+    background:var(--bg);
+    color:var(--text);
+}
+
+.header{
+    background:var(--card);
+    box-shadow:var(--shadow);
+}
+
+.card,
+.sellerCard,
+.deliveryBox,
+.descCard,
+.section{
+    background:var(--card);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+}
+
+.buyBtn,
+.visitBtn{
+    background:var(--gradient);
+    color:var(--white);
+}
+
+.cartBtn{
+    background:var(--secondary);
+    color:var(--white);
+}
+
+.discountBadge{
+    background:var(--primary);
+}
+
+.price,
+.deliveryPrice{
+    color:var(--primary);
+}
+
+.rating,
+.relatedDiscount{
+    background:var(--success);
+    color:var(--white);
+}
+
+.oldPrice{
+    color:var(--text-light);
+}
+
+button:hover{
+    opacity:.92;
+}
 body{
 background:#f5f5f5;
 color:#222;
