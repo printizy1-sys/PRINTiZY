@@ -1335,17 +1335,7 @@ background:#f2f2f2;
     <!-- ==================== MAIN CONTENT ==================== -->
     <div class="main-container">
 
-        <!-- Search -->
-        <div class="search-section">
-
-            <input
-                type="text"
-                id="searchInput"
-                class="search-input"
-                placeholder="🔍 Search Products..."
-                onkeyup="filterProducts()">
-
-        </div>
+        
 
         <!-- Category Title -->
         <h2 id="catTitle" class="title">
@@ -2117,19 +2107,7 @@ function renderProducts(products){
         container.insertAdjacentHTML("beforeend", html);
     }
 }
-  function toggleSearch(){
-  const box = document.getElementById("searchBox");
-  const input = document.getElementById("searchInput");
 
-  if(box.style.display === "none"){
-    box.style.display = "block";
-    input.focus();
-  }else{
-    box.style.display = "none";
-    input.value = "";
-    renderProducts(allProducts); // reset
-  }
-}
 
 
 async function loadCategoryProducts() {
