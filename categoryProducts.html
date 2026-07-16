@@ -336,6 +336,72 @@ function renderProducts(list){
   }
 }
 
+
+async function loadCategoryProducts() {
+
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+
+    if (!category) return;
+
+    document.getElementById("categoryTitle").innerText =
+        decodeURIComponent(category);
+
+    try {
+
+        const res = await fetch(`${API}/api/products/all?page=1`, {
+            cache: "no-store"
+        });
+
+        const data = await res.json();
+
+        if (!data.success) return;
+
+        const products = data.products.filter(p =>
+            (p.category || "").trim().toLowerCase() ===
+            decodeURIComponent(category).trim().toLowerCase()
+        );
+
+        renderCategoryProducts(products);
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function renderCategoryProducts(products) {
+
+    const container = document.getElementById("products");
+
+    if (!products.length) {
+        container.innerHTML = "<h3>No Products Found</h3>";
+        return;
+    }
+
+    container.innerHTML = products.map(p => `
+
+        <div class="product-card"
+             onclick="openProduct('${p._id}')">
+
+            <img src="${p.images?.[0] || 'https://via.placeholder.com/300'}">
+
+            <h4>${p.productName}</h4>
+
+            <p>${p.category}</p>
+
+            <h3>₹${p.price}</h3>
+
+        </div>
+
+    `).join("");
+
+}
+
+function openProduct(id){
+    window.location.href = `product.html?id=${id}`;
+}
+
+window.onload = loadCategoryProducts;
 function filterProducts(){
   const q = document.getElementById("searchInput").value.toLowerCase();
 
