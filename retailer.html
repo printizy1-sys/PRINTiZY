@@ -185,52 +185,64 @@ body {
         }
 
         /* ==================== SEARCH SECTION ==================== */
-        .search-section{
-    background:#fff;
-    padding:14px;
-    border-radius:1px;
-    margin-top:30px;
-    margin-left:12px;
-    margin-right:12px;
-    margin-bottom:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,.08);
+/* ==================== PREMIUM SEARCH SECTION ==================== */
+
+.search-section{
+    background:#ffffff;
+    padding:16px;
+    margin:18px 12px;
+    border-radius:18px;
+    border:1px solid rgba(0,0,0,.05);
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
 }
 
-        .search-input {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid var(--border-color);
-            border-radius: 20px;
-            font-size: 13px;
-            background: #fafafa;
-            margin-bottom: 10px;
-            font-family: 'Rubik', sans-serif;
-            transition: all 0.3s;
-        }
+.search-input{
+    width:100%;
+    height:52px;
+    padding:0 18px;
+    border:1px solid #ececec;
+    border-radius:30px;
+    background:#fafafa;
+    font-size:14px;
+    color:#222;
+    outline:none;
+    transition:.3s;
+    font-family:'Rubik',sans-serif;
+}
 
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: white;
-        }
+.search-input::placeholder{
+    color:#999;
+}
 
-        .search-btn {
-            width: 100%;
-            padding: 11px 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Rubik', sans-serif;
-        }
+.search-input:focus{
+    background:#fff;
+    border-color:var(--primary);
+    box-shadow:0 0 0 4px rgba(106,27,154,.08);
+}
 
-        .search-btn:hover {
-            background: var(--primary-dark);
-        }
+.search-btn{
+    width:100%;
+    height:48px;
+    margin-top:12px;
+    border:none;
+    border-radius:28px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 6px 16px rgba(106,27,154,.25);
+}
+
+.search-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 22px rgba(106,27,154,.35);
+}
+
+.search-btn:active{
+    transform:scale(.98);
+}
 
         /* ==================== CATEGORY SLIDER ==================== */
         .category-section {
@@ -1380,12 +1392,16 @@ background:#f2f2f2;
         <!-- Search Section -->
 <div class="search-section">
 
-    <input
-        type="text"
-        id="searchInput"
-        class="search-input"
-        placeholder="🔍 Search Products, Category, Shop..."
-        onkeyup="searchProducts()">
+    <div class="search-box">
+        <i class="bi bi-search"></i>
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search Products, Categories, Shops..."
+            onkeyup="searchProducts()">
+    </div>
 
 </div>
 
