@@ -312,7 +312,29 @@ body {
 .category-label{
     display:none;
 }
+.category-card{
+    width:70px;
+    height:70px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-shrink:0;
+    cursor:pointer;
+}
 
+.category-photo{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:50%;
+    border:2px solid #eee;
+    transition:.3s;
+}
+
+.category-photo:hover{
+    transform:scale(1.08);
+    border-color:var(--primary);
+}
 /* Mobile */
 
 @media(max-width:768px){
@@ -2200,20 +2222,16 @@ async function loadProducts() {
       });
 
       document.getElementById("categories").innerHTML =
-        Object.keys(categoryMap).map(cat => `
-          <div class="category-card"
-               onclick="openCategory('${encodeURIComponent(cat)}')">
+Object.keys(categoryMap).map(cat => `
+  <div class="category-card"
+       onclick="openCategory('${encodeURIComponent(cat)}')">
 
-            <img src="${categoryImages[cat] || 'images/categories/other.jpg'}"
-                 class="category-photo"
-                 loading="lazy">
+    <img src="${categoryImages[cat] || 'images/categories/other.jpg'}"
+         class="category-photo"
+         loading="lazy">
 
-            <div class="category-name">
-              ${cat.replace(/\b\w/g, c => c.toUpperCase())}
-            </div>
-
-          </div>
-        `).join("");
+  </div>
+`).join("");
     }
 
    // renderAllProducts(allProducts);
