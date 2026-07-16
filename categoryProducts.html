@@ -273,54 +273,101 @@ window.addEventListener("scroll", () => {
 
 });
     
-function renderProducts(list){
+function renderProducts(products){
 
-  const container = document.getElementById("products");
+    const container = document.getElementById("products");
 
-  if(page === 1){
-    container.innerHTML = "";
-  }
-
-  if(!list || !list.length){
     if(page === 1){
-      container.innerHTML = "<p>No products found</p>";
+        container.innerHTML = "";
     }
-    return;
-  }
 
-  const html = list.map(p=>{
+    if(!products || !products.length){
+        if(page === 1){
+            container.innerHTML = "<h3 style='text-align:center'>No Products Found</h3>";
+        }
+        return;
+    }
 
-    const pdata = encodeURIComponent(JSON.stringify(p));
+    const html = products.map(p => {
 
-    return `
-      <div class="product-card">
-        <img src="${p.images?.[0] || ''}"
-             loading="lazy">
+        const img = p.images?.[0] || "https://via.placeholder.com/300";
+        const price = Number(p.price || 0);
+        const oldPrice = Math.round(price * 1.35);
+        const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
 
-        <div>${p.productName}</div>
+        return `
+        <div class="product-card">
 
-        <div class="price">₹${p.price}</div>
+            <div class="product-image-wrapper">
+                <img src="${img}"
+                     class="product-image"
+                     loading="lazy"
+                     onclick="openProduct('${p._id}')">
 
-        <div class="actions">
+                <div class="product-badge">${discount}% OFF</div>
 
-          <button class="cart-btn"
-            onclick='addToCart(JSON.parse(decodeURIComponent("${pdata}")))'>
-            🛒
-          </button>
+                <button class="wishlist-icon">
+                    <i class="bi bi-heart-fill"></i>
+                </button>
+            </div>
 
-          <button class="buy-btn"
-            onclick='openDetail(JSON.parse(decodeURIComponent("${pdata}")))'>
-            ⚡
-          </button>
+            <div class="product-info">
+
+                <div class="product-title"
+                     onclick="openProduct('${p._id}')">
+                    ${p.productName}
+                </div>
+
+                <div class="product-rating">
+                    ⭐ 4.5
+                    <span class="rating-count">(125)</span>
+                </div>
+
+                <small>${p.category || "General"}</small>
+
+                <div class="product-price">
+                    <span class="price-current">₹${price}</span>
+                    <span class="price-original">₹${oldPrice}</span>
+                    <span class="price-discount">${discount}% OFF</span>
+                </div>
+
+                <div class="product-buttons">
+
+                ${p.productUrl ? `
+
+                    <button class="btn-small btn-buy"
+                        onclick="openExternalProduct('${p.productUrl}')">
+                        <i class="bi bi-bag-check-fill"></i>
+                    </button>
+
+                ` : `
+
+                    <button class="btn-small btn-cart"
+                        onclick="openProduct('${p._id}')">
+                        <i class="bi bi-eye-fill"></i>
+                    </button>
+
+                    <button class="btn-small btn-buy"
+                        onclick='addToCart(${JSON.stringify(p)})'>
+                        <i class="bi bi-cart-fill"></i>
+                    </button>
+
+                `}
+
+                </div>
+
+            </div>
 
         </div>
+        `;
 
-      </div>
-    `;
+    }).join("");
 
-  }).join("");
-
-  container.insertAdjacentHTML("beforeend", html);
+    if(page === 1){
+        container.innerHTML = html;
+    }else{
+        container.insertAdjacentHTML("beforeend", html);
+    }
 }
   function toggleSearch(){
   const box = document.getElementById("searchBox");
@@ -396,9 +443,8 @@ function renderCategoryProducts(products) {
     `).join("");
 
 }
-
 function openProduct(id){
-    window.location.href = `product.html?id=${id}`;
+    window.location.href = "product.html?id=" + id;
 }
 
 window.onload = loadCategoryProducts;
