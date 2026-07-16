@@ -2204,12 +2204,11 @@ function renderAllProducts(products){
 
    container.innerHTML = html;
 }
-function openCategory(cat){
-    console.log("Clicked:", cat);
-    alert("Clicked");
+function openCategory(cat) {
+    cat = decodeURIComponent(cat);
 
     window.location.href =
-    "categoryProducts.html?category=" + encodeURIComponent(cat);
+        `categoryProducts.html?category=${encodeURIComponent(cat)}`;
 }
 window.addEventListener("load", async () => {
 
@@ -2290,20 +2289,7 @@ function searchProducts(){
     renderAllProducts(filtered);
 }
 /* ================= OPEN CATEGORY ================= */
-function openCategory(cat){
 
-    cat = decodeURIComponent(cat);
-
-    const filtered = window.allProducts.filter(p =>
-
-        (p.category || "").trim().toLowerCase() ===
-        cat.trim().toLowerCase()
-
-    );
-
-    renderAllProducts(filtered);
-
-}
 
 function normalizeSetAt(setAt) {
   if (!setAt) return null;
