@@ -1428,28 +1428,23 @@ background:#f2f2f2;
 .categories{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:10px;
+    column-gap:10px;   /* Left-Right gap */
+    row-gap:2px;       /* ऊपर-नीचे gap */
     padding:8px 12px;
 }
 
 .category{
-    background:transparent;
-    border:none;
-    box-shadow:none;
+    margin:0;
     padding:0;
-    height:auto;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
+    height:82px;       /* पहले से कम */
 }
 
 .category img{
-    width:100%;
-    max-width:82px;
-    aspect-ratio:1/1;
+    width:82px;
+    height:82px;
     object-fit:contain;
     display:block;
+    margin:auto;
 }
 
 .category:hover{
