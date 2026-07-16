@@ -1377,6 +1377,28 @@ background:#f2f2f2;
     font-size: 14px;
     font-weight: 600;
 }
+/* ===== Save Profile Button ===== */
+.profile-sheet .btn-primary{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#6A1B9A,#8E24AA);
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(106,27,154,.30);
+    transition:.3s;
+}
+
+.profile-sheet .btn-primary:hover{
+    background:linear-gradient(135deg,#5A189A,#7B1FA2);
+}
+
+.profile-sheet .btn-primary:active{
+    transform:scale(.98);
+}
     </style>
 </head>
 <body>
@@ -1702,12 +1724,9 @@ background:#f2f2f2;
 
     </div>
 
-    <button class="btn-primary"
-            onclick="saveProfile()">
-
-      Save Profile
-
-    </button>
+    <button class="btn-primary" onclick="saveProfile()">
+    Save Profile
+</button>
 
   </div>
 
