@@ -1424,35 +1424,39 @@ background:#f2f2f2;
     color:transparent !important;
 }
 /* ===== Categories ===== */
+
 .categories{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:4px;              /* पहले 10px या 12px होगा */
-    padding:8px 10px;
+    column-gap:8px;      /* Left-Right gap */
+    row-gap:4px;         /* Upar-Niche gap */
+    padding:8px 12px;
     margin:0;
 }
 
 .category{
+    display:flex;
+    justify-content:center;
+    align-items:center;
     padding:0;
     margin:0;
     background:transparent;
     border:none;
     box-shadow:none;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    cursor:pointer;
 }
 
 .category img{
-    width:82px;
-    height:82px;
+    width:85px;
+    height:85px;
     object-fit:contain;
     display:block;
+    margin:0;
+    padding:0;
 }
 
 .category:hover{
-    transform:translateY(-3px);
-    box-shadow:0 8px 18px rgba(0,0,0,.12);
+    transform:scale(1.03);
 }
 
 /* Mobile */
@@ -1461,16 +1465,14 @@ background:#f2f2f2;
 
 .categories{
     grid-template-columns:repeat(4,1fr);
-    gap:10px;
-}
-
-.category{
-    height:110px;
+    column-gap:6px;
+    row-gap:2px;      /* Rows ke beech bahut kam gap */
+    padding:6px 8px;
 }
 
 .category img{
-    width:70px;
-    height:70px;
+    width:78px;
+    height:78px;
 }
 
 }
