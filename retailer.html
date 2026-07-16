@@ -2204,11 +2204,8 @@ function renderAllProducts(products){
 
    container.innerHTML = html;
 }
-function openCategory(cat) {
-    cat = decodeURIComponent(cat);
-
-    window.location.href =
-        `categoryProducts.html?category=${encodeURIComponent(cat)}`;
+function openProduct(id){
+    window.location.href = `categoryProducts.html?id=${id}`;
 }
 window.addEventListener("load", async () => {
 
