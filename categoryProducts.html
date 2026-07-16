@@ -1299,67 +1299,70 @@ background:#f2f2f2;
 </head>
 
 <body>
+
     <!-- ==================== NAVBAR ==================== -->
-<nav class="navbar">
-    <div class="navbar-wrapper">
+    <nav class="navbar">
+        <div class="navbar-wrapper">
 
-        <a href="/" class="navbar-brand">
-            📦 PRINTiZY
-        </a>
+            <a href="/" class="navbar-brand">
+                📦 PRINTiZY
+            </a>
 
-        <div class="navbar-icons">
+            <div class="navbar-icons">
 
-            <button class="nav-btn" onclick="openRetailerProfile()" title="Profile">
-                <i class="bi bi-person"></i>
-            </button>
+                <button class="nav-btn" onclick="openRetailerProfile()" title="Profile">
+                    <i class="bi bi-person"></i>
+                </button>
 
-            <button class="nav-btn" onclick="openOrderStatus()" title="Orders">
-                <i class="bi bi-bag"></i>
-            </button>
+                <button class="nav-btn" onclick="openOrderStatus()" title="Orders">
+                    <i class="bi bi-bag"></i>
+                </button>
 
-            <button class="nav-btn" onclick="openCart()" title="Cart">
-                <i class="bi bi-cart3"></i>
-                <span class="badge" id="cartBadge">0</span>
-            </button>
+                <button class="nav-btn" onclick="openCart()" title="Cart">
+                    <i class="bi bi-cart3"></i>
+                    <span class="badge" id="cartBadge">0</span>
+                </button>
 
-            <button class="nav-btn" onclick="openDeliveryDetails()" title="Delivery">
-                <i class="bi bi-truck"></i>
-            </button>
+                <button class="nav-btn" onclick="openDeliveryDetails()" title="Delivery">
+                    <i class="bi bi-truck"></i>
+                </button>
+
+            </div>
 
         </div>
-
-    </div>
-</nav>
+    </nav>
 
     <!-- ==================== MAIN CONTENT ==================== -->
     <div class="main-container">
-        
 
-        <!-- Search Section -->
-<div class="search-section">
+        <!-- Search -->
+        <div class="search-section">
 
-    <input
-        type="text"
-        id="searchInput"
-        class="search-input"
-        placeholder="🔍 Search Products, Category, Shop..."
-        onkeyup="searchProducts()">
+            <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="🔍 Search Products..."
+                onkeyup="filterProducts()">
 
-
-  <h2 id="catTitle" class="title">Category Products</h2>
-
-    
-        <!-- Categories -->
-        <div class="category-section">
-            <div class="section-title">
-                <i class="bi bi-grid-3x2-gap"></i> Categories
-            </div>
-            <div class="categories-slider" id="categories"></div>
         </div>
 
+        <!-- Category Title -->
+        <h2 id="catTitle" class="title">
+            Category Products
+        </h2>
+
+        <!-- Loader -->
         <div id="loader" style="display:none;">
-    <div class="spinner"></div>
+            <div class="spinner"></div>
+        </div>
+
+        <!-- Products -->
+        <div class="products-grid" id="products"></div>
+
     </div>
+
+
 
         <!-- Featured -->
         <!-- ================= ALL PRODUCTS ================= -->
