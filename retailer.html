@@ -1424,19 +1424,23 @@ background:#f2f2f2;
     color:transparent !important;
 }
 /* ===== Categories ===== */
-
 .categories{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    column-gap:10px;   /* Left-Right gap */
-    row-gap:-15px;       /* ऊपर-नीचे gap */
-    padding:0px 10px;
+    gap:4px;              /* पहले 10px या 12px होगा */
+    padding:8px 10px;
+    margin:0;
 }
 
 .category{
-    margin:0;
     padding:0;
-    height:0px;       /* पहले से कम */
+    margin:0;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .category img{
@@ -1444,7 +1448,6 @@ background:#f2f2f2;
     height:82px;
     object-fit:contain;
     display:block;
-    margin:0 auto;
 }
 
 .category:hover{
