@@ -1615,6 +1615,47 @@ background:#f2f2f2;
     font-weight:600;
     line-height:1.4;
 }
+        .best-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.best-card{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    text-align:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.best-img{
+    position:relative;
+}
+
+.best-img img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
+}
+
+.best-price{
+    position:absolute;
+    top:8px;
+    left:8px;
+    background:#5B21B6;
+    color:#fff;
+    padding:6px 12px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.best-card h4{
+    padding:12px;
+    font-size:18px;
+    font-weight:600;
+}
     </style>
 </head>
 <body>
@@ -1824,6 +1865,14 @@ background:#f2f2f2;
         </a>
 
     </div>
+
+        </section>
+
+        <section class="best-sellers">
+
+<h2>Best Sellers</h2>
+
+<div id="bestSellers" class="best-grid"></div>
 
         </section>
     <!-- ==================== MODALS ==================== -->
@@ -2511,15 +2560,15 @@ async function loadProducts() {
 
   // Category Images
   const categoryImages = {
-  "4 hrs delivery": "images/categories/A.webp",
-  "visiting cards": "images/categories/b.webp",
-  "apparel": "images/categories/c.webp",
-  "personalised gifts": "images/categories/d.webp",
-  "stationery & stamps": "images/categories/f.webp",
-  "labels & packaging": "images/categories/g.webp",
-  "signage": "images/categories/h.webp",
-  "drinkware": "images/categories/e.webp"
-};
+    "4 hrs delivery": "images/categories/A.webp",
+    "visiting cards": "images/categories/b.webp",
+    "apparel": "images/categories/c.webp",
+    "personalised gifts": "images/categories/d.webp",
+    "stationery & stamps": "images/categories/f.webp",
+    "labels & packaging": "images/categories/g.webp",
+    "signage": "images/categories/h.webp",
+    "drinkware": "images/categories/e.webp"
+  };
 
   if (loading || !hasMore) return;
 
@@ -2530,16 +2579,11 @@ async function loadProducts() {
 
     console.log("Loading page:", page);
 
-    const res = await fetch(
-      `${API}/api/products/all?page=${page}`,
-      {
-        cache: "no-store"
-      }
-    );
+    const res = await fetch(`${API}/api/products/all?page=${page}`, {
+      cache: "no-store"
+    });
 
-    if (!res.ok) {
-      throw new Error("HTTP " + res.status);
-    }
+    if (!res.ok) throw new Error("HTTP " + res.status);
 
     const data = await res.json();
 
@@ -2547,11 +2591,11 @@ async function loadProducts() {
 
     if (!data.success) return;
 
-    // New products add
+    // Add New Products
     allProducts.push(...data.products);
     window.allProducts = allProducts;
 
-    // Categories only first time
+    // Categories First Time
     if (page === 1) {
 
       const categoryMap = {};
@@ -2562,19 +2606,23 @@ async function loadProducts() {
       });
 
       document.getElementById("categories").innerHTML =
-Object.keys(categoryMap).map(cat => `
-  <div class="category-card"
-       onclick="openCategory('${encodeURIComponent(cat)}')">
+      Object.keys(categoryMap).map(cat => `
+        <div class="category-card"
+             onclick="openCategory('${encodeURIComponent(cat)}')">
 
-    <img src="${categoryImages[cat] || 'images/categories/other.jpg'}"
-         class="category-photo"
-         loading="lazy">
+          <img src="${categoryImages[cat] || 'images/categories/other.jpg'}"
+               class="category-photo"
+               loading="lazy">
 
-  </div>
-`).join("");
+        </div>
+      `).join("");
     }
 
-   // renderAllProducts(allProducts);
+    // Best Sellers
+    renderBestSellers(allProducts);
+
+    // All Products (अगर चाहिए)
+    // renderAllProducts(allProducts);
 
     hasMore = data.hasMore;
     page++;
@@ -2590,7 +2638,6 @@ Object.keys(categoryMap).map(cat => `
 
   }
 }
-
 // First Load
 window.addEventListener("load", loadProducts);
 // First Load
@@ -2607,6 +2654,51 @@ window.addEventListener("scroll", () => {
   }
 
 });
+    function renderBestSellers(products){
+
+    const container = document.getElementById("bestSellers");
+
+    if(!container) return;
+
+    // Category wise first product
+    const categoryMap = {};
+
+    products.forEach(p=>{
+        const cat = (p.category || "").trim().toLowerCase();
+
+        if(!categoryMap[cat]){
+            categoryMap[cat] = p;
+        }
+    });
+
+    const html = Object.values(categoryMap).map(p=>{
+
+        const img = p.images?.[0] || "images/no-image.webp";
+
+        return `
+        <div class="best-card"
+             onclick="openProduct('${p._id}')">
+
+            <div class="best-img">
+
+                <img src="${img}" loading="lazy">
+
+                <div class="best-price">
+                    Buy 1 @ ₹${p.price}
+                </div>
+
+            </div>
+
+            <h4>${p.category}</h4>
+
+        </div>
+        `;
+
+    }).join("");
+
+    container.innerHTML = html;
+
+    }
 
 function renderAllProducts(products){
 
