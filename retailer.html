@@ -1488,6 +1488,32 @@ background:#f2f2f2;
     object-fit:contain;
     display:block;
 }
+        .promo-container{
+    width:100%;
+    max-width:1200px;
+    margin:20px auto;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.promo-card{
+    display:block;
+    overflow:hidden;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+    transition:.3s;
+}
+
+.promo-card:hover{
+    transform:translateY(-5px);
+}
+
+.promo-card img{
+    width:100%;
+    display:block;
+    border-radius:18px;
+}
     </style>
 </head>
 <body>
@@ -1591,14 +1617,17 @@ background:#f2f2f2;
         <!-- Featured -->
         <!-- ================= ALL PRODUCTS ================= -->
 
-<div class="category-section">
+<div class="promo-container">
 
-    <div class="section-title">
-        <i class="bi bi-box-seam"></i>
-        All Products
-    </div>
+    <!-- Top Banner -->
+    <a href="promo1.html" class="promo-card">
+        <img src="images/categories/banner1.webp" alt="Banner 1">
+    </a>
 
-    <div class="products-grid" id="allProducts"></div>
+    <!-- Bottom Banner -->
+    <a href="promo2.html" class="promo-card">
+        <img src="images/categories/banner2.webp" alt="Banner 2">
+    </a>
 
 </div>
 
