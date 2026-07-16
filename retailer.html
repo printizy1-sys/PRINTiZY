@@ -187,27 +187,28 @@ body {
         /* ==================== SEARCH SECTION ==================== */
 /* ==================== PREMIUM SEARCH SECTION ==================== */
 
+/* ================= SLIM PREMIUM SEARCH ================= */
+
 .search-section{
-    background:#ffffff;
-    padding:16px;
-    margin:18px 12px;
-    border-radius:18px;
-    border:1px solid rgba(0,0,0,.05);
-    box-shadow:0 8px 25px rgba(0,0,0,.06);
+    background:#fff;
+    padding:10px;
+    margin:16px 12px;
+    border-radius:14px;
+    border:1px solid #f2f2f2;
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
 }
 
 .search-input{
     width:100%;
-    height:52px;
-    padding:0 18px;
-    border:1px solid #ececec;
-    border-radius:30px;
+    height:42px;
+    padding:0 14px;
+    border:1px solid #e8e8e8;
+    border-radius:22px;
     background:#fafafa;
-    font-size:14px;
+    font-size:13px;
     color:#222;
     outline:none;
     transition:.3s;
-    font-family:'Rubik',sans-serif;
 }
 
 .search-input::placeholder{
@@ -217,7 +218,7 @@ body {
 .search-input:focus{
     background:#fff;
     border-color:var(--primary);
-    box-shadow:0 0 0 4px rgba(106,27,154,.08);
+    box-shadow:0 0 0 3px rgba(106,27,154,.08);
 }
 
 .search-btn{
@@ -1391,18 +1392,12 @@ background:#f2f2f2;
 
         <!-- Search Section -->
 <div class="search-section">
-
-    <div class="search-box">
-        <i class="bi bi-search"></i>
-
-        <input
-            type="text"
-            id="searchInput"
-            class="search-input"
-            placeholder="Search Products, Categories, Shops..."
-            onkeyup="searchProducts()">
-    </div>
-
+    <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Search Products, Category, Shop..."
+        onkeyup="searchProducts()">
 </div>
 
         <!-- Categories -->
