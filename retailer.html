@@ -3739,10 +3739,10 @@ window.__cartDelivery = {
 async function addToCart(p) {
   const retailerId = localStorage.getItem("userId");
 
-  if (!retailerId) {
-    alert("🔐 Please login first");
-    return;
-  }
+  //if (!retailerId) {
+   // alert("🔐 Please login first");
+    //return;
+ // }
 
   try {
     const res = await fetch(`${API}/api/cart/save`, {
@@ -3816,12 +3816,12 @@ async function loadCart() {
   const cartDiv = document.getElementById("cartItems");
 
   /* ---------- LOGIN CHECK ---------- */
-  if (!retailerId) {
-    cartDiv.innerHTML =
-      "<p style='text-align:center'>🔐 Please login</p>";
-    cart = [];
-    return;
-  }
+ // if (!retailerId) {
+    //cartDiv.innerHTML =
+   //   "<p style='text-align:center'>🔐 Please login</p>";
+  //  cart = [];
+   // return;
+//  }
 
   try {
     /* ---------- FETCH CART ---------- */
@@ -4280,10 +4280,10 @@ async function openRetailerProfile() {
 
   const retailerId = localStorage.getItem("userId");
 
-  if (!retailerId) {
-    alert("🔐 Login required");
-    return;
-  }
+  //if (!retailerId) {
+   // alert("🔐 Login required");
+   // return;
+ // }
 
   try {
 
