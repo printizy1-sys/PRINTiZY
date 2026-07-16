@@ -1726,7 +1726,234 @@ const params = new URLSearchParams(location.search);
 const wid = params.get("wid");
 const category = params.get("category");
 document.getElementById("catTitle").innerText = category || "Category Products";
+async function ensureRetailerLocation() {
+  const profile = JSON.parse(localStorage.getItem("retailerProfile") || "{}");
 
+  // ✅ localStorage me already hai
+  const loc = normalizeLocation(profile.location);
+  if (loc) {
+    localStorage.setItem("retailer_location", JSON.stringify(loc));
+    return loc;
+  }
+
+  // 🔥 backend se laao
+  const retailerId = localStorage.getItem("userId");
+  if (!retailerId) return null;
+
+  try {
+    const res = await fetch(`${API}/api/retailers/profile/${retailerId}`);
+    const data = await res.json();
+
+    const serverLoc = normalizeLocation(data?.profile?.location);
+    if (serverLoc) {
+      localStorage.setItem("retailer_location", JSON.stringify(serverLoc));
+      localStorage.setItem(
+        "retailerProfile",
+        JSON.stringify(data.profile)
+      );
+      return serverLoc;
+    }
+  } catch (e) {
+    console.error("❌ ensureRetailerLocation failed", e);
+  }
+
+  return null;
+  }
+
+
+/* ===========================
+   COIN + REFER SYSTEM
+=========================== */
+
+// Signup bonus
+const SIGNUP_BONUS = 0;
+
+// Referral reward
+const REFERRAL_REWARD = 0;
+
+// Load profile
+async function loadCoinProfile() {
+
+  const retailerId = localStorage.getItem("userId");
+  if (!retailerId) return;
+
+  try {
+
+    const res = await fetch(
+      `${API}/api/retailers/profile/${retailerId}`
+    );
+
+    const data = await res.json();
+
+    if (!data.success) return;
+
+    document.getElementById("coinBalance").innerText =
+      data.profile.coins || 0;
+
+    document.getElementById("referralCode").innerText =
+      data.profile.referralCode || "LOCAL100";
+
+  } catch (err) {
+
+    console.log(err);
+
+  }
+
+}
+function openLogin() {
+    window.location.href = "wholesalerlogin.html";
+    }
+/* ===========================
+   COPY REFERRAL
+=========================== */
+
+function copyReferral(){
+
+  const code =
+    document.getElementById("referralCode").innerText;
+
+  navigator.clipboard.writeText(code);
+
+  alert("Referral Code Copied");
+
+}
+
+/* ===========================
+   SHARE REFERRAL
+=========================== */
+
+async function shareReferral(){
+
+  const code =
+    document.getElementById("referralCode").innerText;
+
+  const text =
+
+`🛍️ Join PRINTiZY
+
+🎁 Use my referral code
+
+${code}
+
+Signup now and get
+
+🪙 ${SIGNUP_BONUS} Coins
+
+I also get
+
+🪙 ${REFERRAL_REWARD} Coins.
+
+https://webnestic-tech-up.vercel.app`;
+
+  if(navigator.share){
+
+    try{
+
+      await navigator.share({
+
+        title:"Local Dukan",
+
+        text:text
+
+      });
+
+    }catch(e){}
+
+  }else{
+
+    window.open(
+
+      "https://wa.me/?text="+
+      encodeURIComponent(text)
+
+    );
+
+  }
+
+}
+
+/* ===========================
+   COIN HISTORY
+=========================== */
+
+async function openCoinHistory(){
+
+  try{
+
+    const retailerId =
+      localStorage.getItem("userId");
+
+    const res = await fetch(
+
+      `${API}/api/coins/history/${retailerId}`
+
+    );
+
+    const data = await res.json();
+
+    if(!data.success){
+
+      return alert("No history");
+
+    }
+
+    let html="";
+
+    data.history.forEach(h=>{
+
+      html +=
+
+      `
+      <div class="coin-row">
+
+        <div>
+
+          ${h.reason}
+
+        </div>
+
+        <div>
+
+          ${h.amount>0?"+":""}
+          ${h.amount}
+
+        </div>
+
+      </div>
+      `;
+
+    });
+
+    document.getElementById("coinHistoryBody").innerHTML =
+      html;
+
+    document.getElementById("coinHistoryModal")
+      .style.display="flex";
+
+  }catch(err){
+
+    console.log(err);
+
+  }
+
+}
+
+/* ===========================
+   CLOSE COIN HISTORY
+=========================== */
+
+function closeCoinHistory(){
+
+ document.getElementById("coinHistoryModal")
+ .style.display="none";
+
+}
+
+window.addEventListener("load",()=>{
+
+  loadCoinProfile();
+
+});
 // ---------------- PRODUCTS ----------------
 async function loadProducts() {
 
