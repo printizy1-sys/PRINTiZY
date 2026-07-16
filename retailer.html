@@ -1423,6 +1423,69 @@ background:#f2f2f2;
     padding:0 !important;
     color:transparent !important;
 }
+    /* ================= CATEGORY GRID ================= */
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    padding:15px;
+}
+
+/* Category Box */
+
+.category{
+    background:#fff;
+    border:1px solid #e9e9e9;
+    border-radius:18px;
+    height:120px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.category:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+
+/* Category Image */
+
+.category img{
+    width:88px;
+    height:88px;
+    object-fit:contain;
+    transition:.3s;
+}
+
+.category:hover img{
+    transform:scale(1.08);
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.categories{
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    padding:10px;
+}
+
+.category{
+    height:95px;
+    border-radius:14px;
+}
+
+.category img{
+    width:68px;
+    height:68px;
+}
+
+}
     </style>
 </head>
 <body>
@@ -1480,6 +1543,39 @@ background:#f2f2f2;
         onkeyup="searchProducts()">
 </div>
 
+
+<div class="category" onclick="openCategory('4 Hrs Delivery')">
+    <img src="images/categories/a.webp">
+</div>
+
+<div class="category" onclick="openCategory('Visiting Cards')">
+    <img src="images/categories/b.webp">
+</div>
+
+<div class="category" onclick="openCategory('Apparel')">
+    <img src="images/categories/c.webp">
+</div>
+
+<div class="category" onclick="openCategory('Personalised Gifts')">
+    <img src="images/categories/d.webp">
+</div>
+
+<div class="category" onclick="openCategory('Stationery & Stamps')">
+    <img src="images/categories/e.webp">
+</div>
+
+<div class="category" onclick="openCategory('Labels & Packaging')">
+    <img src="images/categories/f.webp">
+</div>
+
+<div class="category" onclick="openCategory('Signage')">
+    <img src="images/categories/g.webp">
+</div>
+
+<div class="category" onclick="openCategory('Drinkware')">
+    <img src="images/categories/h.webp">
+</div>
+        
         <!-- Categories -->
         <div class="category-section">
             <div class="section-title">
@@ -1882,7 +1978,47 @@ function normalizeLocation(loc) {
 
   return null;
 }
+function openCategory(category){
 
+switch(category){
+
+case "4 Hrs Delivery":
+window.location.href="delivery.html";
+break;
+
+case "Visiting Cards":
+window.location.href="visiting-cards.html";
+break;
+
+case "Apparel":
+window.location.href="apparel.html";
+break;
+
+case "Personalised Gifts":
+window.location.href="personalised-gifts.html";
+break;
+
+case "Stationery & Stamps":
+window.location.href="stationery.html";
+break;
+
+case "Labels & Packaging":
+window.location.href="labels-packaging.html";
+break;
+
+case "Signage":
+window.location.href="signage.html";
+break;
+
+case "Drinkware":
+window.location.href="drinkware.html";
+break;
+
+default:
+window.location.href="categoryProducts.html";
+}
+
+    }
 // ================= RETAILER LOCATION ENSURE =================
 async function ensureRetailerLocation() {
   const profile = JSON.parse(localStorage.getItem("retailerProfile") || "{}");
