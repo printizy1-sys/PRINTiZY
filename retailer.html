@@ -4070,7 +4070,8 @@ function renderAllProducts(products){
     const container = document.getElementById("allProducts");
 
     if(!products || !products.length){
-        return;
+    container.innerHTML = "<p>No Products Found</p>";
+    return;
     }
 
     const html = products.map(p => {
