@@ -628,9 +628,12 @@ async function loadProducts(){
 
     try{
 
-        const res = await fetch(`${API}/api/products/all?page=${page}`,{
-            cache:"no-store"
-        });
+        const res = await fetch(
+    `${API}/api/products/all?page=${page}&category=Apparel`,
+    {
+        cache: "no-store"
+    }
+);
 
         const data = await res.json();
 
