@@ -3976,79 +3976,32 @@ window.addEventListener("load",()=>{
   loadCoinProfile();
 
 });
-    
-// ------------------- PRODUCTS -------------------
+    async function loadProducts() {
 
-async function loadProducts() {
-
-  // Category Images
-  const categoryImages = {
-    "4 hrs delivery": "images/categories/A.webp",
-    "visiting cards": "images/categories/b.webp",
-    "apparel": "images/categories/c.webp",
-    "personalised gifts": "images/categories/d.webp",
-    "stationery & stamps": "images/categories/f.webp",
-    "labels & packaging": "images/categories/g.webp",
-    "signage": "images/categories/h.webp",
-    "drinkware": "images/categories/e.webp"
-  };
-
-  if (loading || !hasMore) return;
-
-  loading = true;
   document.getElementById("loader").style.display = "block";
 
   try {
 
-    console.log("Loading page:", page);
-
-    const res = await fetch(`${API}/api/products/all?page=${page}`, {
+    const res = await fetch(`${API}/api/products/front-products`, {
       cache: "no-store"
     });
 
-    if (!res.ok) throw new Error("HTTP " + res.status);
+    if (!res.ok) {
+      throw new Error("HTTP " + res.status);
+    }
 
     const data = await res.json();
 
-    console.log(data);
-
     if (!data.success) return;
 
-    // Add New Products
-    allProducts.push(...data.products);
+    allProducts = data.products;
     window.allProducts = allProducts;
 
-    // Categories First Time
-    if (page === 1) {
-
-      const categoryMap = {};
-
-      allProducts.forEach(p => {
-        const cat = (p.category || "other").toLowerCase().trim();
-        categoryMap[cat] = true;
-      });
-
-      document.getElementById("categories").innerHTML =
-      Object.keys(categoryMap).map(cat => `
-        <div class="category-card"
-             onclick="openCategory('${encodeURIComponent(cat)}')">
-
-          <img src="${categoryImages[cat] || 'images/categories/other.jpg'}"
-               class="category-photo"
-               loading="lazy">
-
-        </div>
-      `).join("");
-    }
-
-    // Best Sellers
+    // Front Page पर हर Category का 1 Product
     renderBestSellers(allProducts);
 
-    // All Products (अगर चाहिए)
+    // अगर All Products सेक्शन भी दिखाना है
     // renderAllProducts(allProducts);
-
-    hasMore = data.hasMore;
-    page++;
 
   } catch (err) {
 
@@ -4056,27 +4009,16 @@ async function loadProducts() {
 
   } finally {
 
-    loading = false;
     document.getElementById("loader").style.display = "none";
 
   }
+
 }
+
 // First Load
 window.addEventListener("load", loadProducts);
-// First Load
+// ------------------- PRODUCTS -------------------
 
-
-// Infinite Scroll
-window.addEventListener("scroll", () => {
-
-  if (
-    window.innerHeight + window.scrollY >=
-    document.body.offsetHeight - 300
-  ) {
-    loadProducts();
-  }
-
-});
     function renderBestSellers(products){
 
     const container = document.getElementById("bestSellers");
