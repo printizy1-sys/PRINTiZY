@@ -40,7 +40,7 @@ box-shadow:0 3px 12px rgba(0,0,0,.08);
 }
 
 .logo{
-height:45px;
+height:40px;
 }
 
 .search-box{
@@ -386,11 +386,6 @@ id="searchInput">
 
 <div class="header-right">
 
-<a href="wishlist.html" class="icon-btn">
-
-<i class="bi bi-heart"></i>
-
-</a>
 
 
 <a href="cart.html" class="icon-btn cart-btn">
@@ -402,12 +397,6 @@ id="searchInput">
 </a>
 
 
-<a href="retailer-profile.html"
-class="icon-btn">
-
-<i class="bi bi-person-circle"></i>
-
-</a>
 
 </div>
 
@@ -566,20 +555,24 @@ BEST SELLERS
 
 <h2>
 
-Best Selling Apparel
+BEST SELLERS
 
 </h2>
 
 <div
 class="products-grid"
-id="bestProducts">
-
-<!-- API Products -->
+id="allProducts">
 
 </div>
 
 </section>
+<div
+id="loader"
+class="loader">
 
+Loading Products...
+
+</div>
 
 
 <!--==========================
@@ -608,31 +601,11 @@ id="newProducts">
 ALL PRODUCTS
 ===========================-->
 
-<section class="best-selling">
-
-<h2>
-
-Explore More
-
-</h2>
-
-<div
-class="products-grid"
-id="allProducts">
-
-</div>
-
-</section>
 
 
 
-<div
-id="loader"
-class="loader">
 
-Loading Products...
 
-</div>
 <script>
        const API = "https://printizyserver.onrender.com";
 
