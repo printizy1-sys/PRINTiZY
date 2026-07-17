@@ -4033,136 +4033,149 @@ window.addEventListener("load",()=>{
 window.addEventListener("load", loadProducts);
 // ------------------- PRODUCTS -------------------
 
-    function renderBestSellers(products){
+async function loadProducts(){
 
-    const container = document.getElementById("bestSellers");
+    if(loading || !hasMore) return;
+
+    loading = true;
+
+    document.getElementById("loader").style.display="block";
+
+    try{
+
+        const res = await fetch(
+    `${API}/api/products/all?page=${page}&category=Apparel`,
+    {
+        cache: "no-store"
+    }
+);
+
+        const data = await res.json();
+
+        if(!data.success) return;
+
+        allProducts.push(...data.products);
+
+        renderProducts(allProducts);
+
+        page++;
+
+        hasMore = data.hasMore;
+
+    }catch(err){
+
+        console.log(err);
+
+    }finally{
+
+        loading=false;
+
+        document.getElementById("loader").style.display="none";
+
+    }
+
+}
+
+/* =========================
+   RENDER PRODUCTS
+========================= */
+
+function renderProducts(products){
+
+    const container =
+    document.getElementById("allProducts");
 
     if(!container) return;
 
-    // Category wise first product
-    const categoryMap = {};
+    container.innerHTML="";
 
-    products.forEach(p=>{
-        const cat = (p.category || "").trim().toLowerCase();
+    products.forEach(product=>{
 
-        if(!categoryMap[cat]){
-            categoryMap[cat] = p;
-        }
-    });
+        const img =
+        product.images?.[0] ||
+        "images/no-image.webp";
 
-    const html = Object.values(categoryMap).map(p=>{
+        const price =
+        Number(product.price || 0);
 
-        const img = p.images?.[0] || "images/no-image.webp";
+        const oldPrice =
+        Math.round(price*1.35);
 
-        return `
-        <div class="best-card"
-             onclick="openProduct('${p._id}')">
+        const discount =
+        Math.round(
+        ((oldPrice-price)/oldPrice)*100
+        );
 
-            <div class="best-img">
+        container.innerHTML += `
 
-                <img src="${img}" loading="lazy">
-
-                <div class="best-price">
-                    Buy 1 @ ₹${p.price}
-                </div>
-
-            </div>
-
-            <h4>${p.category}</h4>
-
-        </div>
-        `;
-
-    }).join("");
-
-    container.innerHTML = html;
-
-    }
-
-function renderAllProducts(products){
-
-    const container = document.getElementById("allProducts");
-
-    if(!products || !products.length){
-    container.innerHTML = "<p>No Products Found</p>";
-    return;
-    }
-
-    const html = products.map(p => {
-
-        const img = p.images?.[0] || "https://via.placeholder.com/300";
-        const price = Number(p.price || 0);
-        const oldPrice = Math.round(price * 1.35);
-        const discount = Math.round(((oldPrice-price)/oldPrice)*100);
-
-        return `
         <div class="product-card">
 
-            <div class="product-image-wrapper">
-                <img src="${img}"
-                     class="product-image"
-                     loading="lazy"
-                     onclick="openProduct('${p._id}')">
-
-                <div class="product-badge">${discount}% OFF</div>
-
-                <button class="wishlist-icon">
-                    <i class="bi bi-heart-fill"></i>
-                </button>
-            </div>
+            <img
+            src="${img}"
+            class="product-image"
+            loading="lazy"
+            onclick="openProduct('${product._id}')">
 
             <div class="product-info">
 
-                <div class="product-title"
-                     onclick="openProduct('${p._id}')">
-                     ${p.productName}
-                </div>
+                <div class="product-title">
 
-                <div class="product-rating">
-                    ⭐ 4.5
-                    <span class="rating-count">(125)</span>
-                </div>
+                    ${product.productName}
 
-                <small>${p.category || "General"}</small>
+                </div>
 
                 <div class="product-price">
-                    <span class="price-current">₹${price}</span>
-                    <span class="price-original">₹${oldPrice}</span>
-                    <span class="price-discount">${discount}% OFF</span>
+
+                    <span class="current-price">
+
+                    ₹${price}
+
+                    </span>
+
+                    <span class="old-price">
+
+                    ₹${oldPrice}
+
+                    </span>
+
+                    <span class="discount">
+
+                    ${discount}% OFF
+
+                    </span>
+
                 </div>
 
-                <div class="product-buttons">
+                <div class="product-btns">
 
-    ${p.productUrl ? `
+                    <button
+                    class="view-btn"
+                    onclick="openProduct('${product._id}')">
 
-        <button class="btn-small btn-buy"
-            onclick="openExternalProduct('${p.productUrl}')">
-            <i class="bi bi-bag-check-fill"></i>
-        </button>
+                    View
 
-    ` : `
+                    </button>
 
-        <button class="btn-small btn-cart"
-            onclick="openProduct('${p._id}')">
-            <i class="bi bi-eye-fill"></i>
-        </button>
+                    <button
+                    class="cart-btn2"
+                    onclick='addToCart(${JSON.stringify(product)})'>
 
-        <button class="btn-small btn-buy"
-            onclick='addToCart(${JSON.stringify(p)})'>
-            <i class="bi bi-cart-fill"></i>
-        </button>
+                    Cart
 
-    `}
+                    </button>
 
-</div>
+                </div>
 
             </div>
 
-        </div>`;
-    }).join("");
+        </div>
 
-   container.innerHTML = html;
+        `;
+
+    });
+
 }
+
 function openCategory(cat) {
     cat = decodeURIComponent(cat);
 
