@@ -3993,49 +3993,62 @@ window.addEventListener("load",()=>{
     
 // ------------------- PRODUCTS -------------------
 
-async function loadProducts(){
+async function loadProducts() {
 
-    if(loading || !hasMore) return;
+    if (loading || !hasMore) return;
 
     loading = true;
+    document.getElementById("loader").style.display = "block";
 
-    document.getElementById("loader").style.display="block";
-
-    try{
+    try {
 
         const res = await fetch(
-    `${API}/api/products/all?page=${page}&category=Apparel`,
-    {
-        cache: "no-store"
-    }
-);
+            `${API}/api/products/all?page=${page}&category=Apparel`,
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!res.ok) throw new Error("HTTP " + res.status);
 
         const data = await res.json();
 
-        if(!data.success) return;
+        if (!data.success) return;
 
         allProducts.push(...data.products);
 
         renderProducts(allProducts);
 
         page++;
-
         hasMore = data.hasMore;
 
-    }catch(err){
+    } catch (err) {
 
-        console.log(err);
+        console.error(err);
 
-    }finally{
+    } finally {
 
-        loading=false;
-
-        document.getElementById("loader").style.display="none";
+        loading = false;
+        document.getElementById("loader").style.display = "none";
 
     }
 
 }
 
+// First Load
+window.addEventListener("load", loadProducts);
+
+// Infinite Scroll
+window.addEventListener("scroll", () => {
+
+    if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 300
+    ) {
+        loadProducts();
+    }
+
+});
 /* =========================
    RENDER PRODUCTS
 ========================= */
