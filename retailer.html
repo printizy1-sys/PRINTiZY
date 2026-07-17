@@ -2682,7 +2682,7 @@ transform:translateY(0);
         </section>
     <section class="best-selling">
 
-    <h2>Apparel Products</h2>
+    <h2>Special Products</h2>
 
     <div id="allProducts" class="products-grid"></div>
 
@@ -3981,147 +3981,80 @@ window.addEventListener("load",()=>{
     
 // ------------------- PRODUCTS -------------------
 
-async function loadProducts() {
-
-    if (loading || !hasMore) return;
-
-    loading = true;
-    document.getElementById("loader").style.display = "block";
-
-    try {
-
-        const res = await fetch(
-            `${API}/api/products/all?page=${page}&category=Apparel`,
-            {
-                cache: "no-store"
-            }
-        );
-
-        if (!res.ok) throw new Error("HTTP " + res.status);
-
-        const data = await res.json();
-
-        if (!data.success) return;
-
-        allProducts.push(...data.products);
-
-        renderProducts(allProducts);
-
-        page++;
-        hasMore = data.hasMore;
-
-    } catch (err) {
-
-        console.error(err);
-
-    } finally {
-
-        loading = false;
-        document.getElementById("loader").style.display = "none";
-
-    }
-
-}
-
-// First Load
-window.addEventListener("load", loadProducts);
-
-// Infinite Scroll
-window.addEventListener("scroll", () => {
-
-    if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 300
-    ) {
-        loadProducts();
-    }
-
-});
-/* =========================
-   RENDER PRODUCTS
-========================= */
-
 function renderProducts(products){
 
-    const container =
-    document.getElementById("allProducts");
+    const container = document.getElementById("allProducts");
 
     if(!container) return;
 
-    container.innerHTML="";
+    container.innerHTML = "";
 
-    products.forEach(product=>{
+    // ✅ हर Category का केवल पहला Product
+    const categoryMap = {};
 
-        const img =
-        product.images?.[0] ||
-        "images/no-image.webp";
+    products.forEach(product => {
 
-        const price =
-        Number(product.price || 0);
+        const cat = (product.category || "").trim().toLowerCase();
 
-        const oldPrice =
-        Math.round(price*1.35);
+        if(!categoryMap[cat]){
+            categoryMap[cat] = product;
+        }
 
-        const discount =
-        Math.round(
-        ((oldPrice-price)/oldPrice)*100
-        );
+    });
+
+    Object.values(categoryMap).forEach(product => {
+
+        const img = product.images?.[0] || "images/no-image.webp";
+
+        const price = Number(product.price || 0);
+
+        const oldPrice = Math.round(price * 1.35);
+
+        const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
 
         container.innerHTML += `
 
         <div class="product-card">
 
             <img
-            src="${img}"
-            class="product-image"
-            loading="lazy"
-            onclick="openProduct('${product._id}')">
+                src="${img}"
+                class="product-image"
+                loading="lazy"
+                onclick="openProduct('${product._id}')">
 
             <div class="product-info">
 
                 <div class="product-title">
-
                     ${product.productName}
-
                 </div>
+
+                <small>${product.category}</small>
 
                 <div class="product-price">
 
-                    <span class="current-price">
+                    <span class="current-price">₹${price}</span>
 
-                    ₹${price}
+                    <span class="old-price">₹${oldPrice}</span>
 
-                    </span>
-
-                    <span class="old-price">
-
-                    ₹${oldPrice}
-
-                    </span>
-
-                    <span class="discount">
-
-                    ${discount}% OFF
-
-                    </span>
+                    <span class="discount">${discount}% OFF</span>
 
                 </div>
 
                 <div class="product-btns">
 
                     <button
-                    class="view-btn"
-                    onclick="openProduct('${product._id}')">
+                        class="view-btn"
+                        onclick="openProduct('${product._id}')">
 
-                    View
+                        View
 
                     </button>
 
                     <button
-                    class="cart-btn2"
-                    onclick='addToCart(${JSON.stringify(product)})'>
+                        class="cart-btn2"
+                        onclick='addToCart(${JSON.stringify(product)})'>
 
-                    Cart
+                        Cart
 
                     </button>
 
@@ -4135,8 +4068,7 @@ function renderProducts(products){
 
     });
 
-}
-
+    }
 function openCategory(cat) {
     cat = decodeURIComponent(cat);
 
