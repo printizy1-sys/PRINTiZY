@@ -3981,36 +3981,94 @@ window.addEventListener("load",()=>{
     
 // ------------------- PRODUCTS -------------------
 
+// ------------------- PRODUCTS -------------------
+
+
+
+async function loadProducts() {
+
+    if (loading) return;
+
+    loading = true;
+
+    document.getElementById("loader").style.display = "block";
+
+    try {
+
+        const res = await fetch(
+            `${API}/api/products/front-products`,
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error("HTTP " + res.status);
+        }
+
+        const data = await res.json();
+
+        if (!data.success) return;
+
+        allProducts = data.products;
+
+        renderProducts(allProducts);
+
+    } catch (err) {
+
+        console.error("Load Products Error:", err);
+
+    } finally {
+
+        loading = false;
+
+        document.getElementById("loader").style.display = "none";
+
+    }
+
+}
+
+// First Load
+window.addEventListener("load", loadProducts);
+
+
+/* =========================
+   RENDER PRODUCTS
+========================= */
+
 function renderProducts(products){
 
-    const container = document.getElementById("allProducts");
+    const container =
+    document.getElementById("allProducts");
 
     if(!container) return;
 
+    if(!products || !products.length){
+
+        container.innerHTML =
+        "<h3 style='text-align:center'>No Products Found</h3>";
+
+        return;
+    }
+
     container.innerHTML = "";
 
-    // ✅ हर Category का केवल पहला Product
-    const categoryMap = {};
+    products.forEach(product=>{
 
-    products.forEach(product => {
+        const img =
+        product.images?.[0] ||
+        "images/no-image.webp";
 
-        const cat = (product.category || "").trim().toLowerCase();
+        const price =
+        Number(product.price || 0);
 
-        if(!categoryMap[cat]){
-            categoryMap[cat] = product;
-        }
+        const oldPrice =
+        Math.round(price * 1.35);
 
-    });
-
-    Object.values(categoryMap).forEach(product => {
-
-        const img = product.images?.[0] || "images/no-image.webp";
-
-        const price = Number(product.price || 0);
-
-        const oldPrice = Math.round(price * 1.35);
-
-        const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
+        const discount =
+        Math.round(
+            ((oldPrice-price)/oldPrice)*100
+        );
 
         container.innerHTML += `
 
@@ -4032,11 +4090,17 @@ function renderProducts(products){
 
                 <div class="product-price">
 
-                    <span class="current-price">₹${price}</span>
+                    <span class="current-price">
+                        ₹${price}
+                    </span>
 
-                    <span class="old-price">₹${oldPrice}</span>
+                    <span class="old-price">
+                        ₹${oldPrice}
+                    </span>
 
-                    <span class="discount">${discount}% OFF</span>
+                    <span class="discount">
+                        ${discount}% OFF
+                    </span>
 
                 </div>
 
@@ -4068,7 +4132,14 @@ function renderProducts(products){
 
     });
 
-    }
+}
+
+
+/* =========================
+   SEARCH PRODUCTS
+========================= */
+
+
 function openCategory(cat) {
     cat = decodeURIComponent(cat);
 
