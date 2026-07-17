@@ -4033,15 +4033,21 @@ async function loadProducts() {
 // First Load
 window.addEventListener("load", loadProducts);
 
+function openProduct(productId){
 
+    window.location.href =
+    `product.html?id=${productId}`;
+
+}
 /* =========================
    RENDER PRODUCTS
 ========================= */
 
+
+
 function renderProducts(products){
 
-    const container =
-    document.getElementById("allProducts");
+    const container = document.getElementById("allProducts");
 
     if(!container) return;
 
@@ -4057,35 +4063,41 @@ function renderProducts(products){
 
     products.forEach(product=>{
 
-        const img =
-        product.images?.[0] ||
-        "images/no-image.webp";
+        const img = product.images?.[0] || "images/no-image.webp";
 
-        const price =
-        Number(product.price || 0);
+        const price = Number(product.price || 0);
 
-        const oldPrice =
-        Math.round(price * 1.35);
+        const oldPrice = Math.round(price * 1.35);
 
-        const discount =
-        Math.round(
-            ((oldPrice-price)/oldPrice)*100
+        const discount = Math.round(
+            ((oldPrice - price) / oldPrice) * 100
         );
 
         container.innerHTML += `
 
         <div class="product-card">
 
-            <img
-                src="${img}"
-                class="product-image"
-                loading="lazy"
-                onclick="openProduct('${product._id}')">
+            <div class="product-image-wrapper">
+
+                <img
+                    src="${img}"
+                    class="product-image"
+                    loading="lazy"
+                    onclick="openProduct('${product._id}')">
+
+                <div class="product-badge">
+                    ${discount}% OFF
+                </div>
+
+            </div>
 
             <div class="product-info">
 
-                <div class="product-title">
+                <div class="product-title"
+                     onclick="openProduct('${product._id}')">
+
                     ${product.productName}
+
                 </div>
 
                 <small>${product.category}</small>
@@ -4134,9 +4146,7 @@ function renderProducts(products){
 
     });
 
-}
-
-
+    }
 /* =========================
    SEARCH PRODUCTS
 ========================= */
