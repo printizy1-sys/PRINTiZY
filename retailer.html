@@ -1665,7 +1665,726 @@ background:#f2f2f2;
     width: 100%;
     display: block;
 }
-  
+  *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f5f7fb;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+text-align:center;
+font-size:35px;
+font-weight:700;
+color:#0A1F44;
+margin-bottom:45px;
+}
+
+/* TESTIMONIAL */
+
+.testimonials{
+padding:80px 8%;
+}
+
+.testimonial-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+
+}
+
+.review-card{
+
+background:#fff;
+padding:30px;
+border-radius:18px;
+box-shadow:0 12px 35px rgba(0,0,0,.08);
+transition:.4s;
+border-top:5px solid #FF6B00;
+
+}
+
+.review-card:hover{
+
+transform:translateY(-10px);
+
+}
+
+.profile{
+
+text-align:center;
+
+}
+
+.profile img{
+
+width:80px;
+height:80px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:15px;
+border:4px solid #FF6B00;
+
+}
+
+.profile h3{
+
+color:#0A1F44;
+margin-bottom:5px;
+
+}
+
+.profile span{
+
+color:#888;
+
+}
+
+.review-card p{
+
+margin:25px 0;
+line-height:1.8;
+color:#444;
+text-align:center;
+
+}
+
+.stars{
+
+text-align:center;
+font-size:24px;
+color:#FFB400;
+
+}
+
+/* FEATURES */
+
+.features{
+
+padding:70px 8%;
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:25px;
+
+}
+
+.feature-box{
+
+background:white;
+
+padding:35px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.4s;
+
+box-shadow:0 10px 30px rgba(0,0,0,.07);
+
+}
+
+.feature-box:hover{
+
+background:#0A1F44;
+color:white;
+transform:translateY(-8px);
+
+}
+
+.icon{
+
+font-size:55px;
+margin-bottom:20px;
+
+}
+
+.feature-box h3{
+
+margin-bottom:10px;
+
+}
+
+/* TRUSTED */
+
+.trusted{
+
+padding:80px 0;
+
+background:white;
+
+overflow:hidden;
+
+}
+
+.trusted h2{
+
+text-align:center;
+
+margin-bottom:40px;
+
+font-size:34px;
+
+color:#0A1F44;
+
+}
+
+.logo-slider{
+
+overflow:hidden;
+
+white-space:nowrap;
+
+}
+
+.logo-track{
+
+display:inline-flex;
+
+animation:slide 20s linear infinite;
+
+}
+
+.logo-track img{
+
+width:170px;
+
+height:80px;
+
+object-fit:contain;
+
+margin:0 45px;
+
+filter:grayscale(100%);
+
+transition:.4s;
+
+}
+
+.logo-track img:hover{
+
+filter:none;
+
+transform:scale(1.15);
+
+}
+
+@keyframes slide{
+
+0%{
+
+transform:translateX(0);
+
+}
+
+100%{
+
+transform:translateX(-50%);
+
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.section-title{
+
+font-size:28px;
+
+}
+
+.review-card{
+
+padding:25px;
+
+}
+
+.features{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+.logo-track img{
+
+width:120px;
+
+margin:0 20px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.features{
+
+grid-template-columns:1fr;
+
+}
+
+        }
+        /* ==========================
+CORPORATE BANNER
+========================== */
+
+.corporate-banner{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:80px 8%;
+background:linear-gradient(135deg,#0A1F44,#163C77);
+color:#fff;
+border-radius:25px;
+margin:70px 8%;
+overflow:hidden;
+gap:50px;
+
+}
+
+.corporate-content{
+
+flex:1;
+
+}
+
+.corporate-content h2{
+
+font-size:42px;
+margin-bottom:20px;
+
+}
+
+.corporate-content p{
+
+font-size:18px;
+line-height:1.8;
+margin-bottom:35px;
+opacity:.95;
+
+}
+
+.corporate-btn{
+
+display:inline-block;
+padding:15px 40px;
+background:#FF6B00;
+color:#fff;
+text-decoration:none;
+border-radius:50px;
+font-weight:600;
+transition:.3s;
+
+}
+
+.corporate-btn:hover{
+
+background:#fff;
+color:#0A1F44;
+
+}
+
+.corporate-image{
+
+flex:1;
+text-align:center;
+
+}
+
+.corporate-image img{
+
+width:100%;
+max-width:500px;
+
+}
+
+/* ==========================
+BLOGS
+========================== */
+
+.blogs{
+
+padding:80px 8%;
+
+}
+
+.blog-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+
+}
+
+.blog-card{
+
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 10px 35px rgba(0,0,0,.08);
+transition:.4s;
+
+}
+
+.blog-card:hover{
+
+transform:translateY(-10px);
+
+}
+
+.blog-card img{
+
+width:100%;
+height:220px;
+object-fit:cover;
+
+}
+
+.blog-content{
+
+padding:25px;
+
+}
+
+.blog-content h3{
+
+color:#0A1F44;
+margin-bottom:15px;
+
+}
+
+.blog-content p{
+
+line-height:1.8;
+color:#666;
+margin-bottom:20px;
+
+}
+
+.blog-content a{
+
+text-decoration:none;
+font-weight:600;
+color:#FF6B00;
+
+}
+
+/* ==========================
+ABOUT
+========================== */
+
+.about-printizy{
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:60px;
+padding:90px 8%;
+background:#fff;
+
+}
+
+.about-image{
+
+flex:1;
+
+}
+
+.about-image img{
+
+width:100%;
+max-width:500px;
+
+}
+
+.about-content{
+
+flex:1;
+
+}
+
+.about-content h2{
+
+font-size:42px;
+color:#0A1F44;
+margin-bottom:25px;
+
+}
+
+.about-content p{
+
+line-height:2;
+font-size:17px;
+color:#555;
+
+}
+
+.counter-grid{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:25px;
+margin-top:40px;
+
+}
+
+.counter-box{
+
+background:#F8F9FA;
+padding:30px;
+border-radius:15px;
+text-align:center;
+transition:.3s;
+
+}
+
+.counter-box:hover{
+
+background:#FF6B00;
+color:#fff;
+
+}
+
+.counter-box h3{
+
+font-size:34px;
+margin-bottom:10px;
+
+}
+
+/* ==========================
+RESPONSIVE
+========================== */
+
+@media(max-width:900px){
+
+.corporate-banner{
+
+flex-direction:column;
+text-align:center;
+
+}
+
+.about-printizy{
+
+flex-direction:column;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.corporate-content h2{
+
+font-size:32px;
+
+}
+
+.about-content h2{
+
+font-size:32px;
+
+}
+
+.counter-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+        /* ==========================
+FAQ
+========================== */
+
+.faq-section{
+
+padding:80px 8%;
+background:#f7f8fb;
+
+}
+
+.faq-container{
+
+max-width:900px;
+margin:auto;
+
+}
+
+.faq-item{
+
+background:#fff;
+margin-bottom:18px;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.faq-question{
+
+padding:22px;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+.faq-answer{
+
+max-height:0;
+overflow:hidden;
+
+transition:.35s;
+
+}
+
+.faq-answer p{
+
+padding:0 22px 22px;
+line-height:1.8;
+color:#666;
+
+}
+
+/* ==========================
+FOOTER
+========================== */
+
+.footer{
+
+background:#07152f;
+color:#fff;
+
+padding:70px 8% 20px;
+
+}
+
+.footer-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:40px;
+
+}
+
+.footer h3{
+
+margin-bottom:20px;
+
+}
+
+.footer ul{
+
+list-style:none;
+
+}
+
+.footer ul li{
+
+margin:12px 0;
+
+}
+
+.footer a{
+
+color:#ddd;
+text-decoration:none;
+transition:.3s;
+
+}
+
+.footer a:hover{
+
+color:#FF6B00;
+
+}
+
+.footer hr{
+
+margin:35px 0;
+border:none;
+height:1px;
+background:#333;
+
+}
+
+.footer-bottom{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+
+}
+
+.social a{
+
+width:42px;
+height:42px;
+
+display:inline-flex;
+align-items:center;
+justify-content:center;
+
+background:#10244d;
+border-radius:50%;
+
+margin-left:10px;
+
+font-size:18px;
+
+}
+
+.social a:hover{
+
+background:#FF6B00;
+
+}
+
+@media(max-width:768px){
+
+.footer-bottom{
+
+flex-direction:column;
+gap:20px;
+
+}
+
+    }
+            .hidden{
+
+opacity:0;
+transform:translateY(60px);
+transition:all .8s ease;
+
+}
+
+.show{
+
+opacity:1;
+transform:translateY(0);
+
+}
+        
     </style>
 </head>
 <body>
@@ -1678,7 +2397,7 @@ background:#f2f2f2;
   </div>
     <!-- ==================== NAVBAR ==================== -->
 <nav class="navbar">
-    
+
     <div class="navbar-wrapper">
 
         <a href="/" class="navbar-brand">
@@ -1885,6 +2604,531 @@ background:#f2f2f2;
 <div id="bestSellers" class="best-grid"></div>
 
         </section>
+
+        <!-- ==========================
+PRINTIZY TESTIMONIAL SECTION
+========================== -->
+
+<section class="testimonials">
+
+<h2 class="section-title">
+What Our Customers Say
+</h2>
+
+<div class="testimonial-grid">
+
+<div class="review-card">
+<div class="profile">
+<img src="images/users/user1.jpg">
+<h3>Rahul Sharma</h3>
+<span>Business Owner</span>
+</div>
+
+<p>
+Excellent printing quality and very fast delivery.
+Highly recommended for business branding.
+</p>
+
+<div class="stars">
+★★★★★
+</div>
+
+</div>
+
+<div class="review-card">
+
+<div class="profile">
+<img src="images/users/user2.jpg">
+<h3>Priya Verma</h3>
+<span>Fashion Designer</span>
+</div>
+
+<p>
+Loved the brochure quality. Colors were accurate
+and paper quality was premium.
+</p>
+
+<div class="stars">
+★★★★★
+</div>
+
+</div>
+
+<div class="review-card">
+
+<div class="profile">
+<img src="images/users/user3.jpg">
+<h3>Amit Kumar</h3>
+<span>Startup Founder</span>
+</div>
+
+<p>
+PRINTIZY helped us create premium visiting cards
+within one day.
+</p>
+
+<div class="stars">
+★★★★★
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================
+FEATURE SECTION
+========================== -->
+
+<section class="features">
+
+<div class="feature-box">
+
+<div class="icon">
+🚀
+</div>
+
+<h3>Fast Delivery</h3>
+
+<p>
+Same Day & Express Delivery Available
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="icon">
+🎨
+</div>
+
+<h3>Premium Printing</h3>
+
+<p>
+Best Quality Digital & Offset Printing
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="icon">
+📦
+</div>
+
+<h3>Secure Packaging</h3>
+
+<p>
+Safe & Damage Free Packaging
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<div class="icon">
+💰
+</div>
+
+<h3>Affordable Price</h3>
+
+<p>
+Premium Quality at Budget Price
+</p>
+
+</div>
+
+</section>
+
+<!-- ==========================
+TRUSTED SECTION
+========================== -->
+
+<section class="trusted">
+
+<h2>
+Trusted By Growing Businesses
+</h2>
+
+<div class="logo-slider">
+
+<div class="logo-track">
+
+<img src="images/logo/google.png">
+
+<img src="images/logo/paytm.png">
+
+<img src="images/logo/amazon.png">
+
+<img src="images/logo/tata.png">
+
+<img src="images/logo/adobe.png">
+
+<img src="images/logo/microsoft.png">
+
+<img src="images/logo/google.png">
+
+<img src="images/logo/paytm.png">
+
+<img src="images/logo/amazon.png">
+
+<img src="images/logo/tata.png">
+
+<img src="images/logo/adobe.png">
+
+<img src="images/logo/microsoft.png">
+
+</div>
+
+</div>
+
+</section>
+        <!-- ==========================
+CORPORATE BANNER
+========================== -->
+
+<section class="corporate-banner">
+
+<div class="corporate-content">
+
+<h2>
+Grow Your Business with PRINTiZY
+</h2>
+
+<p>
+From Business Cards to Packaging, Branding,
+Corporate Gifts and Promotional Products,
+PRINTiZY delivers premium printing solutions
+for every business.
+</p>
+
+<a href="contact.html" class="corporate-btn">
+Get Started
+</a>
+
+</div>
+
+<div class="corporate-image">
+
+<img src="images/corporate-printing.png" alt="Corporate Printing">
+
+</div>
+
+</section>
+
+<!-- ==========================
+LATEST BLOGS
+========================== -->
+
+<section class="blogs">
+
+<h2 class="section-title">
+Latest From PRINTiZY
+</h2>
+
+<div class="blog-grid">
+
+<div class="blog-card">
+
+<img src="images/blog/blog1.jpg">
+
+<div class="blog-content">
+
+<h3>
+Top 10 Visiting Card Design Trends
+</h3>
+
+<p>
+Discover premium business card ideas to
+make your brand stand out.
+</p>
+
+<a href="#">
+Read More →
+</a>
+
+</div>
+
+</div>
+
+<div class="blog-card">
+
+<img src="images/blog/blog2.jpg">
+
+<div class="blog-content">
+
+<h3>
+Packaging That Increases Sales
+</h3>
+
+<p>
+Creative packaging builds trust and improves
+customer experience.
+</p>
+
+<a href="#">
+Read More →
+</a>
+
+</div>
+
+</div>
+
+<div class="blog-card">
+
+<img src="images/blog/blog3.jpg">
+
+<div class="blog-content">
+
+<h3>
+Corporate Gifting Guide 2026
+</h3>
+
+<p>
+Impress your employees and clients with
+custom branded gifts.
+</p>
+
+<a href="#">
+Read More →
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================
+ABOUT PRINTIZY
+========================== -->
+
+<section class="about-printizy">
+
+<div class="about-image">
+
+<img src="images/about-printizy.png">
+
+</div>
+
+<div class="about-content">
+
+<h2>
+About PRINTiZY
+</h2>
+
+<p>
+
+PRINTiZY is your trusted online printing partner,
+offering premium quality printing services for
+businesses, startups, students and individuals.
+
+From Business Cards, Brochures and Flyers
+to T-Shirts, Corporate Gifts, Packaging and
+Custom Merchandise—we deliver everything
+with premium quality and fast turnaround.
+
+</p>
+
+<div class="counter-grid">
+
+<div class="counter-box">
+
+<h3>50K+</h3>
+
+<span>Orders Delivered</span>
+
+</div>
+
+<div class="counter-box">
+
+<h3>5000+</h3>
+
+<span>Happy Customers</span>
+
+</div>
+
+<div class="counter-box">
+
+<h3>500+</h3>
+
+<span>Business Clients</span>
+
+</div>
+
+<div class="counter-box">
+
+<h3>99%</h3>
+
+<span>Customer Satisfaction</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+        <!-- ==========================
+FAQ SECTION
+========================== -->
+
+<section class="faq-section">
+
+<h2 class="section-title">
+Frequently Asked Questions
+</h2>
+
+<div class="faq-container">
+
+<div class="faq-item">
+<div class="faq-question">
+What services does PRINTiZY offer?
+<span>+</span>
+</div>
+
+<div class="faq-answer">
+<p>
+PRINTiZY provides Business Cards, Flyers, Brochures,
+Posters, Packaging, T-Shirts, Corporate Gifts,
+Banners, Stickers and many more printing solutions.
+</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+Do you provide same-day delivery?
+<span>+</span>
+</div>
+
+<div class="faq-answer">
+<p>
+Yes. Same-day delivery is available for selected
+products and selected locations.
+</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+Can I order a single piece?
+<span>+</span>
+</div>
+
+<div class="faq-answer">
+<p>
+Yes, many of our products are available from just
+one quantity.
+</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+How can I contact PRINTiZY?
+<span>+</span>
+</div>
+
+<div class="faq-answer">
+<p>
+You can contact us through WhatsApp, Email or Call.
+Our support team is always ready to help.
+</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================
+FOOTER
+========================== -->
+
+<footer class="footer">
+
+<div class="footer-grid">
+
+<div>
+
+<h2 class="logo">PRINTiZY</h2>
+
+<p>
+Premium Online Printing &
+Branding Solutions for Businesses.
+</p>
+
+</div>
+
+<div>
+
+<h3>Quick Links</h3>
+
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#">Products</a></li>
+<li><a href="#">Categories</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+
+</div>
+
+<div>
+
+<h3>Services</h3>
+
+<ul>
+<li><a href="#">Business Cards</a></li>
+<li><a href="#">Brochures</a></li>
+<li><a href="#">Packaging</a></li>
+<li><a href="#">Corporate Gifts</a></li>
+</ul>
+
+</div>
+
+<div>
+
+<h3>Contact</h3>
+
+<p>Email : support@printizy.com</p>
+
+<p>Phone : +91 XXXXX XXXXX</p>
+
+<p>Mon - Sat : 9AM - 7PM</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="footer-bottom">
+
+<p>
+© 2026 PRINTiZY. All Rights Reserved.
+</p>
+
+<div class="social">
+
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+
+<a href="#"><i class="fab fa-instagram"></i></a>
+
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+<a href="#"><i class="fab fa-youtube"></i></a>
+
+</div>
+
+</div>
+
+</footer>
+        
     <!-- ==================== MODALS ==================== -->
 
     <!-- Product Detail Modal -->
@@ -2292,6 +3536,101 @@ window.location.href="categoryProducts.html";
 }
 
     }
+    /* FAQ */
+
+document.querySelectorAll(".faq-question").forEach((item)=>{
+
+item.addEventListener("click",()=>{
+
+let answer=item.nextElementSibling;
+
+if(answer.style.maxHeight){
+
+answer.style.maxHeight=null;
+
+item.querySelector("span").innerHTML="+";
+
+}else{
+
+document.querySelectorAll(".faq-answer").forEach((a)=>{
+
+a.style.maxHeight=null;
+
+});
+
+document.querySelectorAll(".faq-question span").forEach((s)=>{
+
+s.innerHTML="+";
+
+});
+
+answer.style.maxHeight=answer.scrollHeight+"px";
+
+item.querySelector("span").innerHTML="−";
+
+}
+
+});
+
+});
+
+
+/* Counter Animation */
+
+const counters=document.querySelectorAll(".counter-box h3");
+
+counters.forEach(counter=>{
+
+const target=parseInt(counter.innerText);
+
+let count=0;
+
+const update=()=>{
+
+count+=Math.ceil(target/60);
+
+if(count<target){
+
+counter.innerText=count+"+";
+
+requestAnimationFrame(update);
+
+}else{
+
+counter.innerText=counter.dataset.value || counter.innerText;
+
+}
+
+};
+
+update();
+
+});
+
+
+/* Scroll Animation */
+
+const observer=new IntersectionObserver((entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+});
+
+document.querySelectorAll("section").forEach(sec=>{
+
+sec.classList.add("hidden");
+
+observer.observe(sec);
+
+});
 // ================= RETAILER LOCATION ENSURE =================
 async function ensureRetailerLocation() {
   const profile = JSON.parse(localStorage.getItem("retailerProfile") || "{}");
