@@ -3990,47 +3990,7 @@ window.addEventListener("load",()=>{
   loadCoinProfile();
 
 });
-    async function loadProducts() {
-
-  document.getElementById("loader").style.display = "block";
-
-  try {
-
-    const res = await fetch(`${API}/api/products/front-products`, {
-      cache: "no-store"
-    });
-
-    if (!res.ok) {
-      throw new Error("HTTP " + res.status);
-    }
-
-    const data = await res.json();
-
-    if (!data.success) return;
-
-    allProducts = data.products;
-    window.allProducts = allProducts;
-
-    // Front Page पर हर Category का 1 Product
-    renderBestSellers(allProducts);
-
-    // अगर All Products सेक्शन भी दिखाना है
-    renderAllProducts(allProducts);
-
-  } catch (err) {
-
-    console.error("Load Products Error:", err);
-
-  } finally {
-
-    document.getElementById("loader").style.display = "none";
-
-  }
-
-}
-
-// First Load
-window.addEventListener("load", loadProducts);
+    
 // ------------------- PRODUCTS -------------------
 
 async function loadProducts(){
