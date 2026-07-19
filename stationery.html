@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PRINTiZY | Custom stationery Printing</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<link rel="stylesheet" href="css/apparel.css">
+   <style>
+       *{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f7f8fc;
+color:#222;
+}
+
+/* HEADER */
+
+.header{
+position:sticky;
+top:0;
+z-index:1000;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+padding:12px 15px;
+background:#fff;
+box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.logo{
+height:20px;
+}
+
+.search-box{
+flex:1;
+display:flex;
+align-items:center;
+background:#f3f4f8;
+border-radius:50px;
+padding:10px 15px;
+}
+
+.search-box i{
+font-size:20px;
+color:#666;
+margin-right:10px;
+}
+
+.search-box input{
+width:100%;
+border:none;
+outline:none;
+background:transparent;
+font-size:15px;
+}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.icon-btn{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#f5f5f5;
+display:flex;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+color:#5B21B6;
+font-size:22px;
+position:relative;
+}
+
+.cart-btn span{
+position:absolute;
+top:-5px;
+right:-5px;
+background:#ff6600;
+color:#fff;
+width:20px;
+height:20px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:11px;
+font-weight:700;
+}
+
+/* HERO */
+
+.hero{
+padding:15px;
+}
+
+.hero-slider{
+display:flex;
+gap:12px;
+overflow-x:auto;
+scrollbar-width:none;
+}
+
+.hero-slider::-webkit-scrollbar{
+display:none;
+}
+
+.hero-slider img{
+width:100%;
+min-width:320px;
+height:180px;
+object-fit:cover;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.12);
+}
+
+/* INTRO */
+
+.intro{
+padding:20px;
+text-align:center;
+}
+
+.intro h1{
+font-size:34px;
+font-weight:700;
+color:#222;
+margin-bottom:10px;
+}
+
+.intro p{
+font-size:18px;
+line-height:1.6;
+color:#666;
+}
+
+/* SECTION */
+
+.best-selling,
+.top-categories{
+padding:20px;
+}
+
+.best-selling h2,
+.top-categories h2{
+font-size:28px;
+font-weight:700;
+margin-bottom:18px;
+color:#333;
+}
+
+/* CATEGORY */
+
+.category-scroll{
+display:flex;
+overflow-x:auto;
+gap:15px;
+scrollbar-width:none;
+}
+
+.category-scroll::-webkit-scrollbar{
+display:none;
+}
+
+.category-card{
+min-width:130px;
+background:#fff;
+border-radius:18px;
+padding:10px;
+text-align:center;
+box-shadow:0 5px 18px rgba(0,0,0,.08);
+transition:.3s;
+cursor:pointer;
+}
+
+.category-card:hover{
+transform:translateY(-5px);
+}
+
+.category-card img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:15px;
+}
+
+.category-card p{
+margin-top:10px;
+font-size:15px;
+font-weight:600;
+}
+
+/* PRODUCTS */
+
+.products-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:18px;
+}
+
+.product-card{
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 4px 15px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.product-card:hover{
+transform:translateY(-4px);
+}
+
+.product-image{
+width:100%;
+height:190px;
+object-fit:cover;
+}
+
+.product-info{
+padding:12px;
+}
+
+.product-title{
+font-size:17px;
+font-weight:600;
+margin-bottom:8px;
+min-height:45px;
+}
+
+.product-price{
+display:flex;
+align-items:center;
+gap:8px;
+margin-bottom:12px;
+}
+
+.current-price{
+font-size:20px;
+font-weight:700;
+color:#5B21B6;
+}
+
+.old-price{
+font-size:14px;
+text-decoration:line-through;
+color:#888;
+}
+
+.discount{
+font-size:13px;
+color:#ff6600;
+font-weight:700;
+}
+
+.product-btns{
+display:flex;
+gap:10px;
+}
+
+.view-btn,
+.cart-btn2{
+flex:1;
+padding:10px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:15px;
+font-weight:600;
+}
+
+.view-btn{
+background:#5B21B6;
+color:#fff;
+}
+
+.cart-btn2{
+background:#ff6600;
+color:#fff;
+}
+
+/* LOADER */
+
+.loader{
+display:none;
+text-align:center;
+padding:25px;
+font-size:18px;
+font-weight:600;
+color:#5B21B6;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.header{
+padding:10px;
+}
+
+.logo{
+height:28px;
+}
+
+.search-box{
+padding:8px 12px;
+}
+
+.search-box input{
+font-size:14px;
+}
+
+.intro h1{
+font-size:28px;
+}
+
+.intro p{
+font-size:16px;
+}
+
+.products-grid{
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.product-image{
+height:150px;
+}
+
+.category-card{
+min-width:115px;
+}
+
+.category-card img{
+height:100px;
+}
+
+}
+    </style>
+</head>
+
+<body>
+
+<!--==========================
+HEADER
+===========================-->
+
+<header class="header">
+
+<div class="header-left">
+
+<a href="retailer.html">
+
+<img src="images/categories/logo.webp"
+class="logo">
+
+</a>
+
+</div>
+
+
+<div class="search-box">
+
+<i class="bi bi-search"></i>
+
+<input
+type="text"
+placeholder="Search T-Shirts, Hoodies, Caps..."
+id="searchInput">
+
+</div>
+
+
+<div class="header-right">
+
+
+
+<a href="cart.html" class="icon-btn cart-btn">
+
+<i class="bi bi-cart3"></i>
+
+<span id="cartBadge">0</span>
+
+</a>
+
+
+
+</div>
+
+</header>
+
+
+
+<!--==========================
+BANNER
+===========================-->
+
+<section class="hero">
+
+<div class="hero-slider">
+
+<img src="images/apparel/banner1.webp">
+
+<img src="images/apparel/banner2.webp">
+
+<img src="images/apparel/banner3.webp">
+
+</div>
+
+</section>
+
+
+
+<!--==========================
+TITLE
+===========================-->
+
+<section class="intro">
+
+<h1>
+
+Custom Apparel Printing
+
+</h1>
+
+<p>
+
+Create premium quality custom apparel
+for your company, college,
+business or events.
+
+</p>
+
+</section>
+
+
+
+<!--==========================
+TOP CATEGORIES
+===========================-->
+
+<section class="top-categories">
+
+<h2>
+
+Shop by Apparel
+
+</h2>
+
+<div class="category-scroll">
+
+
+<div class="category-card">
+
+<img src="images/apparel/round-neck.webp">
+
+<p>Round Neck</p>
+
+</div>
+
+
+
+<div class="category-card">
+
+<img src="images/apparel/polo.webp">
+
+<p>Polo T-Shirts</p>
+
+</div>
+
+
+
+<div class="category-card">
+
+<img src="images/apparel/full-sleeve.webp">
+
+<p>Full Sleeve</p>
+
+</div>
+
+
+
+<div class="category-card">
+
+<img src="images/apparel/hoodie.webp">
+
+<p>Hoodies</p>
+
+</div>
+
+
+
+<div class="category-card">
+
+<img src="images/apparel/jacket.webp">
+
+<p>Jackets</p>
+
+</div>
+
+
+
+<div class="category-card">
+
+<img src="images/apparel/sports.webp">
+
+<p>Sports Wear</p>
+
+</div>
+
+
+
+<div class="category-card">
+
+<img src="images/apparel/cap.webp">
+
+<p>Caps</p>
+
+</div>
+
+
+
+<div class="category-card">
+
+<img src="images/apparel/apron.webp">
+
+<p>Aprons</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!--==========================
+BEST SELLERS
+===========================-->
+
+<section class="best-selling">
+
+<h2>
+
+BEST SELLERS
+
+</h2>
+
+<div
+class="products-grid"
+id="allProducts">
+
+</div>
+
+</section>
+<div
+id="loader"
+class="loader">
+
+Loading Products...
+
+</div>
+
+
+<!--==========================
+NEW ARRIVALS
+===========================-->
+
+<section class="best-selling">
+
+<h2>
+
+New Arrivals
+
+</h2>
+
+<div
+class="products-grid"
+id="newProducts">
+
+</div>
+
+</section>
+
+
+
+<!--==========================
+ALL PRODUCTS
+===========================-->
+
+
+
+
+
+
+<script>
+       const API = "https://printizyserver.onrender.com";
+
+let page = 1;
+let loading = false;
+let hasMore = true;
+let allProducts = [];
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
+
+async function loadProducts(){
+
+    if(loading || !hasMore) return;
+
+    loading = true;
+
+    document.getElementById("loader").style.display="block";
+
+    try{
+
+        const res = await fetch(
+    `${API}/api/products/all?page=${page}&category=Apparel`,
+    {
+        cache: "no-store"
+    }
+);
+
+        const data = await res.json();
+
+        if(!data.success) return;
+
+        allProducts.push(...data.products);
+
+        renderProducts(allProducts);
+
+        page++;
+
+        hasMore = data.hasMore;
+
+    }catch(err){
+
+        console.log(err);
+
+    }finally{
+
+        loading=false;
+
+        document.getElementById("loader").style.display="none";
+
+    }
+
+}
+
+/* =========================
+   RENDER PRODUCTS
+========================= */
+
+function renderProducts(products){
+
+    const container =
+    document.getElementById("allProducts");
+
+    if(!container) return;
+
+    container.innerHTML="";
+
+    products.forEach(product=>{
+
+        const img =
+        product.images?.[0] ||
+        "images/no-image.webp";
+
+        const price =
+        Number(product.price || 0);
+
+        const oldPrice =
+        Math.round(price*1.35);
+
+        const discount =
+        Math.round(
+        ((oldPrice-price)/oldPrice)*100
+        );
+
+        container.innerHTML += `
+
+        <div class="product-card">
+
+            <img
+            src="${img}"
+            class="product-image"
+            loading="lazy"
+            onclick="openProduct('${product._id}')">
+
+            <div class="product-info">
+
+                <div class="product-title">
+
+                    ${product.productName}
+
+                </div>
+
+                <div class="product-price">
+
+                    <span class="current-price">
+
+                    ₹${price}
+
+                    </span>
+
+                    <span class="old-price">
+
+                    ₹${oldPrice}
+
+                    </span>
+
+                    <span class="discount">
+
+                    ${discount}% OFF
+
+                    </span>
+
+                </div>
+
+                <div class="product-btns">
+
+                    <button
+                    class="view-btn"
+                    onclick="openProduct('${product._id}')">
+
+                    View
+
+                    </button>
+
+                    <button
+                    class="cart-btn2"
+                    onclick='addToCart(${JSON.stringify(product)})'>
+
+                    Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+/* =========================
+   BANNER AUTO SLIDER
+========================= */
+
+let bannerIndex = 0;
+
+setInterval(()=>{
+
+const slider =
+document.querySelector(".hero-slider");
+
+if(!slider) return;
+
+const banners =
+slider.querySelectorAll("img");
+
+bannerIndex++;
+
+if(bannerIndex>=banners.length){
+
+bannerIndex=0;
+
+}
+
+slider.scrollTo({
+
+left:banners[bannerIndex].offsetLeft,
+
+behavior:"smooth"
+
+});
+
+},3000);
+
+/* =========================
+   OPEN PRODUCT
+========================= */
+
+function openProduct(id){
+
+window.location.href=
+`product-details.html?id=${id}`;
+
+}
+
+/* =========================
+   FIRST LOAD
+========================= */
+
+window.onload=()=>{
+
+loadProducts();
+
+};
+   /* ===========================
+   LIVE SEARCH
+=========================== */
+
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", function () {
+
+        const keyword = this.value.toLowerCase().trim();
+
+        if (keyword === "") {
+            renderProducts(allProducts);
+            return;
+        }
+
+        const filtered = allProducts.filter(product => {
+
+            return (
+                (product.productName || "").toLowerCase().includes(keyword) ||
+                (product.category || "").toLowerCase().includes(keyword)
+            );
+
+        });
+
+        renderProducts(filtered);
+
+    });
+
+}
+
+
+/* ===========================
+   CATEGORY FILTER
+=========================== */
+
+document.querySelectorAll(".category-card").forEach(card => {
+
+    card.addEventListener("click", function () {
+
+        const category = this.innerText.toLowerCase().trim();
+
+        const filtered = allProducts.filter(product => {
+
+            return (product.category || "")
+                .toLowerCase()
+                .includes(category);
+
+        });
+
+        renderProducts(filtered);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+});
+
+
+/* ===========================
+   ADD TO CART
+=========================== */
+
+function addToCart(product){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const index = cart.findIndex(item => item._id === product._id);
+
+    if(index > -1){
+
+        cart[index].qty++;
+
+    }else{
+
+        product.qty = 1;
+
+        cart.push(product);
+
+    }
+
+    localStorage.setItem("cart",JSON.stringify(cart));
+
+    updateCartBadge();
+
+    alert("✅ Added to Cart");
+
+}
+
+
+/* ===========================
+   CART BADGE
+=========================== */
+
+function updateCartBadge(){
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let total = 0;
+
+    cart.forEach(item=>{
+
+        total += item.qty || 1;
+
+    });
+
+    const badge = document.getElementById("cartBadge");
+
+    if(badge){
+
+        badge.innerText = total;
+
+    }
+
+}
+
+
+/* ===========================
+   WISHLIST
+=========================== */
+
+function addToWishlist(product){
+
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+    const exists = wishlist.find(item => item._id === product._id);
+
+    if(exists){
+
+        alert("Already in Wishlist");
+
+        return;
+
+    }
+
+    wishlist.push(product);
+
+    localStorage.setItem("wishlist",JSON.stringify(wishlist));
+
+    alert("❤️ Added to Wishlist");
+
+}
+
+
+/* ===========================
+   OPEN CART
+=========================== */
+
+function openCart(){
+
+    window.location.href="cart.html";
+
+}
+
+
+/* ===========================
+   OPEN WISHLIST
+=========================== */
+
+function openWishlist(){
+
+    window.location.href="wishlist.html";
+
+}
+
+
+/* ===========================
+   PAGE LOAD
+=========================== */
+
+window.addEventListener("load",()=>{
+
+    updateCartBadge();
+
+});
+   /* ===========================
+   INFINITE SCROLL
+=========================== */
+
+window.addEventListener("scroll", () => {
+
+    if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 300
+    ) {
+
+        loadProducts();
+
+    }
+
+});
+
+
+/* ===========================
+   PRODUCT DETAILS
+=========================== */
+
+function openProduct(id){
+
+    window.location.href =
+    `product.html?id=${id}`;
+
+}
+
+
+/* ===========================
+   BUY NOW
+=========================== */
+
+function buyNow(product){
+
+    localStorage.setItem(
+        "buyNowProduct",
+        JSON.stringify(product)
+    );
+
+    window.location.href="checkout.html";
+
+}
+
+
+/* ===========================
+   OPEN EXTERNAL PRODUCT
+=========================== */
+
+function openExternalProduct(url){
+
+    if(!url) return;
+
+    window.open(url,"_blank");
+
+}
+
+
+/* ===========================
+   FILTER BY CATEGORY
+=========================== */
+
+function filterCategory(category){
+
+    category = category.toLowerCase();
+
+    const filtered = allProducts.filter(p=>{
+
+        return (
+            p.category || ""
+        ).toLowerCase() === category;
+
+    });
+
+    renderProducts(filtered);
+
+}
+
+
+/* ===========================
+   SORT LOW TO HIGH
+=========================== */
+
+function sortPriceLow(){
+
+    const data = [...allProducts];
+
+    data.sort((a,b)=>
+        Number(a.price)-Number(b.price)
+    );
+
+    renderProducts(data);
+
+}
+
+
+/* ===========================
+   SORT HIGH TO LOW
+=========================== */
+
+function sortPriceHigh(){
+
+    const data = [...allProducts];
+
+    data.sort((a,b)=>
+        Number(b.price)-Number(a.price)
+    );
+
+    renderProducts(data);
+
+}
+
+
+/* ===========================
+   REFRESH PRODUCTS
+=========================== */
+
+async function refreshProducts(){
+
+    page = 1;
+
+    hasMore = true;
+
+    allProducts = [];
+
+    document.getElementById("allProducts").innerHTML="";
+
+    await loadProducts();
+
+}
+
+
+/* ===========================
+   IMAGE ERROR
+=========================== */
+
+document.addEventListener("error",function(e){
+
+    if(e.target.tagName==="IMG"){
+
+        e.target.src="images/no-image.webp";
+
+    }
+
+},true);
+
+
+/* ===========================
+   PAGE READY
+=========================== */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    updateCartBadge();
+
+    loadProducts();
+
+});
+
+
+/* ===========================
+   UTILITIES
+=========================== */
+
+function formatPrice(price){
+
+    return "₹"+Number(price).toLocaleString("en-IN");
+
+}
+
+function showLoader(){
+
+    const loader=document.getElementById("loader");
+
+    if(loader) loader.style.display="block";
+
+}
+
+function hideLoader(){
+
+    const loader=document.getElementById("loader");
+
+    if(loader) loader.style.display="none";
+
+}
+    </script>
+</body>
+</html>
