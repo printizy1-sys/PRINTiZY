@@ -531,7 +531,7 @@ async function loadProducts(){
     try{
 
         const res = await fetch(
-    `${API}/api/products/all?page=${page}&category=stationery & stamps`,
+    `${API}/api/products/all?page=${page}&category=stationery%20%26%20stamps`,
     {
         cache: "no-store"
     }
