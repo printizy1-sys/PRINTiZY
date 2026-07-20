@@ -2559,6 +2559,50 @@ max-width:100px;
 }
 
 }
+    /* =========================
+   CUSTOMER REVIEWS
+========================= */
+
+.reviews{
+    padding:40px 5%;
+    background:#fff;
+}
+
+.reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.review-card{
+    background:#fff;
+    border:2px solid #6f2dbd;
+    border-radius:22px;
+    overflow:hidden;
+    text-align:center;
+    padding:0;
+}
+
+.review-photo{
+    width:100%;
+    height:320px;   /* सभी फोटो एक जैसी */
+    display:block;
+    object-fit:cover;
+    border-radius:20px;
+}
+
+/* Mobile */
+@media(max-width:768px){
+
+.review-photo{
+    height:240px;
+}
+
+.reviews-grid{
+    gap:15px;
+}
+
+}
     </style>
 </head>
 <body>
