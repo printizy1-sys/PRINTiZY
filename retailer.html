@@ -2427,52 +2427,131 @@ color:#07152f;
 GRID
 =========================== */
 
+/* ===========================
+PRODUCTS GRID
+=========================== */
+
 .products-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
-gap:18px;
+gap:16px;
+padding:0;
+margin:20px 0;
 }
 
 /* ===========================
-CARD
+PRODUCT CARD
 =========================== */
 
-
+.product-card{
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 4px 15px rgba(0,0,0,.08);
+transition:.3s;
+cursor:pointer;
+}
 
 .product-card:hover{
 transform:translateY(-4px);
 }
 
 /* ===========================
-IMAGE
+IMAGE WRAPPER
 =========================== */
 
-.product-card{
-    background:#fff;
-    border-radius:18px;
-    overflow:hidden;
+.product-image-wrapper{
+width:100%;
+height:220px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#fff;
+overflow:hidden;
 }
+
+/* ===========================
+PRODUCT IMAGE
+=========================== */
 
 .product-image{
-    width:100%;
-    height:180px;
-    display:block;
-    object-fit:contain;
-    object-position:center;
-    background:#fff;
+width:100%;
+height:100%;
+display:block;
+object-fit:contain;
+object-position:center;
+background:#fff;
+padding:10px;
 }
+
 /* ===========================
-TITLE
+PRODUCT INFO
 =========================== */
 
-.product-card h3{
-padding:15px 10px;
-font-size:23px;
-font-weight:700;
+.product-info{
+padding:12px;
+}
+
+.product-title{
+font-size:18px;
+font-weight:600;
 text-align:center;
+line-height:1.4;
+min-height:50px;
 color:#222;
-line-height:1.3;
-min-height:75px;
+margin-bottom:10px;
+}
+
+.product-price{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-bottom:12px;
+}
+
+.current-price{
+font-size:20px;
+font-weight:700;
+color:#5B21B6;
+}
+
+.old-price{
+font-size:15px;
+color:#888;
+text-decoration:line-through;
+}
+
+.discount{
+font-size:13px;
+font-weight:700;
+color:#ff6600;
+}
+
+.product-btns{
+display:flex;
+gap:10px;
+}
+
+.view-btn,
+.cart-btn2{
+flex:1;
+padding:10px;
+border:none;
+border-radius:10px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+}
+
+.view-btn{
+background:#5B21B6;
+color:#fff;
+}
+
+.cart-btn2{
+background:#ff6600;
+color:#fff;
 }
 
 /* ===========================
@@ -2486,18 +2565,20 @@ grid-template-columns:repeat(2,1fr);
 gap:12px;
 }
 
-.product-image{
-height:170px;
-padding:8px;
+.product-image-wrapper{
+height:180px;
 }
 
-.product-card h3{
+.product-title{
+font-size:16px;
+min-height:45px;
+}
+
+.current-price{
 font-size:18px;
-min-height:60px;
-padding:12px 8px;
 }
 
-}    
+}
     </style>
 </head>
 <body>
