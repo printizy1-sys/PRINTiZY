@@ -2528,6 +2528,37 @@ background:#20ba5a;
     display:block;
     border-radius:8px;
 }
+    .section-title{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:18px;
+font-size:42px;
+font-weight:700;
+color:#333;
+margin:30px 0;
+}
+
+.section-title span{
+flex:1;
+height:3px;
+background:#e5e5e5;
+border-radius:10px;
+max-width:180px;
+}
+
+@media(max-width:768px){
+
+.section-title{
+font-size:26px;
+gap:12px;
+}
+
+.section-title span{
+max-width:100px;
+}
+
+}
     </style>
 </head>
 <body>
@@ -2643,7 +2674,12 @@ background:#20ba5a;
 </div>
 <section class="business-needs">
 
-    <h2 class="section-title">Everything Your Business Needs</h2>
+    <h2 class="section-title">
+
+<span></span>
+        Everything Your Business Needs<span></span>
+
+</h2>
 
     <div class="business-list">
 
@@ -2741,8 +2777,16 @@ background:#20ba5a;
         </section>
 <section class="best-selling">
 
-<h2>Popular Products</h2>
 
+<h2 class="section-title">
+
+<span></span>
+
+Popular Products
+
+<span></span>
+
+</h2>
 <div class="products-grid">
 
 <div class="product-card"
@@ -2938,7 +2982,15 @@ class="product-image">
 </div>
     <section class="best-selling">
 
-<h2>New Launches</h2>
+<h2 class="section-title">
+
+<span></span>
+
+New Launches
+
+<span></span>
+
+</h2>
 
 <div class="products-grid">
 
