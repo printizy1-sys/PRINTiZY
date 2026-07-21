@@ -2560,7 +2560,7 @@ max-width:100px;
 
 }
     /* =========================
-   CUSTOMER REVIEWS
+CUSTOMER REVIEWS
 ========================= */
 
 .reviews{
@@ -2580,32 +2580,38 @@ max-width:100px;
     border-radius:22px;
     overflow:hidden;
     text-align:center;
-    padding:0;
-
-    width:140%;
-    height:220px;   /* Height kam */
+    width:100%;
+    height:220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .review-photo{
     width:100%;
-    height:280px;   /* सभी फोटो एक जैसी */
+    height:100%;
     display:block;
-    object-fit:cover;
-    border-radius:20px;
+    object-fit:contain;      /* Photo poori dikhegi */
+    object-position:center;
+    background:#fff;
 }
 
 /* Mobile */
 @media(max-width:768px){
 
-.review-photo{
-    height:210px;
+    .review-card{
+        height:210px;
+    }
+
+    .reviews-grid{
+        gap:15px;
+    }
+
+    .review-photo{
+        height:100%;
+    }
 }
 
-.reviews-grid{
-    gap:15px;
-}
-
-}
     </style>
 </head>
 <body>
