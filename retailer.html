@@ -4085,40 +4085,55 @@ item.querySelector("span").innerHTML="−";
       FOOTER ACCORDION
 =========================*/
 
-document.addEventListener("DOMContentLoaded", () => {
+/*==========================
+      PRINTiZY FOOTER
+==========================*/
 
-const buttons = document.querySelectorAll(".accordion-btn");
+document.addEventListener("DOMContentLoaded",()=>{
 
-buttons.forEach(btn => {
+const items=document.querySelectorAll(".accordion-item");
 
-btn.addEventListener("click", () => {
+items.forEach(item=>{
 
-const item = btn.parentElement;
-const content = item.querySelector(".accordion-content");
-const icon = btn.querySelector("span");
+const btn=item.querySelector(".accordion-btn");
+const content=item.querySelector(".accordion-content");
+const icon=btn.querySelector("i");
 
-// Close all other accordions
-document.querySelectorAll(".accordion-item").forEach(i => {
+btn.addEventListener("click",()=>{
 
-if(i !== item){
+// Close all
+items.forEach(other=>{
 
-i.querySelector(".accordion-content").style.display = "none";
-i.querySelector(".accordion-btn span").innerHTML = "+";
+if(other!==item){
+
+other.querySelector(".accordion-content").style.maxHeight=null;
+other.querySelector(".accordion-content").style.display="none";
+
+const otherIcon=other.querySelector(".accordion-btn i");
+
+otherIcon.classList.remove("bi-dash-lg");
+otherIcon.classList.add("bi-plus-lg");
 
 }
 
 });
 
-// Toggle current accordion
-if(content.style.display === "block"){
+// Toggle current
+if(content.style.display==="block"){
 
-content.style.display = "none";
-icon.innerHTML = "+";
+content.style.maxHeight=null;
+content.style.display="none";
+
+icon.classList.remove("bi-dash-lg");
+icon.classList.add("bi-plus-lg");
 
 }else{
 
-content.style.display = "block";
-icon.innerHTML = "−";
+content.style.display="block";
+content.style.maxHeight=content.scrollHeight+"px";
+
+icon.classList.remove("bi-plus-lg");
+icon.classList.add("bi-dash-lg");
 
 }
 
@@ -4127,7 +4142,6 @@ icon.innerHTML = "−";
 });
 
 });
-
 /* Counter Animation */
 
 const counters=document.querySelectorAll(".counter-box h3");
