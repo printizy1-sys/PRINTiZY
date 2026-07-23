@@ -976,6 +976,45 @@ let allProducts = [];
 /* =========================
    LOAD PRODUCTS
 ========================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+const categoryMap = {
+
+"Round Neck":"round-neck",
+"Polo T-Shirts":"polo",
+"Full Sleeve":"full-sleeve",
+"Hoodies":"hoodies",
+"Jackets":"jackets",
+"Sports Wear":"sports",
+"Caps":"caps",
+"Aprons":"aprons"
+
+};
+
+document.querySelectorAll(".category-card").forEach(card=>{
+
+card.addEventListener("click",()=>{
+
+const text=card.querySelector("p").innerText.trim();
+
+const id=categoryMap[text];
+
+if(id){
+
+document.getElementById(id).scrollIntoView({
+
+behavior:"smooth",
+block:"start"
+
+});
+
+}
+
+});
+
+});
+
+});
 
 async function loadProducts(){
 
