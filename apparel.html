@@ -995,18 +995,13 @@ document.querySelectorAll(".category-card").forEach(card=>{
 
 card.addEventListener("click",()=>{
 
-const text=card.querySelector("p").innerText.trim();
+const text = card.querySelector("p").innerText.trim();
 
-const id=categoryMap[text];
+const id = categoryMap[text];
 
 if(id){
 
-document.getElementById(id).scrollIntoView({
-
-behavior:"smooth",
-block:"start"
-
-});
+location.hash = id;
 
 }
 
