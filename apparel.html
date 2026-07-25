@@ -1523,41 +1523,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadProducts() {
 
-    if (loading || !hasMore) return;
-
-    loading = true;
-
     const loader = document.getElementById("loader");
     if (loader) loader.style.display = "block";
 
     try {
 
-        const res = await fetch(
-    `${API}/api/products/all?category=apparel`,
-    {
-        cache: "no-store"
-    }
-);
+        allProducts = [];
 
-        const data = await res.json();
+        let currentPage = 1;
+        let more = true;
 
-        if (!data.success) return;
+        while (more) {
 
-        allProducts.push(...data.products);
+            const res = await fetch(
+                `${API}/api/products/all?page=${currentPage}&category=apparel`,
+                {
+                    cache: "no-store"
+                }
+            );
+
+            const data = await res.json();
+
+            if (!data.success) break;
+
+            allProducts.push(...data.products);
+
+            more = data.hasMore;
+            currentPage++;
+
+        }
 
         renderProducts(allProducts);
-
-        page++;
-
-        hasMore = data.hasMore;
 
     } catch (err) {
 
         console.error(err);
 
     } finally {
-
-        loading = false;
 
         if (loader) loader.style.display = "none";
 
