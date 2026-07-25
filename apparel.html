@@ -1521,39 +1521,36 @@ document.addEventListener("DOMContentLoaded", () => {
    LOAD PRODUCTS
 ========================= */
 
+
 async function loadProducts() {
+
+    if (loading || !hasMore) return;
+
+    loading = true;
 
     const loader = document.getElementById("loader");
     if (loader) loader.style.display = "block";
 
     try {
 
-        allProducts = [];
+        const res = await fetch(
+            `${API}/api/products/all?page=${page}&category=apparel`,
+            {
+                cache: "no-store"
+            }
+        );
 
-        let currentPage = 1;
-        let more = true;
+        const data = await res.json();
 
-        while (more) {
+        if (!data.success) return;
 
-            const res = await fetch(
-                `${API}/api/products/all?page=${currentPage}&category=apparel`,
-                {
-                    cache: "no-store"
-                }
-            );
-
-            const data = await res.json();
-
-            if (!data.success) break;
-
-            allProducts.push(...data.products);
-
-            more = data.hasMore;
-            currentPage++;
-
-        }
+        allProducts.push(...data.products);
 
         renderProducts(allProducts);
+
+        page++;
+
+        hasMore = data.hasMore;
 
     } catch (err) {
 
@@ -1561,10 +1558,14 @@ async function loadProducts() {
 
     } finally {
 
+        loading = false;
+
         if (loader) loader.style.display = "none";
 
     }
 
+}
+   
 }
    
 /* =========================
