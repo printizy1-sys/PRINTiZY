@@ -1533,11 +1533,11 @@ async function loadProducts() {
     try {
 
         const res = await fetch(
-            `${API}/api/products/all?page=${page}&category=apparel`,
-            {
-                cache: "no-store"
-            }
-        );
+    `${API}/api/products/all?category=apparel`,
+    {
+        cache: "no-store"
+    }
+);
 
         const data = await res.json();
 
@@ -1739,18 +1739,7 @@ if (searchInput) {
    INFINITE SCROLL
 ========================= */
 
-window.addEventListener("scroll", () => {
 
-    if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 300
-    ) {
-
-        loadProducts();
-
-    }
-
-});
 
 /* =========================
    REFRESH PRODUCTS
