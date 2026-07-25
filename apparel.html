@@ -983,27 +983,7 @@ height:3px;
     margin:12px auto 0;
     border-radius:20px;
 }
-.products h2,
-.top-categories h2,
-.why-printizy h2,
-.faq h2,
-.contact-banner h2,
-.trusted-brands h2,
-.reviews h2{
 
-    text-align:center !important;
-    width:100%;
-    margin:0 auto 35px !important;
-    padding:0;
-
-}
-
-.products h2::after,
-.why-printizy h2::after{
-
-    margin:12px auto 0 !important;
-
-}
     </style>
 </head>
 
@@ -1521,7 +1501,6 @@ document.addEventListener("DOMContentLoaded", () => {
    LOAD PRODUCTS
 ========================= */
 
-
 async function loadProducts() {
 
     if (loading || !hasMore) return;
@@ -1564,8 +1543,6 @@ async function loadProducts() {
 
     }
 
-}
-   
 }
    
 /* =========================
@@ -1688,6 +1665,7 @@ window.onload = function () {
     updateCartBadge();
 
 };
+
 /* =========================
    LIVE SEARCH
 ========================= */
@@ -1741,7 +1719,18 @@ if (searchInput) {
    INFINITE SCROLL
 ========================= */
 
+window.addEventListener("scroll", () => {
 
+    if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 300
+    ) {
+
+        loadProducts();
+
+    }
+
+});
 
 /* =========================
    REFRESH PRODUCTS
@@ -2048,16 +2037,7 @@ function hideLoader() {
         });
 
     }
-window.addEventListener("scroll", () => {
 
-    if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 300
-    ) {
-        loadProducts();
-    }
-
-});
 
     /*==========================
       AUTO SLIDE REVIEW IMAGES
