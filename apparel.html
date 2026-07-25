@@ -953,23 +953,21 @@ behavior:"smooth"
    OPEN PRODUCT
 ========================= */
 
-function openProduct(id){
-
-window.location.href=
-`product-details.html?id=${id}`;
-
+function openProduct(id) {
+    window.location.href = `product-details.html?id=${id}`;
 }
 
 /* =========================
    FIRST LOAD
 ========================= */
 
-window.onload=()=>{
+window.onload = function () {
 
-loadProducts();
+    loadProducts();
 
 };
-   /* ===========================
+
+/* ===========================
    LIVE SEARCH
 =========================== */
 
@@ -979,18 +977,35 @@ if (searchInput) {
 
     searchInput.addEventListener("input", function () {
 
-        const keyword = this.value.toLowerCase().trim();
+        const keyword = this.value.trim().toLowerCase();
 
         if (keyword === "") {
+
             renderProducts(allProducts);
             return;
+
         }
 
         const filtered = allProducts.filter(product => {
 
             return (
-                (product.productName || "").toLowerCase().includes(keyword) ||
-                (product.category || "").toLowerCase().includes(keyword)
+
+                String(product.productName || "")
+                    .toLowerCase()
+                    .includes(keyword)
+
+                ||
+
+                String(product.subCategory || "")
+                    .toLowerCase()
+                    .includes(keyword)
+
+                ||
+
+                String(product.category || "")
+                    .toLowerCase()
+                    .includes(keyword)
+
             );
 
         });
