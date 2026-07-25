@@ -1006,31 +1006,6 @@ if (searchInput) {
    CATEGORY FILTER
 =========================== */
 
-document.querySelectorAll(".category-card").forEach(card => {
-
-    card.addEventListener("click", function () {
-
-        const category = this.innerText.toLowerCase().trim();
-
-        const filtered = allProducts.filter(product => {
-
-            return (product.category || "")
-                .toLowerCase()
-                .includes(category);
-
-        });
-
-        renderProducts(filtered);
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    });
-
-});
-
 
 /* ===========================
    ADD TO CART
@@ -1211,21 +1186,7 @@ function openExternalProduct(url){
    FILTER BY CATEGORY
 =========================== */
 
-function filterCategory(category){
 
-    category = category.toLowerCase();
-
-    const filtered = allProducts.filter(p=>{
-
-        return (
-            p.category || ""
-        ).toLowerCase() === category;
-
-    });
-
-    renderProducts(filtered);
-
-}
 
 
 /* ===========================
