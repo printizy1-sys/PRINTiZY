@@ -1682,13 +1682,13 @@ function openProduct(id) {
    PAGE LOAD
 ========================= */
 
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", async () => {
 
-    loadProducts();
+    await loadProducts();
+
     updateCartBadge();
 
-};
-
+});
 /* =========================
    LIVE SEARCH
 ========================= */
