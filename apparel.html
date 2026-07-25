@@ -644,31 +644,11 @@ ROUND NECK
 
 <section class="products" id="round-neck">
 
-<h2>Round Neck</h2>
+    <h2>Round Neck</h2>
 
-<div class="products-grid">
+    <div class="products-grid" id="roundNeckProducts">
 
-<div class="product-card">
-<img src="images/apparel/round-neck-1.webp">
-<h3>Classic Round Neck</h3>
-</div>
-
-<div class="product-card">
-<img src="images/apparel/round-neck-2.webp">
-<h3>Premium Cotton</h3>
-</div>
-
-<div class="product-card">
-<img src="images/apparel/round-neck-3.webp">
-<h3>Oversized Round Neck</h3>
-</div>
-
-<div class="product-card">
-<img src="images/apparel/round-neck-4.webp">
-<h3>Printed Round Neck</h3>
-</div>
-
-</div>
+    </div>
 
 </section>
 
@@ -1063,14 +1043,27 @@ async function loadProducts(){
 
 function renderProducts(products){
 
-    const container =
-    document.getElementById("allProducts");
+    const containers = {
+        "Round Neck": document.getElementById("roundProducts"),
+        "Polo T-Shirts": document.getElementById("poloProducts"),
+        "Full Sleeve": document.getElementById("fullSleeveProducts"),
+        "Hoodies": document.getElementById("hoodieProducts"),
+        "Jackets": document.getElementById("jacketProducts"),
+        "Sports Wear": document.getElementById("sportsProducts"),
+        "Caps": document.getElementById("capProducts"),
+        "Aprons": document.getElementById("apronProducts")
+    };
 
-    if(!container) return;
-
-    container.innerHTML="";
+    // Clear all sections
+    Object.values(containers).forEach(c=>{
+        if(c) c.innerHTML="";
+    });
 
     products.forEach(product=>{
+
+        const container = containers[product.category];
+
+        if(!container) return;
 
         const img =
         product.images?.[0] ||
@@ -1080,12 +1073,10 @@ function renderProducts(products){
         Number(product.price || 0);
 
         const oldPrice =
-        Math.round(price*1.35);
+        Math.round(price * 1.35);
 
         const discount =
-        Math.round(
-        ((oldPrice-price)/oldPrice)*100
-        );
+        Math.round(((oldPrice-price)/oldPrice)*100);
 
         container.innerHTML += `
 
@@ -1100,29 +1091,21 @@ function renderProducts(products){
             <div class="product-info">
 
                 <div class="product-title">
-
                     ${product.productName}
-
                 </div>
 
                 <div class="product-price">
 
                     <span class="current-price">
-
-                    ₹${price}
-
+                        ₹${price}
                     </span>
 
                     <span class="old-price">
-
-                    ₹${oldPrice}
-
+                        ₹${oldPrice}
                     </span>
 
                     <span class="discount">
-
-                    ${discount}% OFF
-
+                        ${discount}% OFF
                     </span>
 
                 </div>
@@ -1132,17 +1115,13 @@ function renderProducts(products){
                     <button
                     class="view-btn"
                     onclick="openProduct('${product._id}')">
-
                     View
-
                     </button>
 
                     <button
                     class="cart-btn2"
                     onclick='addToCart(${JSON.stringify(product)})'>
-
                     Cart
-
                     </button>
 
                 </div>
@@ -1156,7 +1135,6 @@ function renderProducts(products){
     });
 
 }
-
 /* =========================
    BANNER AUTO SLIDER
 ========================= */
