@@ -859,6 +859,13 @@ async function loadCategories() {
     console.error(err);
   }
  }
+  function openProduct(){
+
+    loadCategoriesSelect();
+
+    document.getElementById("productModal").style.display = "flex";
+
+  }
 
 async function updateProduct() {
   if (!editProductId) return alert("No product selected");
