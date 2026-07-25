@@ -884,18 +884,136 @@ function selectCategory(name, el){
     document.getElementById("pcategorySelect").value = name;
 
     document.querySelectorAll(".cat-card")
-        .forEach(x=>x.classList.remove("active"));
+        .forEach(x => x.classList.remove("active"));
 
     el.classList.add("active");
+
+    const subCategoryBox = document.getElementById("subCategoryBox");
+
+    const subCategories = {
+
+        "4 Hrs Delivery": [
+            "Same Day Printing",
+            "Express Visiting Cards",
+            "Express Flyers",
+            "Express Brochures",
+            "Express Stickers",
+            "Express Banners"
+        ],
+
+        "Visiting Cards": [
+            "Standard Cards",
+            "Premium Cards",
+            "Matt Finish",
+            "Gloss Finish",
+            "Spot UV",
+            "Transparent Cards",
+            "Metal Cards",
+            "NFC Cards"
+        ],
+
+        "Apparel": [
+            "Round Neck",
+            "Polo T-Shirts",
+            "Full Sleeve",
+            "Hoodies",
+            "Jackets",
+            "Sports Wear",
+            "Caps",
+            "Aprons"
+        ],
+
+        "Personalised Gifts": [
+            "Mugs",
+            "Photo Frames",
+            "Keychains",
+            "Mobile Covers",
+            "Cushions",
+            "Pens",
+            "Clocks",
+            "Gift Combos"
+        ],
+
+        "Stationery & Stamps": [
+            "Letter Heads",
+            "Envelopes",
+            "Notebooks",
+            "Diaries",
+            "Rubber Stamps",
+            "Self Ink Stamps",
+            "Files",
+            "Receipt Books"
+        ],
+
+        "Labels & Packaging": [
+            "Product Labels",
+            "Bottle Labels",
+            "Packaging Stickers",
+            "Paper Bags",
+            "Food Boxes",
+            "Courier Bags",
+            "Boxes",
+            "Tags"
+        ],
+
+        "Signage": [
+            "ACP Boards",
+            "Glow Sign",
+            "LED Boards",
+            "Sun Board",
+            "Vinyl Printing",
+            "Roll Up Standee",
+            "Foam Board",
+            "Name Plates"
+        ],
+
+        "Drinkware": [
+            "Coffee Mug",
+            "Steel Bottle",
+            "Sipper Bottle",
+            "Travel Mug",
+            "Beer Mug",
+            "Glass Bottle",
+            "Flask",
+            "Cup Set"
+        ]
+
+    };
+
+    const list = subCategories[name];
+
+    if(list){
+
+        subCategoryBox.style.display = "block";
+
+        subCategoryBox.innerHTML = `
+
+        <h3>Select Sub Category</h3>
+
+        <select id="psubcategory">
+
+            <option value="">Select Sub Category</option>
+
+            ${list.map(item =>
+                `<option value="${item}">${item}</option>`
+            ).join("")}
+
+        </select>
+
+        `;
+
+    }else{
+
+        subCategoryBox.style.display = "none";
+        subCategoryBox.innerHTML = "";
+
+    }
+
 }
-  function openProduct() {
-    loadCategoriesSelect();
-    document.getElementById("productModal").style.display = "flex";
-  }
 // ==========================
 // Add Product (FINAL FIXED)
 // ==========================
-async function addProduct(){
+async function addProduct() {
 
   console.log("ADD PRODUCT CLICKED");
 
@@ -906,90 +1024,142 @@ async function addProduct(){
   const purl = document.getElementById("purl");
   const categorySelect = document.getElementById("pcategorySelect");
 
-  if(!pname || !pprice || !pdetail || !pimg || !categorySelect){
+  if (!pname || !pprice || !pdetail || !pimg || !categorySelect) {
     alert("Form elements missing");
     return;
   }
 
   const category = categorySelect.value;
 
-  if(!category){
+  // ✅ Sub Category
+  const subCategory =
+    document.getElementById("psubcategory")?.value || "";
+
+  if (!category) {
     alert("Please Select Category");
     return;
   }
 
-  if(!pimg.files.length){
+  // ✅ Apparel etc. ke liye Sub Category compulsory
+  if (document.getElementById("psubcategory") && !subCategory) {
+    alert("Please Select Sub Category");
+    return;
+  }
+
+  if (!pimg.files.length) {
     alert("Images required");
     return;
   }
 
   const images = [];
 
-  for(const file of pimg.files){
-    const base64 = await new Promise(resolve=>{
+  for (const file of pimg.files) {
+
+    const base64 = await new Promise(resolve => {
+
       const reader = new FileReader();
-      reader.onload = ()=>resolve(reader.result);
+
+      reader.onload = () => resolve(reader.result);
+
       reader.readAsDataURL(file);
+
     });
+
     images.push(base64);
+
   }
 
   const prof = JSON.parse(
     localStorage.getItem("wholesalerProfile_" + WID) || "{}"
   );
 
-  try{
+  try {
 
-    const res = await fetch(API + "/api/products",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization":"Bearer "+TOKEN
+    const res = await fetch(API + "/api/products", {
+
+      method: "POST",
+
+      headers: {
+
+        "Content-Type": "application/json",
+
+        "Authorization": "Bearer " + TOKEN
+
       },
-      body:JSON.stringify({
 
-        wholesalerId:WID,
-        productName:pname.value.trim(),
-        price:pprice.value,
-        detail:pdetail.value,
-        images:images,
-        category:category,
+      body: JSON.stringify({
 
-        // 👇 Other Platform Link
-        productUrl:purl ? purl.value.trim() : "",
+        wholesalerId: WID,
 
-        shopName:prof.shopName || "",
-        mobile:prof.mobile || "",
-        address:prof.address || "",
-        wholesalerLocation:prof.location || null
+        productName: pname.value.trim(),
+
+        price: pprice.value,
+
+        detail: pdetail.value,
+
+        images: images,
+
+        category: category,
+
+        // ✅ New Field
+        subCategory: subCategory,
+
+        // Other Platform Link
+        productUrl: purl ? purl.value.trim() : "",
+
+        shopName: prof.shopName || "",
+
+        mobile: prof.mobile || "",
+
+        address: prof.address || "",
+
+        wholesalerLocation: prof.location || null
 
       })
+
     });
 
     const d = await res.json();
 
-    if(d.success){
+    if (d.success) {
 
       alert("✅ Product Added Successfully");
 
-      pname.value="";
-      pprice.value="";
-      pdetail.value="";
-      pimg.value="";
-      if(purl) purl.value="";
+      pname.value = "";
+      pprice.value = "";
+      pdetail.value = "";
+      pimg.value = "";
 
-      if(typeof closeAll==="function") closeAll();
-      if(typeof loadProducts==="function") loadProducts();
-      if(typeof loadCategoriesSelect==="function") loadCategoriesSelect();
+      if (purl) purl.value = "";
 
-    }else{
+      // Reset Category
+      categorySelect.value = "";
+
+      // Reset Sub Category
+      const sub = document.getElementById("psubcategory");
+      if (sub) sub.value = "";
+
+      const box = document.getElementById("subCategoryBox");
+      if (box) {
+        box.style.display = "none";
+        box.innerHTML = "";
+      }
+
+      if (typeof closeAll === "function") closeAll();
+      if (typeof loadProducts === "function") loadProducts();
+      if (typeof loadCategoriesSelect === "function") loadCategoriesSelect();
+
+    } else {
+
       alert(d.message || "Failed to add product");
+
     }
 
-  }catch(err){
+  } catch (err) {
 
     console.error(err);
-    alert("Server Error: "+err.message);
+
+    alert("Server Error: " + err.message);
 
   }
 
