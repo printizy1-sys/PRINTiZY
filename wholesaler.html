@@ -206,6 +206,20 @@ button.success{background:#16a34a;color:#fff;border:none;padding:8px 12px;border
     border:2px solid #ff3f6c;
     background:#fff5f7;
 }
+ #subCategoryBox h3{
+    margin:10px 0;
+    font-size:16px;
+}
+
+#psubcategory{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+    margin-top:8px;
+}
 </style>  </head>  <body>    
 <div class="main">    <div class="icon-bar">    
     <button class="icon-btn" onclick="openProfile()"><i class="bi bi-shop"></i></button>    
@@ -262,7 +276,8 @@ button.success{background:#16a34a;color:#fff;border:none;padding:8px 12px;border
     <!-- Fixed Category Dropdown -->
     <input type="hidden" id="pcategorySelect">
 <div id="categoryGrid"></div>
-
+    <!-- Sub Category -->
+<div id="subCategoryBox" style="display:none; margin:15px 0;"></div>
     <input id="pprice" type="number" placeholder="Price">
 
     <textarea id="pdetail" placeholder="Product Detail"></textarea>
