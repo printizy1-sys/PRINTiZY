@@ -1901,7 +1901,155 @@ function hideLoader() {
     }
 
        }
-   
+   document.addEventListener("DOMContentLoaded", () => {
+
+    /*==========================
+            FAQ ACCORDION
+    ==========================*/
+
+    const faqButtons = document.querySelectorAll(".faq-btn");
+
+    faqButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const content = button.nextElementSibling;
+            const icon = button.querySelector("span");
+
+            // Close all other FAQs
+            faqButtons.forEach(otherBtn => {
+
+                if(otherBtn !== button){
+
+                    otherBtn.nextElementSibling.style.display = "none";
+                    otherBtn.querySelector("span").innerHTML = "+";
+
+                }
+
+            });
+
+            // Toggle current FAQ
+            if(content.style.display === "block"){
+
+                content.style.display = "none";
+                icon.innerHTML = "+";
+
+            }else{
+
+                content.style.display = "block";
+                icon.innerHTML = "−";
+
+            }
+
+        });
+
+    });
+
+
+    /*==========================
+          PRODUCT HOVER EFFECT
+    ==========================*/
+
+    const cards = document.querySelectorAll(".product-card");
+
+    cards.forEach(card=>{
+
+        card.addEventListener("mouseenter",()=>{
+
+            card.style.transform="translateY(-8px)";
+            card.style.transition=".3s";
+
+        });
+
+        card.addEventListener("mouseleave",()=>{
+
+            card.style.transform="translateY(0)";
+
+        });
+
+    });
+
+
+    /*==========================
+        CATEGORY CLICK EFFECT
+    ==========================*/
+
+    const categories = document.querySelectorAll(".category-card");
+
+    categories.forEach(category=>{
+
+        category.addEventListener("click",()=>{
+
+            category.style.transform="scale(.96)";
+
+            setTimeout(()=>{
+
+                category.style.transform="scale(1)";
+
+            },150);
+
+        });
+
+    });
+
+
+    /*==========================
+        SMOOTH SCROLL BUTTON
+    ==========================*/
+
+    const heroBtn = document.querySelector(".hero-btn");
+
+    if(heroBtn){
+
+        heroBtn.addEventListener("click",(e)=>{
+
+            e.preventDefault();
+
+            document.querySelector("#products")
+            .scrollIntoView({
+
+                behavior:"smooth"
+
+            });
+
+        });
+
+    }
+
+
+    /*==========================
+      AUTO SLIDE REVIEW IMAGES
+    ==========================*/
+
+    const reviews = document.querySelectorAll(".review-photo");
+
+    if(reviews.length > 0){
+
+        let current = 0;
+
+        reviews.forEach((img,index)=>{
+
+            if(index!==0){
+
+                img.style.display="none";
+
+            }
+
+        });
+
+        setInterval(()=>{
+
+            reviews[current].style.display="none";
+
+            current=(current+1)%reviews.length;
+
+            reviews[current].style.display="block";
+
+        },3000);
+
+    }
+
+});
 
     </script>
 </body>
