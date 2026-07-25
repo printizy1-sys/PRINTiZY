@@ -4539,26 +4539,27 @@ function openProduct(productId){
 
 function renderProducts(products){
 
-    const container = document.getElementById("allProducts");
+    const containers = {
+        "Round Neck": document.getElementById("roundProducts"),
+        "Polo T-Shirts": document.getElementById("poloProducts"),
+        "Full Sleeve": document.getElementById("fullSleeveProducts"),
+        "Hoodies": document.getElementById("hoodieProducts"),
+        "Jackets": document.getElementById("jacketProducts"),
+        "Sports Wear": document.getElementById("sportsProducts"),
+        "Caps": document.getElementById("capProducts"),
+        "Aprons": document.getElementById("apronProducts")
+    };
 
-    if(!container) return;
-
-    container.innerHTML = "";
-
-    // ✅ हर Category का केवल पहला Product
-    const categoryMap = {};
-
-    products.forEach(product => {
-
-        const cat = (product.category || "").trim().toLowerCase();
-
-        if(!categoryMap[cat]){
-            categoryMap[cat] = product;
-        }
-
+    // Clear all sections
+    Object.values(containers).forEach(c=>{
+        if(c) c.innerHTML="";
     });
 
-    Object.values(categoryMap).forEach(product => {
+    products.forEach(product=>{
+
+        const container = containers[product.category];
+
+        if(!container) return;
 
         const img =
         product.images?.[0] ||
@@ -4571,9 +4572,7 @@ function renderProducts(products){
         Math.round(price * 1.35);
 
         const discount =
-        Math.round(
-            ((oldPrice - price) / oldPrice) * 100
-        );
+        Math.round(((oldPrice-price)/oldPrice)*100);
 
         container.innerHTML += `
 
@@ -4590,8 +4589,6 @@ function renderProducts(products){
                 <div class="product-title">
                     ${product.productName}
                 </div>
-
-                <small>${product.category}</small>
 
                 <div class="product-price">
 
@@ -4614,17 +4611,13 @@ function renderProducts(products){
                     <button
                     class="view-btn"
                     onclick="openProduct('${product._id}')">
-
-                        View
-
+                    View
                     </button>
 
                     <button
                     class="cart-btn2"
                     onclick='addToCart(${JSON.stringify(product)})'>
-
-                        Cart
-
+                    Cart
                     </button>
 
                 </div>
