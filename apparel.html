@@ -2049,7 +2049,16 @@ function hideLoader() {
         });
 
     }
+window.addEventListener("scroll", () => {
 
+    if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 300
+    ) {
+        loadProducts();
+    }
+
+});
 
     /*==========================
       AUTO SLIDE REVIEW IMAGES
