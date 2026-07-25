@@ -1739,15 +1739,10 @@ if (searchInput) {
    INFINITE SCROLL
 ========================= */
 
-window.addEventListener("scroll", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-    if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 300
-    ) {
-
-        loadProducts();
-
+    while (hasMore) {
+        await loadProducts();
     }
 
 });
