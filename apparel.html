@@ -716,7 +716,8 @@ onclick="document.getElementById('aprons').scrollIntoView({behavior:'smooth'})">
 
 
 <script>
-       const API = "https://printizyserver.onrender.com";
+       
+   const API = "https://printizyserver.onrender.com";
 
 let page = 1;
 let loading = false;
@@ -724,49 +725,57 @@ let hasMore = true;
 let allProducts = [];
 
 /* =========================
-   LOAD PRODUCTS
+   CATEGORY SCROLL
 ========================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
-const categoryMap = {
+    const categoryMap = {
+        "Round Neck": "round-neck",
+        "Polo T-Shirts": "polo",
+        "Full Sleeve": "full-sleeve",
+        "Hoodies": "hoodies",
+        "Jackets": "jackets",
+        "Sports Wear": "sports",
+        "Caps": "caps",
+        "Aprons": "aprons"
+    };
 
-"Round Neck":"round-neck",
-"Polo T-Shirts":"polo",
-"Full Sleeve":"full-sleeve",
-"Hoodies":"hoodies",
-"Jackets":"jackets",
-"Sports Wear":"sports",
-"Caps":"caps",
-"Aprons":"aprons"
+    document.querySelectorAll(".category-card").forEach(card => {
 
-};
+        card.addEventListener("click", () => {
 
-document.querySelectorAll(".category-card").forEach(card=>{
+            const text = card.querySelector("p").innerText.trim();
 
-card.addEventListener("click",()=>{
+            const id = categoryMap[text];
 
-const text = card.querySelector("p").innerText.trim();
+            if (id) {
 
-const id = categoryMap[text];
+                document.getElementById(id)
+                    ?.scrollIntoView({
+                        behavior: "smooth"
+                    });
 
-if(id){
+            }
 
-location.hash = id;
+        });
 
-}
+    });
 
 });
 
-});
+/* =========================
+   LOAD PRODUCTS
+========================= */
 
-});
 async function loadProducts() {
 
     if (loading || !hasMore) return;
 
     loading = true;
 
-    document.getElementById("loader").style.display = "block";
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "block";
 
     try {
 
@@ -791,24 +800,23 @@ async function loadProducts() {
 
     } catch (err) {
 
-        console.log(err);
+        console.error(err);
 
     } finally {
 
         loading = false;
 
-        document.getElementById("loader").style.display = "none";
+        if (loader) loader.style.display = "none";
 
     }
 
 }
+   
 /* =========================
    RENDER PRODUCTS
 ========================= */
 
 function renderProducts(products) {
-
-    alert("Total Products : " + products.length);
 
     const containers = {
 
@@ -823,38 +831,21 @@ function renderProducts(products) {
 
     };
 
-    Object.values(containers).forEach(c => {
-        if (c) c.innerHTML = "";
+    // Clear all containers
+    Object.values(containers).forEach(container => {
+        if (container) container.innerHTML = "";
     });
 
     products.forEach(product => {
 
-        alert(
-            "Product : " + product.productName +
-            "\nCategory : " + product.category +
-            "\nSub Category : " + product.subCategory
-        );
-
         const key = String(product.subCategory || "")
-            .replace(/\s+/g, " ")
             .trim()
+            .replace(/\s+/g, " ")
             .toLowerCase();
-
-        alert("Key = " + key);
 
         const container = containers[key];
 
-        if (!container) {
-
-            alert("❌ Container NOT FOUND\n" + key);
-
-            return;
-
-        } else {
-
-            alert("✅ Container FOUND\n" + key);
-
-        }
+        if (!container) return;
 
         const img = product.images?.[0] || "images/no-image.webp";
 
@@ -862,11 +853,12 @@ function renderProducts(products) {
 
         const oldPrice = Math.round(price * 1.35);
 
-        const discount = Math.round(
-            ((oldPrice - price) / oldPrice) * 100
-        );
+        const discount = oldPrice > 0
+            ? Math.round(((oldPrice - price) / oldPrice) * 100)
+            : 0;
 
         container.innerHTML += `
+
         <div class="product-card">
 
             <img
@@ -896,13 +888,17 @@ function renderProducts(products) {
                     <button
                         class="view-btn"
                         onclick="openProduct('${product._id}')">
+
                         View
+
                     </button>
 
                     <button
                         class="cart-btn2"
                         onclick='addToCart(${JSON.stringify(product)})'>
+
                         Cart
+
                     </button>
 
                 </div>
@@ -910,66 +906,36 @@ function renderProducts(products) {
             </div>
 
         </div>
+
         `;
+
     });
 
-    alert("✅ Render Completed");
 }
-/* =========================
-   BANNER AUTO SLIDER
-========================= */
-
-let bannerIndex = 0;
-
-setInterval(()=>{
-
-const slider =
-document.querySelector(".hero-slider");
-
-if(!slider) return;
-
-const banners =
-slider.querySelectorAll("img");
-
-bannerIndex++;
-
-if(bannerIndex>=banners.length){
-
-bannerIndex=0;
-
-}
-
-slider.scrollTo({
-
-left:banners[bannerIndex].offsetLeft,
-
-behavior:"smooth"
-
-});
-
-},3000);
-
-/* =========================
+   /* =========================
    OPEN PRODUCT
 ========================= */
 
 function openProduct(id) {
-    window.location.href = `product-details.html?id=${id}`;
+
+    window.location.href = `product.html?id=${id}`;
+
 }
 
 /* =========================
-   FIRST LOAD
+   PAGE LOAD
 ========================= */
 
 window.onload = function () {
 
     loadProducts();
+    updateCartBadge();
 
 };
 
-/* ===========================
+/* =========================
    LIVE SEARCH
-=========================== */
+========================= */
 
 const searchInput = document.getElementById("searchInput");
 
@@ -1016,131 +982,9 @@ if (searchInput) {
 
 }
 
-
-/* ===========================
-   CATEGORY FILTER
-=========================== */
-
-
-/* ===========================
-   ADD TO CART
-=========================== */
-
-function addToCart(product){
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    const index = cart.findIndex(item => item._id === product._id);
-
-    if(index > -1){
-
-        cart[index].qty++;
-
-    }else{
-
-        product.qty = 1;
-
-        cart.push(product);
-
-    }
-
-    localStorage.setItem("cart",JSON.stringify(cart));
-
-    updateCartBadge();
-
-    alert("✅ Added to Cart");
-
-}
-
-
-/* ===========================
-   CART BADGE
-=========================== */
-
-function updateCartBadge(){
-
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    let total = 0;
-
-    cart.forEach(item=>{
-
-        total += item.qty || 1;
-
-    });
-
-    const badge = document.getElementById("cartBadge");
-
-    if(badge){
-
-        badge.innerText = total;
-
-    }
-
-}
-
-
-/* ===========================
-   WISHLIST
-=========================== */
-
-function addToWishlist(product){
-
-    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-    const exists = wishlist.find(item => item._id === product._id);
-
-    if(exists){
-
-        alert("Already in Wishlist");
-
-        return;
-
-    }
-
-    wishlist.push(product);
-
-    localStorage.setItem("wishlist",JSON.stringify(wishlist));
-
-    alert("❤️ Added to Wishlist");
-
-}
-
-
-/* ===========================
-   OPEN CART
-=========================== */
-
-function openCart(){
-
-    window.location.href="cart.html";
-
-}
-
-
-/* ===========================
-   OPEN WISHLIST
-=========================== */
-
-function openWishlist(){
-
-    window.location.href="wishlist.html";
-
-}
-
-
-/* ===========================
-   PAGE LOAD
-=========================== */
-
-window.addEventListener("load",()=>{
-
-    updateCartBadge();
-
-});
-   /* ===========================
+/* =========================
    INFINITE SCROLL
-=========================== */
+========================= */
 
 window.addEventListener("scroll", () => {
 
@@ -1155,155 +999,199 @@ window.addEventListener("scroll", () => {
 
 });
 
+/* =========================
+   REFRESH PRODUCTS
+========================= */
 
-/* ===========================
-   PRODUCT DETAILS
+async function refreshProducts() {
+
+    page = 1;
+    hasMore = true;
+    loading = false;
+    allProducts = [];
+
+    await loadProducts();
+
+}
+   /* ===========================
+   ADD TO CART
 =========================== */
 
-function openProduct(id){
+function addToCart(product) {
 
-    window.location.href =
-    `product.html?id=${id}`;
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const index = cart.findIndex(item => item._id === product._id);
+
+    if (index > -1) {
+
+        cart[index].qty = (cart[index].qty || 1) + 1;
+
+    } else {
+
+        product.qty = 1;
+        cart.push(product);
+
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartBadge();
+
+    alert("✅ Product Added to Cart");
 
 }
 
+/* ===========================
+   CART BADGE
+=========================== */
+
+function updateCartBadge() {
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let total = 0;
+
+    cart.forEach(item => {
+
+        total += item.qty || 1;
+
+    });
+
+    const badge = document.getElementById("cartBadge");
+
+    if (badge) {
+
+        badge.innerText = total;
+
+    }
+
+}
+
+/* ===========================
+   ADD TO WISHLIST
+=========================== */
+
+function addToWishlist(product) {
+
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+    const exists = wishlist.find(item => item._id === product._id);
+
+    if (exists) {
+
+        alert("Already in Wishlist");
+        return;
+
+    }
+
+    wishlist.push(product);
+
+    localStorage.setItem(
+        "wishlist",
+        JSON.stringify(wishlist)
+    );
+
+    alert("❤️ Added to Wishlist");
+
+}
+
+/* ===========================
+   OPEN CART
+=========================== */
+
+function openCart() {
+
+    window.location.href = "cart.html";
+
+}
+
+/* ===========================
+   OPEN WISHLIST
+=========================== */
+
+function openWishlist() {
+
+    window.location.href = "wishlist.html";
+
+}
 
 /* ===========================
    BUY NOW
 =========================== */
 
-function buyNow(product){
+function buyNow(product) {
 
     localStorage.setItem(
         "buyNowProduct",
         JSON.stringify(product)
     );
 
-    window.location.href="checkout.html";
+    window.location.href = "checkout.html";
 
 }
-
 
 /* ===========================
    OPEN EXTERNAL PRODUCT
 =========================== */
 
-function openExternalProduct(url){
+function openExternalProduct(url) {
 
-    if(!url) return;
+    if (!url) return;
 
-    window.open(url,"_blank");
-
-}
-
-
-/* ===========================
-   FILTER BY CATEGORY
-=========================== */
-
-
-
-
-/* ===========================
-   SORT LOW TO HIGH
-=========================== */
-
-function sortPriceLow(){
-
-    const data = [...allProducts];
-
-    data.sort((a,b)=>
-        Number(a.price)-Number(b.price)
-    );
-
-    renderProducts(data);
+    window.open(url, "_blank");
 
 }
-
-
-/* ===========================
-   SORT HIGH TO LOW
-=========================== */
-
-function sortPriceHigh(){
-
-    const data = [...allProducts];
-
-    data.sort((a,b)=>
-        Number(b.price)-Number(a.price)
-    );
-
-    renderProducts(data);
-
-}
-
-
-/* ===========================
-   REFRESH PRODUCTS
-=========================== */
-
-async function refreshProducts(){
-
-    page = 1;
-
-    hasMore = true;
-
-    allProducts = [];
-
-    document.getElementById("allProducts").innerHTML="";
-
-    await loadProducts();
-
-}
-
 
 /* ===========================
    IMAGE ERROR
 =========================== */
 
-document.addEventListener("error",function(e){
+document.addEventListener("error", function (e) {
 
-    if(e.target.tagName==="IMG"){
+    if (e.target.tagName === "IMG") {
 
-        e.target.src="images/no-image.webp";
+        e.target.src = "images/no-image.webp";
 
     }
 
-},true);
-
-
-/* ===========================
-   PAGE READY
-=========================== */
-
-
-
+}, true);
 
 /* ===========================
    UTILITIES
 =========================== */
 
-function formatPrice(price){
+function formatPrice(price) {
 
-    return "₹"+Number(price).toLocaleString("en-IN");
-
-}
-
-function showLoader(){
-
-    const loader=document.getElementById("loader");
-
-    if(loader) loader.style.display="block";
+    return "₹" + Number(price).toLocaleString("en-IN");
 
 }
 
-function hideLoader(){
+function showLoader() {
 
-    const loader=document.getElementById("loader");
+    const loader = document.getElementById("loader");
 
-    if(loader) loader.style.display="none";
+    if (loader) {
+
+        loader.style.display = "block";
+
+    }
 
 }
+
+function hideLoader() {
+
+    const loader = document.getElementById("loader");
+
+    if (loader) {
+
+        loader.style.display = "none";
+
+    }
+
+       }
+   
+
     </script>
 </body>
 </html>
