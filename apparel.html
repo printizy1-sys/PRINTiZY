@@ -962,6 +962,50 @@ height:3px;
       section{
     scroll-margin-top:80px;
       }
+      /* SECTION COMMON */
+
+.why-printizy,
+.faq,
+.footer{
+    padding:60px 5%;
+}
+
+/* HEADINGS */
+
+.why-printizy h2,
+.faq h2,
+.footer h3{
+    text-align:center;
+    font-size:34px;
+    color:#0A1F44;
+    margin-bottom:35px;
+    width:100%;
+}
+
+/* ORANGE LINE */
+
+.why-printizy h2::after,
+.faq h2::after{
+    content:"";
+    display:block;
+    width:80px;
+    height:4px;
+    margin:12px auto 0;
+    background:#FF6B00;
+    border-radius:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:576px){
+
+.why-printizy h2,
+.faq h2,
+.footer h3{
+    font-size:26px;
+}
+
+}
     </style>
 </head>
 
