@@ -819,11 +819,10 @@ async function loadProducts() {
     try {
 
         const res = await fetch(
-            `${API}/api/products/all?page=${page}&category=apparel`,
-            {
-                cache: "no-store"
-            }
-        );
+`${API}/api/products/all?page=${page}&category=apparel`,
+{
+    cache: "no-store"
+});
 
         const data = await res.json();
 
@@ -857,39 +856,36 @@ async function loadProducts() {
 function renderProducts(products) {
 
     const containers = {
-    "Round Neck": document.getElementById("roundNeckProducts"),
-    "Polo T-Shirts": document.getElementById("poloProducts"),
-    "Full Sleeve": document.getElementById("fullSleeveProducts"),
-    "Hoodies": document.getElementById("hoodiesProducts"),
-    "Jackets": document.getElementById("jacketsProducts"),
-    "Sports Wear": document.getElementById("sportsProducts"),
-    "Caps": document.getElementById("capsProducts"),
-    "Aprons": document.getElementById("apronsProducts")
-};
+        "round neck": document.getElementById("roundNeckProducts"),
+        "polo t-shirts": document.getElementById("poloProducts"),
+        "full sleeve": document.getElementById("fullSleeveProducts"),
+        "hoodies": document.getElementById("hoodiesProducts"),
+        "jackets": document.getElementById("jacketsProducts"),
+        "sports wear": document.getElementById("sportsProducts"),
+        "caps": document.getElementById("capsProducts"),
+        "aprons": document.getElementById("apronsProducts")
+    };
 
     Object.values(containers).forEach(c => {
-
         if (c) c.innerHTML = "";
-
     });
 
     products.forEach(product => {
 
-        // ✅ Sub Category use karo
-        const container = containers[product.subCategory];
+        const key = (product.subCategory || "")
+            .trim()
+            .toLowerCase();
+
+        const container = containers[key];
 
         if (!container) return;
 
         const img = product.images?.[0] || "images/no-image.webp";
-
         const price = Number(product.price || 0);
-
         const oldPrice = Math.round(price * 1.35);
-
         const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
 
         container.innerHTML += `
-
         <div class="product-card">
 
             <img src="${img}"
@@ -900,45 +896,31 @@ function renderProducts(products) {
             <div class="product-info">
 
                 <div class="product-title">
-
                     ${product.productName}
-
                 </div>
 
                 <div class="product-price">
-
                     <span class="current-price">₹${price}</span>
-
                     <span class="old-price">₹${oldPrice}</span>
-
                     <span class="discount">${discount}% OFF</span>
-
                 </div>
 
                 <div class="product-btns">
-
                     <button class="view-btn"
-                            onclick="openProduct('${product._id}')">
-
+                        onclick="openProduct('${product._id}')">
                         View
-
                     </button>
 
                     <button class="cart-btn2"
-                            onclick='addToCart(${JSON.stringify(product)})'>
-
+                        onclick='addToCart(${JSON.stringify(product)})'>
                         Cart
-
                     </button>
-
                 </div>
 
             </div>
 
         </div>
-
         `;
-
     });
 
 }
