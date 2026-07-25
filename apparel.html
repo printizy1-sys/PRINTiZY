@@ -857,24 +857,15 @@ async function loadProducts() {
 function renderProducts(products) {
 
     const containers = {
-
-        "Round Neck": document.getElementById("roundProducts"),
-
-        "Polo T-Shirts": document.getElementById("poloProducts"),
-
-        "Full Sleeve": document.getElementById("fullSleeveProducts"),
-
-        "Hoodies": document.getElementById("hoodieProducts"),
-
-        "Jackets": document.getElementById("jacketProducts"),
-
-        "Sports Wear": document.getElementById("sportsProducts"),
-
-        "Caps": document.getElementById("capProducts"),
-
-        "Aprons": document.getElementById("apronProducts")
-
-    };
+    "Round Neck": document.getElementById("roundNeckProducts"),
+    "Polo T-Shirts": document.getElementById("poloProducts"),
+    "Full Sleeve": document.getElementById("fullSleeveProducts"),
+    "Hoodies": document.getElementById("hoodiesProducts"),
+    "Jackets": document.getElementById("jacketsProducts"),
+    "Sports Wear": document.getElementById("sportsProducts"),
+    "Caps": document.getElementById("capsProducts"),
+    "Aprons": document.getElementById("apronsProducts")
+};
 
     Object.values(containers).forEach(c => {
 
