@@ -808,22 +808,17 @@ async function loadProducts() {
 
 function renderProducts(products) {
 
+    alert("Total Products : " + products.length);
+
     const containers = {
 
         "round neck": document.getElementById("roundNeckProducts"),
-
         "polo t-shirts": document.getElementById("poloProducts"),
-
         "full sleeve": document.getElementById("fullSleeveProducts"),
-
         "hoodies": document.getElementById("hoodiesProducts"),
-
         "jackets": document.getElementById("jacketsProducts"),
-
         "sports wear": document.getElementById("sportsProducts"),
-
         "caps": document.getElementById("capsProducts"),
-
         "aprons": document.getElementById("apronsProducts")
 
     };
@@ -834,15 +829,31 @@ function renderProducts(products) {
 
     products.forEach(product => {
 
+        alert(
+            "Product : " + product.productName +
+            "\nCategory : " + product.category +
+            "\nSub Category : " + product.subCategory
+        );
+
         const key = String(product.subCategory || "")
+            .replace(/\s+/g, " ")
             .trim()
             .toLowerCase();
+
+        alert("Key = " + key);
 
         const container = containers[key];
 
         if (!container) {
-            console.log("No container found for:", key);
+
+            alert("❌ Container NOT FOUND\n" + key);
+
             return;
+
+        } else {
+
+            alert("✅ Container FOUND\n" + key);
+
         }
 
         const img = product.images?.[0] || "images/no-image.webp";
@@ -856,7 +867,6 @@ function renderProducts(products) {
         );
 
         container.innerHTML += `
-
         <div class="product-card">
 
             <img
@@ -873,17 +883,11 @@ function renderProducts(products) {
 
                 <div class="product-price">
 
-                    <span class="current-price">
-                        ₹${price}
-                    </span>
+                    <span class="current-price">₹${price}</span>
 
-                    <span class="old-price">
-                        ₹${oldPrice}
-                    </span>
+                    <span class="old-price">₹${oldPrice}</span>
 
-                    <span class="discount">
-                        ${discount}% OFF
-                    </span>
+                    <span class="discount">${discount}% OFF</span>
 
                 </div>
 
@@ -906,11 +910,10 @@ function renderProducts(products) {
             </div>
 
         </div>
-
         `;
-
     });
 
+    alert("✅ Render Completed");
 }
 /* =========================
    BANNER AUTO SLIDER
