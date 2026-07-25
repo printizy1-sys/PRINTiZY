@@ -1505,9 +1505,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (id) {
 
                 document.getElementById(id)
-                    ?.scrollIntoView({
-                        behavior: "smooth"
-                    });
+    ?.scrollIntoView({
+        behavior: "instant",
+        block: "start"
+    });
 
             }
 
