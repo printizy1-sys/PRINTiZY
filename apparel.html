@@ -638,125 +638,77 @@ onclick="document.getElementById('aprons').scrollIntoView({behavior:'smooth'})">
 
 </section>
 
-<!--=========================
-ROUND NECK
-==========================-->
-
+<!-- ROUND NECK -->
 <section class="products" id="round-neck">
 
     <h2>Round Neck</h2>
 
-    <div class="products-grid" id="roundNeckProducts">
-
-    </div>
+    <div class="products-grid" id="roundNeckProducts"></div>
 
 </section>
 
-<!--=========================
-POLO T-SHIRTS
-==========================-->
-
+<!-- POLO T-SHIRTS -->
 <section class="products" id="polo">
 
-<h2>Polo T-Shirts</h2>
+    <h2>Polo T-Shirts</h2>
 
-<div class="products-grid" id="poloProducts"></div>
-
-</div>
+    <div class="products-grid" id="poloProducts"></div>
 
 </section>
 
-<!--=========================
-FULL SLEEVE
-==========================-->
-
+<!-- FULL SLEEVE -->
 <section class="products" id="full-sleeve">
 
-<h2>Full Sleeve</h2>
+    <h2>Full Sleeve</h2>
 
-<div class="products-grid" id="fullSleeveProducts"></div>
-</div>
+    <div class="products-grid" id="fullSleeveProducts"></div>
 
 </section>
 
-<!--=========================
-HOODIES
-==========================-->
-
+<!-- HOODIES -->
 <section class="products" id="hoodies">
 
-<h2>Hoodies</h2>
+    <h2>Hoodies</h2>
 
-<div class="products-grid" id="hoodiesProducts"></div>
-</div>
+    <div class="products-grid" id="hoodiesProducts"></div>
 
 </section>
-   <!--=========================
-JACKETS
-==========================-->
 
+<!-- JACKETS -->
 <section class="products" id="jackets">
 
-<h2>Jackets</h2>
+    <h2>Jackets</h2>
 
-<div class="products-grid" id="jacketsProducts"></div>
-
-</div>
+    <div class="products-grid" id="jacketsProducts"></div>
 
 </section>
 
-<!--=========================
-SPORTS WEAR
-==========================-->
-
+<!-- SPORTS WEAR -->
 <section class="products" id="sports">
 
-<h2>Sports Wear</h2>
+    <h2>Sports Wear</h2>
 
-<div class="products-grid" id="sportsProducts"></div>
-
-</div>
+    <div class="products-grid" id="sportsProducts"></div>
 
 </section>
-   
-   <!--=========================
-CAPS
-==========================-->
 
+<!-- CAPS -->
 <section class="products" id="caps">
 
-<h2>Caps</h2>
+    <h2>Caps</h2>
 
-<div class="products-grid" id="capsProducts"></div>
-
-</div>
+    <div class="products-grid" id="capsProducts"></div>
 
 </section>
 
-<!--=========================
-APRONS
-==========================-->
-
+<!-- APRONS -->
 <section class="products" id="aprons">
 
-<h2>Aprons</h2>
+    <h2>Aprons</h2>
 
-<div class="products-grid" id="apronsProducts"></div>
-
-</div>
+    <div class="products-grid" id="apronsProducts"></div>
 
 </section>
-
-<!--==========================
-BEST SELLERS
-===========================-->
-
-
-
-
-<!--==========================
-ALL PRODUCTS
-===========================-->
 
 
 
@@ -819,10 +771,11 @@ async function loadProducts() {
     try {
 
         const res = await fetch(
-`${API}/api/products/all?page=${page}&category=apparel`,
-{
-    cache: "no-store"
-});
+            `${API}/api/products/all?page=${page}&category=apparel`,
+            {
+                cache: "no-store"
+            }
+        );
 
         const data = await res.json();
 
@@ -856,14 +809,23 @@ async function loadProducts() {
 function renderProducts(products) {
 
     const containers = {
+
         "round neck": document.getElementById("roundNeckProducts"),
+
         "polo t-shirts": document.getElementById("poloProducts"),
+
         "full sleeve": document.getElementById("fullSleeveProducts"),
+
         "hoodies": document.getElementById("hoodiesProducts"),
+
         "jackets": document.getElementById("jacketsProducts"),
+
         "sports wear": document.getElementById("sportsProducts"),
+
         "caps": document.getElementById("capsProducts"),
+
         "aprons": document.getElementById("apronsProducts")
+
     };
 
     Object.values(containers).forEach(c => {
@@ -872,26 +834,36 @@ function renderProducts(products) {
 
     products.forEach(product => {
 
-        const key = (product.subCategory || "")
+        const key = String(product.subCategory || "")
             .trim()
             .toLowerCase();
 
         const container = containers[key];
 
-        if (!container) return;
+        if (!container) {
+            console.log("No container found for:", key);
+            return;
+        }
 
         const img = product.images?.[0] || "images/no-image.webp";
+
         const price = Number(product.price || 0);
+
         const oldPrice = Math.round(price * 1.35);
-        const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
+
+        const discount = Math.round(
+            ((oldPrice - price) / oldPrice) * 100
+        );
 
         container.innerHTML += `
+
         <div class="product-card">
 
-            <img src="${img}"
-                 class="product-image"
-                 loading="lazy"
-                 onclick="openProduct('${product._id}')">
+            <img
+                src="${img}"
+                class="product-image"
+                loading="lazy"
+                onclick="openProduct('${product._id}')">
 
             <div class="product-info">
 
@@ -900,27 +872,43 @@ function renderProducts(products) {
                 </div>
 
                 <div class="product-price">
-                    <span class="current-price">₹${price}</span>
-                    <span class="old-price">₹${oldPrice}</span>
-                    <span class="discount">${discount}% OFF</span>
+
+                    <span class="current-price">
+                        ₹${price}
+                    </span>
+
+                    <span class="old-price">
+                        ₹${oldPrice}
+                    </span>
+
+                    <span class="discount">
+                        ${discount}% OFF
+                    </span>
+
                 </div>
 
                 <div class="product-btns">
-                    <button class="view-btn"
+
+                    <button
+                        class="view-btn"
                         onclick="openProduct('${product._id}')">
                         View
                     </button>
 
-                    <button class="cart-btn2"
+                    <button
+                        class="cart-btn2"
                         onclick='addToCart(${JSON.stringify(product)})'>
                         Cart
                     </button>
+
                 </div>
 
             </div>
 
         </div>
+
         `;
+
     });
 
 }
