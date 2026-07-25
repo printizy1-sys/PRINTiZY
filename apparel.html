@@ -808,27 +808,26 @@ location.hash = id;
 });
 
 });
+async function loadProducts() {
 
-async function loadProducts(){
-
-    if(loading || !hasMore) return;
+    if (loading || !hasMore) return;
 
     loading = true;
 
-    document.getElementById("loader").style.display="block";
+    document.getElementById("loader").style.display = "block";
 
-    try{
+    try {
 
         const res = await fetch(
-    `${API}/api/products/all?page=${page}&category=Apparel`,
-    {
-        cache: "no-store"
-    }
-);
+            `${API}/api/products/all?page=${page}&category=apparel`,
+            {
+                cache: "no-store"
+            }
+        );
 
         const data = await res.json();
 
-        if(!data.success) return;
+        if (!data.success) return;
 
         allProducts.push(...data.products);
 
@@ -838,105 +837,107 @@ async function loadProducts(){
 
         hasMore = data.hasMore;
 
-    }catch(err){
+    } catch (err) {
 
         console.log(err);
 
-    }finally{
+    } finally {
 
-        loading=false;
+        loading = false;
 
-        document.getElementById("loader").style.display="none";
+        document.getElementById("loader").style.display = "none";
 
     }
 
 }
-
 /* =========================
    RENDER PRODUCTS
 ========================= */
 
-function renderProducts(products){
+function renderProducts(products) {
 
     const containers = {
+
         "Round Neck": document.getElementById("roundProducts"),
+
         "Polo T-Shirts": document.getElementById("poloProducts"),
+
         "Full Sleeve": document.getElementById("fullSleeveProducts"),
+
         "Hoodies": document.getElementById("hoodieProducts"),
+
         "Jackets": document.getElementById("jacketProducts"),
+
         "Sports Wear": document.getElementById("sportsProducts"),
+
         "Caps": document.getElementById("capProducts"),
+
         "Aprons": document.getElementById("apronProducts")
+
     };
 
-    // Clear all sections
-    Object.values(containers).forEach(c=>{
-        if(c) c.innerHTML="";
+    Object.values(containers).forEach(c => {
+
+        if (c) c.innerHTML = "";
+
     });
 
-    products.forEach(product=>{
+    products.forEach(product => {
 
-        const container = containers[product.category];
+        // ✅ Sub Category use karo
+        const container = containers[product.subCategory];
 
-        if(!container) return;
+        if (!container) return;
 
-        const img =
-        product.images?.[0] ||
-        "images/no-image.webp";
+        const img = product.images?.[0] || "images/no-image.webp";
 
-        const price =
-        Number(product.price || 0);
+        const price = Number(product.price || 0);
 
-        const oldPrice =
-        Math.round(price * 1.35);
+        const oldPrice = Math.round(price * 1.35);
 
-        const discount =
-        Math.round(((oldPrice-price)/oldPrice)*100);
+        const discount = Math.round(((oldPrice - price) / oldPrice) * 100);
 
         container.innerHTML += `
 
         <div class="product-card">
 
-            <img
-            src="${img}"
-            class="product-image"
-            loading="lazy"
-            onclick="openProduct('${product._id}')">
+            <img src="${img}"
+                 class="product-image"
+                 loading="lazy"
+                 onclick="openProduct('${product._id}')">
 
             <div class="product-info">
 
                 <div class="product-title">
+
                     ${product.productName}
+
                 </div>
 
                 <div class="product-price">
 
-                    <span class="current-price">
-                        ₹${price}
-                    </span>
+                    <span class="current-price">₹${price}</span>
 
-                    <span class="old-price">
-                        ₹${oldPrice}
-                    </span>
+                    <span class="old-price">₹${oldPrice}</span>
 
-                    <span class="discount">
-                        ${discount}% OFF
-                    </span>
+                    <span class="discount">${discount}% OFF</span>
 
                 </div>
 
                 <div class="product-btns">
 
-                    <button
-                    class="view-btn"
-                    onclick="openProduct('${product._id}')">
-                    View
+                    <button class="view-btn"
+                            onclick="openProduct('${product._id}')">
+
+                        View
+
                     </button>
 
-                    <button
-                    class="cart-btn2"
-                    onclick='addToCart(${JSON.stringify(product)})'>
-                    Cart
+                    <button class="cart-btn2"
+                            onclick='addToCart(${JSON.stringify(product)})'>
+
+                        Cart
+
                     </button>
 
                 </div>
