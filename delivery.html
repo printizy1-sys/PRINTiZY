@@ -877,6 +877,76 @@ font-size:18px;
 }
 
 }
+  .home-categories{
+    padding:60px 5%;
+    background:#fff;
+}
+
+.home-categories h2{
+    text-align:center;
+    font-size:34px;
+    color:#0A1F44;
+    margin-bottom:30px;
+}
+
+.home-category-scroll{
+    display:flex;
+    gap:18px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    scroll-behavior:smooth;
+    padding-bottom:10px;
+}
+
+.home-category-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+.home-category-card{
+    flex:0 0 170px;
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    cursor:pointer;
+    transition:.3s;
+}
+
+.home-category-card:hover{
+    transform:translateY(-5px);
+}
+
+.home-category-card img{
+    width:100%;
+    height:140px;
+    object-fit:cover;
+    display:block;
+}
+
+.home-category-card h3{
+    text-align:center;
+    padding:12px;
+    font-size:18px;
+    font-weight:600;
+    color:#222;
+    line-height:1.4;
+}
+
+@media(max-width:768px){
+
+.home-category-card{
+    flex:0 0 150px;
+}
+
+.home-category-card img{
+    height:120px;
+}
+
+.home-category-card h3{
+    font-size:15px;
+}
+
+}
  </style>
 </head>
 
@@ -956,46 +1026,46 @@ Shop Now
 <!--=========================
 SHOP BY CATEGORY
 ==========================-->
-<section class="categories">
+<section class="home-categories">
 
 <h2>Shop by Category</h2>
 
-<div class="category-grid">
+<div class="home-category-scroll">
 
-<div class="category-card"
+<div class="home-category-card"
 onclick="document.getElementById('cafe-section').scrollIntoView({behavior:'smooth'})">
 <img src="images/hotel/cafe.webp">
 <h3>Apparel</h3>
 </div>
 
-<div class="category-card"
+<div class="home-category-card"
 onclick="document.getElementById('takeaway-section').scrollIntoView({behavior:'smooth'})">
 <img src="images/hotel/takeaway.webp">
 <h3>Personalised Gifts</h3>
 </div>
 
-<div class="category-card"
+<div class="home-category-card"
 onclick="document.getElementById('decor-section').scrollIntoView({behavior:'smooth'})">
 <img src="images/hotel/decor.webp">
-<h3>Stationery & Stamps</h3>
+<h3>Stationery &amp; Stamps</h3>
 </div>
 
-<div class="category-card"
+<div class="home-category-card"
 onclick="document.getElementById('staff-section').scrollIntoView({behavior:'smooth'})">
 <img src="images/hotel/staff.webp">
-<h3>Labels & Packaging</h3>
+<h3>Labels &amp; Packaging</h3>
 </div>
 
-<div class="category-card"
+<div class="home-category-card"
 onclick="document.getElementById('safety-section').scrollIntoView({behavior:'smooth'})">
 <img src="images/hotel/safety.webp">
-<h3>Rewards and Recognition</h3>
+<h3>Rewards &amp; Recognition</h3>
 </div>
 
-<div class="category-card"
+<div class="home-category-card"
 onclick="document.getElementById('branding-section').scrollIntoView({behavior:'smooth'})">
 <img src="images/hotel/branding.webp">
-<h3>Sign & Marketing Promotion</h3>
+<h3>Sign &amp; Marketing Promotion</h3>
 </div>
 
 </div>
