@@ -207,69 +207,113 @@ font-weight:600;
 /* PRODUCTS */
 
 .products-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    margin-top:20px;
 }
 
-      
 .product-card{
-background:#fff;
-border-radius:18px;
-overflow:hidden;
-box-shadow:0 4px 15px rgba(0,0,0,.08);
-transition:.3s;
+    background:#fff;
+    border:1px solid #e9e9e9;
+    border-radius:12px;
+    overflow:hidden;
+    transition:.3s;
 }
 
 .product-card:hover{
-transform:translateY(-4px);
+    transform:translateY(-3px);
 }
 
 .product-image{
-width:100%;
-height:190px;
-object-fit:cover;
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+    cursor:pointer;
 }
 
 .product-info{
-padding:12px;
+    padding:14px;
+    text-align:center;
 }
 
 .product-title{
-font-size:17px;
-font-weight:600;
-margin-bottom:8px;
-min-height:45px;
+    font-size:18px;
+    font-weight:500;
+    color:#222;
+    line-height:1.3;
+    min-height:70px;
+    margin-bottom:12px;
 }
 
-.product-price{
-display:flex;
-align-items:center;
-gap:8px;
-margin-bottom:12px;
+.product-price2{
+    line-height:1.5;
+    margin-bottom:15px;
 }
 
-.current-price{
-font-size:20px;
-font-weight:700;
-color:#5B21B6;
+.product-price2 .price{
+    font-size:36px;
+    font-weight:700;
+    color:#111;
 }
 
-.old-price{
-font-size:14px;
-text-decoration:line-through;
-color:#888;
-}
-
-.discount{
-font-size:13px;
-color:#ff6600;
-font-weight:700;
+.product-price2 .text{
+    display:block;
+    font-size:17px;
+    color:#555;
 }
 
 .product-btns{
-display:flex;
-gap:10px;
+    display:flex;
+    gap:10px;
+}
+
+.view-btn,
+.cart-btn2{
+    flex:1;
+    border:none;
+    border-radius:10px;
+    padding:12px 0;
+    font-size:17px;
+    font-weight:600;
+    color:#fff;
+    cursor:pointer;
+}
+
+.view-btn{
+    background:#6a1b9a;
+}
+
+.cart-btn2{
+    background:#ff6b00;
+}
+
+@media(max-width:768px){
+
+.products-grid{
+    gap:14px;
+}
+
+.product-title{
+    font-size:16px;
+    min-height:60px;
+}
+
+.product-price2 .price{
+    font-size:30px;
+}
+
+.product-price2 .text{
+    font-size:15px;
+}
+
+.view-btn,
+.cart-btn2{
+    font-size:15px;
+    padding:10px 0;
+}
+
 }
 
 .view-btn,
@@ -332,14 +376,9 @@ font-size:28px;
 font-size:16px;
 }
 
-.products-grid{
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-}
 
-.product-image{
-height:150px;
-}
+
+
 
 .category-card{
 min-width:115px;
@@ -354,67 +393,7 @@ height:100px;
 PRODUCT SECTIONS
 =========================*/
 
-.products{
-padding:60px 5%;
-background:#fff;
-}
 
-.products h2{
-font-size:34px;
-font-weight:700;
-text-align:center;
-color:#0A1F44;
-margin-bottom:35px;
-position:relative;
-}
-
-.products h2::after{
-content:"";
-width:80px;
-height:4px;
-background:#FF6B00;
-display:block;
-margin:12px auto 0;
-border-radius:10px;
-}
-
-/*=========================
-PRODUCT GRID
-=========================*/
-
-
-/*=========================
-PRODUCT CARD
-=========================*/
-
-.product-card{
-background:#fff;
-border-radius:18px;
-overflow:hidden;
-cursor:pointer;
-transition:.35s;
-box-shadow:0 8px 25px rgba(0,0,0,.08);
-}
-
-.product-card:hover{
-transform:translateY(-8px);
-box-shadow:0 15px 35px rgba(0,0,0,.15);
-}
-
-.product-card img{
-width:100%;
-height:230px;
-object-fit:cover;
-display:block;
-}
-
-.product-card h3{
-padding:18px 10px;
-font-size:18px;
-font-weight:600;
-color:#222;
-text-align:center;
-}
       
 
 /*==================================
@@ -903,58 +882,6 @@ font-size:18px;
 MOBILE
 =========================*/
 
-@media(max-width:992px){
-
-.products-grid{
-grid-template-columns:repeat(2,1fr);
-gap:18px;
-}
-
-.product-card img{
-height:180px;
-}
-
-.products h2{
-font-size:28px;
-}
-
-}
-
-@media(max-width:576px){
-
-.products{
-padding:40px 4%;
-}
-
-.products-grid{
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-}
-
-.product-card{
-border-radius:14px;
-}
-
-.product-card img{
-height:150px;
-}
-
-.product-card h3{
-font-size:14px;
-padding:12px 8px;
-}
-
-.products h2{
-font-size:24px;
-margin-bottom:25px;
-}
-
-.products h2::after{
-width:60px;
-height:3px;
-}
-
-}
       section{
     scroll-margin-top:80px;
       }
@@ -1000,23 +927,7 @@ height:3px;
     margin:12px auto 0 !important;
 
 }
-   .product-price2{
-    margin:10px 0;
-    text-align:center;
-}
 
-.product-price2 .price{
-    font-size:26px;
-    font-weight:700;
-    color:#000;
-}
-
-.product-price2 .text{
-    display:block;
-    font-size:16px;
-    color:#555;
-    margin-top:4px;
-}
     </style>
 </head>
 
