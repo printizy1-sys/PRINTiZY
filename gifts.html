@@ -165,14 +165,7 @@ onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})"
 
 </section>
 
-<!-- FULL SLEEVE -->
-<section class="products" id="full-sleeve">
 
-    <h2>Photo Frames</h2>
-
-    <div class="products-grid" id="fullSleeveProducts"></div>
-
-</section>
 
 <!-- HOODIES -->
 <section class="products" id="hoodies">
@@ -549,12 +542,11 @@ async function loadProducts() {
 ========================= */
 
 function renderProducts(products) {
-
+        
     const containers = {
-        "best sellers": document.getElementById("roundNeckProducts"),
-        "looking for something beyond the usual?": document.getElementById("poloProducts"),
-        "shop by card shape": document.getElementById("fullSleeveProducts"),
-        "business stationery combo": document.getElementById("hoodiesProducts")
+        "Mugs": document.getElementById("roundNeckProducts"),
+        "Keychains": document.getElementById("poloProducts"),
+        "Cushions": document.getElementById("hoodiesProducts")
     };
 
     // Clear all containers
