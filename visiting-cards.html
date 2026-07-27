@@ -1132,7 +1132,8 @@ onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})"
 </section>
 
 <!-- ROUND NECK -->
-<section class="products" id="round-neck">
+<!-- BEST SELLERS -->
+<section class="products" id="best-sellers">
 
     <h2>Best Sellers</h2>
 
@@ -1140,8 +1141,8 @@ onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})"
 
 </section>
 
-<!-- POLO T-SHIRTS -->
-<section class="products" id="polo">
+<!-- LOOKING FOR SOMETHING BEYOND THE USUAL -->
+<section class="products" id="looking-beyond-usual">
 
     <h2>Looking for something beyond the usual?</h2>
 
@@ -1149,8 +1150,8 @@ onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})"
 
 </section>
 
-<!-- FULL SLEEVE -->
-<section class="products" id="full-sleeve">
+<!-- SHOP BY CARD SHAPE -->
+<section class="products" id="shop-by-card-shape">
 
     <h2>Shop By Card Shape</h2>
 
@@ -1158,8 +1159,8 @@ onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})"
 
 </section>
 
-<!-- HOODIES -->
-<section class="products" id="hoodies">
+<!-- BUSINESS STATIONERY COMBO -->
+<section class="products" id="business-stationery-combo">
 
     <h2>Business Stationery Combo</h2>
 
@@ -1418,15 +1419,11 @@ let allProducts = [];
 document.addEventListener("DOMContentLoaded", () => {
 
     const categoryMap = {
-        "Round Neck": "round-neck",
-        "Polo T-Shirts": "polo",
-        "Full Sleeve": "full-sleeve",
-        "Hoodies": "hoodies",
-        "Jackets": "jackets",
-        "Sports Wear": "sports",
-        "Caps": "caps",
-        "Aprons": "aprons"
-    };
+    "Best Sellers": "best-sellers",
+    "Looking for something beyond the usual?": "looking-beyond-usual",
+    "Shop By Card Shape": "shop-by-card-shape",
+    "Business Stationery Combo": "business-stationery-combo"
+};
 
     document.querySelectorAll(".category-card").forEach(card => {
 
@@ -1507,17 +1504,11 @@ async function loadProducts() {
 function renderProducts(products) {
 
     const containers = {
-
-        "round neck": document.getElementById("roundNeckProducts"),
-        "polo t-shirts": document.getElementById("poloProducts"),
-        "full sleeve": document.getElementById("fullSleeveProducts"),
-        "hoodies": document.getElementById("hoodiesProducts"),
-        "jackets": document.getElementById("jacketsProducts"),
-        "sports wear": document.getElementById("sportsProducts"),
-        "caps": document.getElementById("capsProducts"),
-        "aprons": document.getElementById("apronsProducts")
-
-    };
+    "best sellers": document.getElementById("bestSellersProducts"),
+    "looking for something beyond the usual?": document.getElementById("lookingBeyondUsualProducts"),
+    "shop by card shape": document.getElementById("shopByCardShapeProducts"),
+    "business stationery combo": document.getElementById("businessStationeryComboProducts")
+};
 
     // Clear all containers
     Object.values(containers).forEach(container => {
