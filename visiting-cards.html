@@ -1461,49 +1461,36 @@ function renderProducts(products) {
 
         container.innerHTML += `
 
-        <div class="product-card" onclick="openProduct('${product._id}')">
+<div class="product-card" onclick="openProduct('${product._id}')">
 
-            <img
-                src="${img}"
-                class="product-image"
-                loading="lazy"
-                alt="${product.productName}">
+    <img
+        src="${img}"
+        class="product-image"
+        loading="lazy"
+        alt="${product.productName}">
 
-            <div class="product-info">
+    <div class="product-info">
 
-                <div class="product-title">
-                    ${product.productName}
-                </div>
+        <div class="product-title">
+            ${product.productName}
+        </div>
 
-                <div class="product-price2">
-                    <span class="price">₹${price}</span>
-                    <span class="text">each for ${quantity}</span>
-                    <span class="unit">${unit}</span>
-                </div>
+        <div class="product-price2">
 
-                <div class="product-btns">
+            <span class="price">₹${price}</span>
 
-                    <button
-                        class="view-btn"
-                        onclick="event.stopPropagation(); openProduct('${product._id}')">
-                        View
-                    </button>
-
-                    <button
-                        class="cart-btn2"
-                        onclick='event.stopPropagation(); addToCart(${JSON.stringify(product)})'>
-                        Cart
-                    </button>
-
-                </div>
-
-            </div>
+            <span class="text">
+                each for ${quantity} ${unit}
+            </span>
 
         </div>
 
-        `;
+    </div>
 
-    });
+</div>
+
+`;
+       });
 
 }
    /* =========================
