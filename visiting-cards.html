@@ -956,6 +956,8 @@ MOBILE
 <body>
 
 
+<div id="mainPage" style="display:none;">
+   
 <!--==========================
 HEADER
 ===========================-->
@@ -1353,7 +1355,7 @@ Hotels, Restaurants & Cafés.
 </footer>
 
 
-
+</div>
 <script>
        
    const API = "https://printizyserver.onrender.com";
@@ -1438,14 +1440,20 @@ async function loadProducts() {
         allProducts.push(...data.products);
 
         renderProducts(allProducts);
-        {document.getElementById("mainPage").style.display = "block";
+
+        // ✅ Page show after products loaded
+        document.getElementById("mainPage").style.display = "block";
+
         page++;
 
         hasMore = data.hasMore;
 
-    } catch (err) 
+    } catch (err) {
 
         console.error(err);
+
+        // API fail ho to bhi page show ho
+        document.getElementById("mainPage").style.display = "block";
 
     } finally {
 
@@ -1460,7 +1468,6 @@ async function loadProducts() {
             setTimeout(() => {
 
                 topLoader.style.display = "none";
-
                 topLoader.style.width = "0%";
 
             }, 200);
@@ -1469,7 +1476,7 @@ async function loadProducts() {
 
     }
 
-}
+   }
    
 /* =========================
    RENDER PRODUCTS
