@@ -954,7 +954,8 @@ MOBILE
 </head>
 
 <body>
-<div id="topLoader"></div>
+
+<div id="mainPage" style="display:none;">
 <!--==========================
 HEADER
 ===========================-->
@@ -1437,12 +1438,12 @@ async function loadProducts() {
         allProducts.push(...data.products);
 
         renderProducts(allProducts);
-
+        {document.getElementById("mainPage").style.display = "block";
         page++;
 
         hasMore = data.hasMore;
 
-    } catch (err) {
+    } catch (err) 
 
         console.error(err);
 
@@ -1958,5 +1959,6 @@ function hideLoader() {
 });
 
     </script>
+</div>
 </body>
 </html>
