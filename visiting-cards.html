@@ -1465,11 +1465,11 @@ async function loadProducts() {
     try {
 
         const res = await fetch(
-            `${API}/api/products/all?page=${page}&category=apparel`,
-            {
-                cache: "no-store"
-            }
-        );
+    `${API}/api/products/all?page=${page}&category=visiting%20cards`,
+    {
+        cache: "no-store"
+    }
+);
 
         const data = await res.json();
 
