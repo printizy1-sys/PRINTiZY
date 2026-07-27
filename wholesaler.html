@@ -1065,6 +1065,7 @@ async function addProduct() {
 
   console.log("ADD PRODUCT CLICKED");
 
+
   const pname = document.getElementById("pname");
   const pprice = document.getElementById("pprice");
   const pdetail = document.getElementById("pdetail");
@@ -1072,142 +1073,262 @@ async function addProduct() {
   const purl = document.getElementById("purl");
   const categorySelect = document.getElementById("pcategorySelect");
 
+
   if (!pname || !pprice || !pdetail || !pimg || !categorySelect) {
+
     alert("Form elements missing");
     return;
+
   }
+
 
   const category = categorySelect.value;
 
-  // ✅ Sub Category
+
   const subCategory =
     document.getElementById("psubcategory")?.value || "";
 
+
+
   if (!category) {
+
     alert("Please Select Category");
     return;
+
   }
 
-  // ✅ Apparel etc. ke liye Sub Category compulsory
+
+
   if (document.getElementById("psubcategory") && !subCategory) {
+
     alert("Please Select Sub Category");
     return;
+
   }
+
+
 
   if (!pimg.files.length) {
+
     alert("Images required");
     return;
-  }
-
-  const images = [];
-
-  for (const file of pimg.files) {
-
-    const base64 = await new Promise(resolve => {
-
-      const reader = new FileReader();
-
-      reader.onload = () => resolve(reader.result);
-
-      reader.readAsDataURL(file);
-
-    });
-
-    images.push(base64);
 
   }
+
+
 
   const prof = JSON.parse(
+
     localStorage.getItem("wholesalerProfile_" + WID) || "{}"
+
   );
+
+
 
   try {
 
-    const res = await fetch(API + "/api/products", {
 
-      method: "POST",
+    const formData = new FormData();
 
-      headers: {
 
-        "Content-Type": "application/json",
 
-        "Authorization": "Bearer " + TOKEN
+    // Text Fields
 
-      },
+    formData.append(
+      "wholesalerId",
+      WID
+    );
 
-      body: JSON.stringify({
 
-        wholesalerId: WID,
+    formData.append(
+      "productName",
+      pname.value.trim()
+    );
 
-        productName: pname.value.trim(),
 
-        price: pprice.value,
+    formData.append(
+      "price",
+      pprice.value
+    );
 
-        detail: pdetail.value,
 
-        images: images,
+    formData.append(
+      "detail",
+      pdetail.value.trim()
+    );
 
-        category: category,
 
-        // ✅ New Field
-        subCategory: subCategory,
+    formData.append(
+      "category",
+      category
+    );
 
-        // Other Platform Link
-        productUrl: purl ? purl.value.trim() : "",
 
-        shopName: prof.shopName || "",
+    formData.append(
+      "subCategory",
+      subCategory
+    );
 
-        mobile: prof.mobile || "",
 
-        address: prof.address || "",
+    formData.append(
+      "productUrl",
+      purl ? purl.value.trim() : ""
+    );
 
-        wholesalerLocation: prof.location || null
 
-      })
+    formData.append(
+      "shopName",
+      prof.shopName || ""
+    );
 
-    });
 
-    const d = await res.json();
+    formData.append(
+      "mobile",
+      prof.mobile || ""
+    );
 
-    if (d.success) {
 
-      alert("✅ Product Added Successfully");
+    formData.append(
+      "address",
+      prof.address || ""
+    );
 
-      pname.value = "";
-      pprice.value = "";
-      pdetail.value = "";
-      pimg.value = "";
 
-      if (purl) purl.value = "";
+    formData.append(
+      "wholesalerLocation",
+      JSON.stringify(prof.location || null)
+    );
 
-      // Reset Category
-      categorySelect.value = "";
 
-      // Reset Sub Category
-      const sub = document.getElementById("psubcategory");
-      if (sub) sub.value = "";
 
-      const box = document.getElementById("subCategoryBox");
-      if (box) {
-        box.style.display = "none";
-        box.innerHTML = "";
-      }
+    // Images Upload
 
-      if (typeof closeAll === "function") closeAll();
-      if (typeof loadProducts === "function") loadProducts();
-      if (typeof loadCategoriesSelect === "function") loadCategoriesSelect();
+    for (const file of pimg.files) {
 
-    } else {
-
-      alert(d.message || "Failed to add product");
+      formData.append(
+        "images",
+        file
+      );
 
     }
 
+
+
+    const res = await fetch(
+      API + "/api/products",
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Authorization":
+          "Bearer " + TOKEN
+
+        },
+
+        body: formData
+
+      }
+    );
+
+
+
+    const d = await res.json();
+
+
+
+    if (d.success) {
+
+
+      alert("✅ Product Added Successfully");
+
+
+
+      pname.value = "";
+
+      pprice.value = "";
+
+      pdetail.value = "";
+
+      pimg.value = "";
+
+
+
+      if (purl)
+
+        purl.value = "";
+
+
+
+      categorySelect.value = "";
+
+
+
+      const sub =
+      document.getElementById("psubcategory");
+
+
+      if (sub)
+
+        sub.value = "";
+
+
+
+      const box =
+      document.getElementById("subCategoryBox");
+
+
+      if (box) {
+
+        box.style.display = "none";
+
+        box.innerHTML = "";
+
+      }
+
+
+
+      if (typeof closeAll === "function")
+
+        closeAll();
+
+
+
+      if (typeof loadProducts === "function")
+
+        loadProducts();
+
+
+
+      if (typeof loadCategoriesSelect === "function")
+
+        loadCategoriesSelect();
+
+
+
+    } else {
+
+
+      alert(
+        d.message || "Failed to add product"
+      );
+
+
+    }
+
+
+
   } catch (err) {
+
 
     console.error(err);
 
-    alert("Server Error: " + err.message);
+
+    alert(
+      "Server Error: " + err.message
+    );
+
 
   }
 
