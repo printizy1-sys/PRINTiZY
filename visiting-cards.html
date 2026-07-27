@@ -227,12 +227,12 @@ font-weight:600;
 
 .product-image{
     width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
+    height:180px;
+    object-fit:contain;
+    background:#fff;
+    padding:10px;
     display:block;
-    cursor:pointer;
 }
-
 .product-info{
     padding:14px;
     text-align:center;
@@ -248,20 +248,23 @@ font-weight:600;
 }
 
 .product-price2{
-    line-height:1.5;
-    margin-bottom:15px;
+    text-align:center;
+    margin-top:8px;
+    margin-bottom:14px;
 }
 
 .product-price2 .price{
-    font-size:36px;
+    font-size:22px;
     font-weight:700;
     color:#111;
 }
 
-.product-price2 .text{
-    display:block;
-    font-size:17px;
-    color:#555;
+.product-price2 .price-text{
+    display:inline;
+    font-size:16px;
+    color:#444;
+    margin-left:4px;
+    font-weight:400;
 }
 
 .product-btns{
@@ -1493,14 +1496,11 @@ function renderProducts(products) {
         </div>
 
         <div class="product-price2">
-
-            <span class="price">₹${price}</span>
-
-            <span class="text">
-                each for ${quantity} ${unit}
-            </span>
-
-        </div>
+    <span class="price">₹${price}</span>
+    <span class="price-text">
+        each for ${quantity} ${unit.toLowerCase()}
+    </span>
+</div>
 
     </div>
 
