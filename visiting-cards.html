@@ -1438,6 +1438,7 @@ function renderProducts(products) {
         "business stationery combo": document.getElementById("hoodiesProducts")
     };
 
+    // Clear all containers
     Object.values(containers).forEach(container => {
         if (container) container.innerHTML = "";
     });
@@ -1454,20 +1455,19 @@ function renderProducts(products) {
         if (!container) return;
 
         const img = product.images?.[0] || "images/no-image.webp";
-
         const price = Number(product.price || 0);
         const quantity = product.quantity || 100;
         const unit = product.unit || "Pieces";
 
         container.innerHTML += `
 
-        <div class="product-card">
+        <div class="product-card" onclick="openProduct('${product._id}')">
 
             <img
                 src="${img}"
                 class="product-image"
                 loading="lazy"
-                onclick="openProduct('${product._id}')">
+                alt="${product.productName}">
 
             <div class="product-info">
 
@@ -1477,20 +1477,21 @@ function renderProducts(products) {
 
                 <div class="product-price2">
                     <span class="price">₹${price}</span>
-                    <span class="text">each for ${quantity} ${unit}</span>
+                    <span class="text">each for ${quantity}</span>
+                    <span class="unit">${unit}</span>
                 </div>
 
                 <div class="product-btns">
 
                     <button
                         class="view-btn"
-                        onclick="openProduct('${product._id}')">
+                        onclick="event.stopPropagation(); openProduct('${product._id}')">
                         View
                     </button>
 
                     <button
                         class="cart-btn2"
-                        onclick='addToCart(${JSON.stringify(product)})'>
+                        onclick='event.stopPropagation(); addToCart(${JSON.stringify(product)})'>
                         Cart
                     </button>
 
