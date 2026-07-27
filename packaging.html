@@ -119,26 +119,16 @@ SHOP BY APPAREL
 <div class="category-card"
 onclick="document.getElementById('round-neck').scrollIntoView({behavior:'smooth'})">
 <img src="images/apparel/round-neck.webp">
-<p>Flex Banner</p>
+<p>Product Labels</p>
 </div>
 
 <div class="category-card"
 onclick="document.getElementById('polo').scrollIntoView({behavior:'smooth'})">
 <img src="images/apparel/polo.webp">
-<p>Standee</p>
+<p>Packaging Stickers</p>
 </div>
 
-<div class="category-card"
-onclick="document.getElementById('full-sleeve').scrollIntoView({behavior:'smooth'})">
-<img src="images/apparel/full-sleeve.webp">
-<p>Acrylic Board</p>
-</div>
 
-<div class="category-card"
-onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})">
-<img src="images/apparel/hoodie.webp">
-<p>Vinyl Prints</p>
-</div>
 
 
 
@@ -149,7 +139,7 @@ onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})"
 <!-- ROUND NECK -->
 <section class="products" id="round-neck">
 
-    <h2>Flex Banner</h2>
+    <h2>Product Labelsr</h2>
 
     <div class="products-grid" id="roundNeckProducts"></div>
 
@@ -158,29 +148,12 @@ onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})"
 <!-- POLO T-SHIRTS -->
 <section class="products" id="polo">
 
-    <h2>Standee</h2>
+    <h2>Packaging Stickers</h2>
 
     <div class="products-grid" id="poloProducts"></div>
 
 </section>
 
-<!-- FULL SLEEVE -->
-<section class="products" id="full-sleeve">
-
-    <h2>Acrylic Board</h2>
-
-    <div class="products-grid" id="fullSleeveProducts"></div>
-
-</section>
-
-<!-- HOODIES -->
-<section class="products" id="hoodies">
-
-    <h2>Vinyl Prints</h2>
-
-    <div class="products-grid" id="hoodiesProducts"></div>
-
-</section>
 
 
 
@@ -550,10 +523,9 @@ async function loadProducts() {
 function renderProducts(products) {
 
     const containers = {
-        "Flex Banner": document.getElementById("roundNeckProducts"),
-        "Roll Up Standee": document.getElementById("poloProducts"),
-        "Acrylic Board": document.getElementById("fullSleeveProducts"),
-        "Vinyl Printing": document.getElementById("hoodiesProducts")
+        "Product Labels": document.getElementById("roundNeckProducts"),
+        "Packaging Stickers": document.getElementById("poloProducts")
+        
     };
 
     // Clear all containers
