@@ -244,26 +244,21 @@ font-weight:600;
 .product-price2{
     display:flex;
     justify-content:center;
-    align-items:center;
-    flex-wrap:nowrap;
-    gap:4px;
-    white-space:nowrap;
-    margin-top:8px;
+    align-items:flex-start;
+    gap:6px;
 }
 
 .product-price2 .price{
-    font-size:20px;
+    font-size:18px;
     font-weight:700;
-    color:#111;
-    line-height:1;
+    line-height:1.2;
 }
 
 .product-price2 .text{
-    display:inline;
-    font-size:14px;
+    font-size:15px;
     color:#444;
-    line-height:1;
-    white-space:nowrap;
+    line-height:1.4;
+    text-align:left;
 }
 
 .product-price2 .unit{
@@ -1494,7 +1489,9 @@ function renderProducts(products) {
 
         <div class="product-price2">
     <span class="price">₹${price}</span>
-    <span class="text">each for ${quantity} ${unit.toLowerCase()}</span>
+    <span class="text">
+        each for ${quantity}<br>${unit.toLowerCase()}
+    </span>
 </div>
     </div>
 
