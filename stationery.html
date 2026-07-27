@@ -1471,16 +1471,25 @@ async function loadProducts() {
     loading = true;
 
     const loader = document.getElementById("loader");
+    const topLoader = document.getElementById("topLoader");
+
     if (loader) loader.style.display = "block";
+
+    if (topLoader) {
+        topLoader.style.display = "block";
+        topLoader.style.width = "30%";
+    }
 
     try {
 
         const res = await fetch(
-            `${API}/api/products/all?page=${page}&category=apparel`,
+            `${API}/api/products/all?page=${page}&category=visiting%20cards`,
             {
                 cache: "no-store"
             }
         );
+
+        if (topLoader) topLoader.style.width = "70%";
 
         const data = await res.json();
 
@@ -1490,6 +1499,9 @@ async function loadProducts() {
 
         renderProducts(allProducts);
 
+        // ✅ Page show after products loaded
+        document.getElementById("mainPage").style.display = "block";
+
         page++;
 
         hasMore = data.hasMore;
@@ -1498,15 +1510,31 @@ async function loadProducts() {
 
         console.error(err);
 
+        // API fail ho to bhi page show ho
+        document.getElementById("mainPage").style.display = "block";
+
     } finally {
 
         loading = false;
 
         if (loader) loader.style.display = "none";
 
+        if (topLoader) {
+
+            topLoader.style.width = "100%";
+
+            setTimeout(() => {
+
+                topLoader.style.display = "none";
+                topLoader.style.width = "0%";
+
+            }, 200);
+
+        }
+
     }
 
-}
+   }
    
 /* =========================
    RENDER PRODUCTS
@@ -1515,16 +1543,10 @@ async function loadProducts() {
 function renderProducts(products) {
 
     const containers = {
-
-        "round neck": document.getElementById("roundNeckProducts"),
-        "polo t-shirts": document.getElementById("poloProducts"),
-        "full sleeve": document.getElementById("fullSleeveProducts"),
-        "hoodies": document.getElementById("hoodiesProducts"),
-        "jackets": document.getElementById("jacketsProducts"),
-        "sports wear": document.getElementById("sportsProducts"),
-        "caps": document.getElementById("capsProducts"),
-        "aprons": document.getElementById("apronsProducts")
-
+        "best sellers": document.getElementById("roundNeckProducts"),
+        "looking for something beyond the usual?": document.getElementById("poloProducts"),
+        "shop by card shape": document.getElementById("fullSleeveProducts"),
+        "business stationery combo": document.getElementById("hoodiesProducts")
     };
 
     // Clear all containers
@@ -1544,68 +1566,38 @@ function renderProducts(products) {
         if (!container) return;
 
         const img = product.images?.[0] || "images/no-image.webp";
-
         const price = Number(product.price || 0);
-
-        const oldPrice = Math.round(price * 1.35);
-
-        const discount = oldPrice > 0
-            ? Math.round(((oldPrice - price) / oldPrice) * 100)
-            : 0;
+        const quantity = product.quantity || 100;
+        const unit = product.unit || "Pieces";
 
         container.innerHTML += `
 
-        <div class="product-card">
+<div class="product-card" onclick="openProduct('${product._id}')">
 
-            <img
-                src="${img}"
-                class="product-image"
-                loading="lazy"
-                onclick="openProduct('${product._id}')">
+    <img
+        src="${img}"
+        class="product-image"
+        loading="lazy"
+        alt="${product.productName}">
 
-            <div class="product-info">
+    <div class="product-info">
 
-                <div class="product-title">
-                    ${product.productName}
-                </div>
-
-                <div class="product-price">
-
-                    <span class="current-price">₹${price}</span>
-
-                    <span class="old-price">₹${oldPrice}</span>
-
-                    <span class="discount">${discount}% OFF</span>
-
-                </div>
-
-                <div class="product-btns">
-
-                    <button
-                        class="view-btn"
-                        onclick="openProduct('${product._id}')">
-
-                        View
-
-                    </button>
-
-                    <button
-                        class="cart-btn2"
-                        onclick='addToCart(${JSON.stringify(product)})'>
-
-                        Cart
-
-                    </button>
-
-                </div>
-
-            </div>
-
+        <div class="product-title">
+            ${product.productName}
         </div>
 
-        `;
+        <div class="product-price2">
+    <span class="price">₹${price}</span>
+    <span class="text">
+        each for ${quantity}<br>${unit.toLowerCase()}
+    </span>
+</div>
+    </div>
 
-    });
+</div>
+
+`;
+       });
 
 }
    /* =========================
