@@ -1000,6 +1000,23 @@ height:3px;
     margin:12px auto 0 !important;
 
 }
+   .product-price2{
+    margin:10px 0;
+    text-align:center;
+}
+
+.product-price2 .price{
+    font-size:26px;
+    font-weight:700;
+    color:#000;
+}
+
+.product-price2 .text{
+    display:block;
+    font-size:16px;
+    color:#555;
+    margin-top:4px;
+}
     </style>
 </head>
 
@@ -1504,13 +1521,12 @@ async function loadProducts() {
 function renderProducts(products) {
 
     const containers = {
-    "best sellers": document.getElementById("roundNeckProducts"),
-    "looking for something beyond the usual?": document.getElementById("poloProducts"),
-    "shop by card shape": document.getElementById("fullSleeveProducts"),
-    "business stationery combo": document.getElementById("hoodiesProducts")
-};
+        "best sellers": document.getElementById("roundNeckProducts"),
+        "looking for something beyond the usual?": document.getElementById("poloProducts"),
+        "shop by card shape": document.getElementById("fullSleeveProducts"),
+        "business stationery combo": document.getElementById("hoodiesProducts")
+    };
 
-    // Clear all containers
     Object.values(containers).forEach(container => {
         if (container) container.innerHTML = "";
     });
@@ -1529,12 +1545,8 @@ function renderProducts(products) {
         const img = product.images?.[0] || "images/no-image.webp";
 
         const price = Number(product.price || 0);
-
-        const oldPrice = Math.round(price * 1.35);
-
-        const discount = oldPrice > 0
-            ? Math.round(((oldPrice - price) / oldPrice) * 100)
-            : 0;
+        const quantity = product.quantity || 100;
+        const unit = product.unit || "Pieces";
 
         container.innerHTML += `
 
@@ -1552,14 +1564,9 @@ function renderProducts(products) {
                     ${product.productName}
                 </div>
 
-                <div class="product-price">
-
-                    <span class="current-price">₹${price}</span>
-
-                    <span class="old-price">₹${oldPrice}</span>
-
-                    <span class="discount">${discount}% OFF</span>
-
+                <div class="product-price2">
+                    <span class="price">₹${price}</span>
+                    <span class="text">each for ${quantity} ${unit}</span>
                 </div>
 
                 <div class="product-btns">
@@ -1567,17 +1574,13 @@ function renderProducts(products) {
                     <button
                         class="view-btn"
                         onclick="openProduct('${product._id}')">
-
                         View
-
                     </button>
 
                     <button
                         class="cart-btn2"
                         onclick='addToCart(${JSON.stringify(product)})'>
-
                         Cart
-
                     </button>
 
                 </div>
