@@ -1095,6 +1095,16 @@ margin-top:4px;
 
 
 }
+        #designPreview img{
+
+width:120px;
+height:120px;
+object-fit:cover;
+margin-top:15px;
+border-radius:10px;
+border:1px solid #ddd;
+
+        }
 </style>
 </head>
 <body>
@@ -1102,29 +1112,78 @@ margin-top:4px;
 
 <header class="header">
 
+
+    <!-- Back Button -->
     <button class="backBtn" onclick="history.back()">
+
         <i class="bi bi-arrow-left"></i>
+
     </button>
 
+
+
+    <!-- Title -->
     <div class="title">
+
         Product Details
+
     </div>
 
+
+
+
+    <!-- Header Icons -->
     <div class="headerIcons">
 
-        <i class="bi bi-search"></i>
 
-        <i class="bi bi-share"
-           onclick="shareProduct()"></i>
+        <!-- Search -->
+        <button onclick="searchProduct()">
 
-        <i class="bi bi-heart"
-           id="wishIcon"
-           onclick="toggleWishlist()"></i>
+            <i class="bi bi-search"></i>
 
-        <i class="bi bi-cart3"
-           onclick="location.href='cart.html'"></i>
+        </button>
+
+
+
+
+        <!-- Share -->
+        <button onclick="shareProduct()">
+
+            <i class="bi bi-share"></i>
+
+        </button>
+
+
+
+
+        <!-- Wishlist -->
+        <button onclick="toggleWishlist()">
+
+            <i class="bi bi-heart" id="wishIcon"></i>
+
+        </button>
+
+
+
+
+        <!-- Cart -->
+        <button onclick="location.href='cart.html'">
+
+
+            <i class="bi bi-cart3"></i>
+
+
+            <span id="cartCount">
+                0
+            </span>
+
+
+        </button>
+
+
 
     </div>
+
 
 </header>
 
@@ -1383,29 +1442,7 @@ margin-top:4px;
 
 </div>
 
-<!-- ================= BOTTOM BAR ================= -->
 
-<div class="bottomBar">
-
-    <button class="cartBtn"
-            onclick="addCurrentToCart()">
-
-        <i class="bi bi-cart-plus"></i>
-
-        Add to Cart
-
-    </button>
-
-    <button class="buyBtn"
-            onclick="buyCurrentProduct()">
-
-        <i class="bi bi-lightning-fill"></i>
-
-        Buy Now
-
-    </button>
-
-</div>
 
 <!-- ================= LOADING ================= -->
 
@@ -1603,7 +1640,7 @@ const productId = new URLSearchParams(location.search).get("id");
 let selectedProduct = null;
 let relatedProducts = [];
 let currentImage = 0;
-
+let uploadedDesign = "";
 // ---------------- DOM ----------------
 
 const imageSlider = document.getElementById("imageSlider");
@@ -2067,13 +2104,20 @@ Total Price: ₹0
 Upload Design
 </label>
 
-<input type="file">
+<input 
+type="file"
+id="designUpload"
+accept="image/*">
 
 
-<button>
-Design Your Product
+<div id="designPreview"></div>
+
+
+<button onclick="addToCart()">
+
+Add To Cart
+
 </button>
-
 
 </div>
 
@@ -2549,79 +2593,118 @@ let lastDeliveryCharge = 0;
 // Add To Cart
 //----------------------------
 
-async function addCurrentToCart(){
+// ===============================
+// ADD TO CART
+// ===============================
 
-    if(!selectedProduct) return;
 
-    const retailerId =
-    localStorage.getItem("userId");
+function addToCart(){
 
-    if(!retailerId){
 
-        alert("Please Login");
 
-        return;
+if(!selectedProduct){
 
-    }
+alert("Product not found");
 
-    try{
+return;
 
-        const res = await fetch(
-        `${API}/api/cart/save`,{
+}
 
-            method:"POST",
 
-            headers:{
-                "Content-Type":"application/json"
-            },
 
-            body:JSON.stringify({
 
-                retailerId,
+const qty =
 
-                item:{
+Number(
+document.getElementById("productQty").value || 1
+);
 
-                    productId:selectedProduct._id,
 
-                    productName:selectedProduct.productName,
 
-                    price:selectedProduct.price,
 
-                    image:selectedProduct.images?.[0]||"",
+const totalPrice =
 
-                    wholesalerId:selectedProduct.wholesalerId,
+Number(selectedProduct.price || 0)
+*
+qty;
 
-                    shopName:selectedProduct.shopName,
 
-                    address:selectedProduct.address,
 
-                    mobile:selectedProduct.mobile
 
-                }
+const cartItem = {
 
-            })
 
-        });
+productId:
+selectedProduct._id,
 
-        const data = await res.json();
 
-        if(data.success){
+productName:
+selectedProduct.productName,
 
-            alert("🛒 Added To Cart");
 
-        }else{
+category:
+selectedProduct.category,
 
-            alert("Failed");
 
-        }
+quantity:
+qty,
 
-    }
 
-    catch(err){
+price:
+totalPrice,
 
-        console.log(err);
 
-    }
+design:
+uploadedDesign
+
+
+};
+
+
+
+
+
+let cart =
+
+JSON.parse(
+localStorage.getItem("cart")
+)
+||
+[];
+
+
+
+
+
+cart.push(cartItem);
+
+
+
+
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+
+
+
+
+alert(
+"Product Added To Cart"
+);
+
+
+
+
+
+// Checkout Page Open
+
+window.location.href =
+"checkout.html";
+
+
 
 }
 
