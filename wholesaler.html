@@ -881,7 +881,6 @@ async function loadCategories() {
     document.getElementById("productModal").style.display = "flex";
 
   }
-
 async function updateProduct() {
 
   if (!editProductId)
@@ -902,6 +901,16 @@ async function updateProduct() {
   formData.append(
     "detail",
     edit_detail.value.trim()
+  );
+
+  formData.append(
+    "quantity",
+    edit_quantity.value
+  );
+
+  formData.append(
+    "unit",
+    edit_unit.value
   );
 
   // New Images
