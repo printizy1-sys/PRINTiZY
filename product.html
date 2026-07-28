@@ -1758,7 +1758,7 @@ function loadRating(){
 
 function loadCategoryForm(category){
 
-
+alert("Category Form Function Called: " + category);
 const formBox =
 document.getElementById("dynamicForm");
 
@@ -1911,7 +1911,7 @@ if(forms[category]){
 
 formBox.innerHTML =
 forms[category];
-
+alert("Form Loaded Successfully: " + category);
 
 }
 
@@ -1919,7 +1919,7 @@ else{
 
 
 formBox.innerHTML="";
-
+alert("Form Not Found: " + category);
 }
 
 
