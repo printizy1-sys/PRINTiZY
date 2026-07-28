@@ -290,30 +290,45 @@ button.success{background:#16a34a;color:#fff;border:none;padding:8px 12px;border
     </div>
 
     <input
-      id="pprice"
-      type="number"
-      placeholder="Price">
+  id="pprice"
+  type="number"
+  placeholder="Price">
 
-    <textarea
-      id="pdetail"
-      placeholder="Product Detail"></textarea>
+<textarea
+  id="pdetail"
+  placeholder="Product Detail"></textarea>
 
-    <input
-      id="pimg"
-      type="file"
-      accept="image/*"
-      multiple>
+<input
+  id="pquantity"
+  type="number"
+  placeholder="Quantity">
 
-    <input
-      type="url"
-      id="purl"
-      placeholder="Amazon / Flipkart / Meesho Product Link (Optional)">
+<select id="punit">
+  <option value="">Select Unit</option>
+  <option value="Pieces">Pieces</option>
+  <option value="Cards">Cards</option>
+  <option value="Sheets">Sheets</option>
+  <option value="Boxes">Boxes</option>
+  <option value="Packs">Packs</option>
+  <option value="Kg">Kg</option>
+</select>
 
-    <button
-      class="primary"
-      onclick="addProduct()">
-      Save Product
-    </button>
+<input
+  id="pimg"
+  type="file"
+  accept="image/*"
+  multiple>
+
+<input
+  type="url"
+  id="purl"
+  placeholder="Amazon / Flipkart / Meesho Product Link (Optional)">
+
+<button
+  class="primary"
+  onclick="addProduct()">
+  Save Product
+</button>
 
     <button
       onclick="closeAll()">
@@ -1190,7 +1205,15 @@ async function addProduct() {
       "productUrl",
       purl ? purl.value.trim() : ""
     );
+    formData.append(
+  "quantity",
+  document.getElementById("pquantity").value
+);
 
+formData.append(
+  "unit",
+  document.getElementById("punit").value
+);
 
     formData.append(
       "shopName",
