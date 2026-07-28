@@ -1779,7 +1779,13 @@ catch(err){
 }
 
 }
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
+    updateCartBadge();
+
+});
 // ---------------- RENDER PRODUCT ----------------
 
 // ---------------- RENDER PRODUCT ----------------
@@ -3410,7 +3416,39 @@ async function nativeShare(){
     }
 
 }
+// ===============================
+// UPDATE CART BADGE
+// ===============================
 
+function updateCartBadge(){
+
+    const cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+
+    let count = 0;
+
+
+    cart.forEach(item=>{
+
+        count += Number(item.quantity || 1);
+
+    });
+
+
+    const badge =
+    document.getElementById("cartBadge");
+
+
+    if(badge){
+
+        badge.innerText = count;
+
+    }
+
+}
 function shareWhatsApp(){
 
     window.open(
