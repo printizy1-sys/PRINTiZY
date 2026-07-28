@@ -4471,9 +4471,42 @@ async function refreshCoins(){
 window.addEventListener("load",()=>{
 
   loadCoinProfile();
-
+  updateCartBadge();
 });
-    
+
+    // ===============================
+// UPDATE CART BADGE
+// ===============================
+
+function updateCartBadge(){
+
+    const cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+
+    let count = 0;
+
+
+    cart.forEach(item=>{
+
+        count += Number(item.quantity || 1);
+
+    });
+
+
+    const badge =
+    document.getElementById("cartBadge");
+
+
+    if(badge){
+
+        badge.innerText = count;
+
+    }
+
+}
 // ------------------- PRODUCTS -------------------
 
 // ------------------- PRODUCTS -------------------
