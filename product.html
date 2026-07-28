@@ -1504,25 +1504,40 @@ catch(err){
 
 // ---------------- RENDER PRODUCT ----------------
 
+// ---------------- RENDER PRODUCT ----------------
+
 function renderProduct(){
 
     if(!selectedProduct) return;
 
+
     renderImages();
+
+
 
     pName.innerText =
     selectedProduct.productName || "";
 
+
+
     const price =
     Number(selectedProduct.price || 0);
 
+
+
     const oldPrice =
-    Math.round(price*1.30);
+    Math.round(price * 1.30);
+
+
 
     const discount =
-    Math.round(
+    oldPrice > 0 
+    ? Math.round(
         ((oldPrice-price)/oldPrice)*100
-    );
+      )
+    : 0;
+
+
 
     pPrice.innerHTML =
 
@@ -1533,6 +1548,7 @@ function renderProduct(){
     gap:10px;
     flex-wrap:wrap;">
 
+
         <span
         style="font-size:28px;
         color:#009688;
@@ -1542,6 +1558,8 @@ function renderProduct(){
 
         </span>
 
+
+
         <span
         style="text-decoration:line-through;
         color:#888;">
@@ -1549,6 +1567,8 @@ function renderProduct(){
         ₹${oldPrice}
 
         </span>
+
+
 
         <span
         style="color:green;
@@ -1558,17 +1578,37 @@ function renderProduct(){
 
         </span>
 
+
     </div>
 
     `;
 
-    
+
+
 
     pDesc.innerHTML =
 
     selectedProduct.detail ||
 
     "No description available.";
+
+
+
+
+    // CATEGORY CHECK
+
+    alert(
+        "Category: " + selectedProduct.category
+    );
+
+
+
+    // LOAD CATEGORY FORM
+
+    loadCategoryForm(
+        selectedProduct.category
+    );
+
 
 }
 
