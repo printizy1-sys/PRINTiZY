@@ -379,7 +379,19 @@ button.success{background:#16a34a;color:#fff;border:none;padding:8px 12px;border
     <input id="edit_name" placeholder="Product Name">
     <input id="edit_price" type="number" placeholder="Price">
     <textarea id="edit_detail" placeholder="Detail"></textarea>
+    <input
+  id="edit_quantity"
+  type="number"
+  placeholder="Quantity">
 
+<select id="edit_unit">
+  <option value="Pieces">Pieces</option>
+  <option value="Cards">Cards</option>
+  <option value="Sheets">Sheets</option>
+  <option value="Boxes">Boxes</option>
+  <option value="Packs">Packs</option>
+  <option value="Kg">Kg</option>
+</select>
     <input type="file" id="edit_images" multiple>
 
     <div id="edit_images_preview"
@@ -1434,7 +1446,8 @@ async function openEditProduct(id) {
   edit_name.value   = p.productName || "";
   edit_price.value  = p.price || "";
   edit_detail.value = p.detail || "";
-
+  edit_quantity.value = p.quantity || 100;
+edit_unit.value = p.unit || "Pieces";
   // 🖼️ old images preview
   const box = edit_images_preview;
   box.innerHTML = "";
