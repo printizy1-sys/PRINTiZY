@@ -893,6 +893,46 @@ MOBILE
 }
 
 }
+        .relatedPrice{
+display:flex;
+gap:8px;
+align-items:center;
+margin-top:8px;
+}
+
+
+.newPrice{
+font-size:18px;
+font-weight:bold;
+color:#009688;
+}
+
+
+.oldPrice{
+text-decoration:line-through;
+color:#888;
+font-size:13px;
+}
+
+
+.discount{
+color:green;
+font-size:13px;
+font-weight:bold;
+}
+
+
+.relatedName{
+font-size:15px;
+font-weight:600;
+}
+
+
+.relatedCategory{
+font-size:13px;
+color:#777;
+margin-top:4px;
+}
 </style>
 </head>
 <body>
@@ -1040,7 +1080,7 @@ MOBILE
     </div>
 
 </div>
-
+<div id="dynamicForm"></div>
 <!-- ================= PRODUCT FEATURES ================= -->
 
 <div class="descCard fade">
@@ -1713,7 +1753,178 @@ function loadRating(){
     `;
 
 }
+// ---------------- CATEGORY FORM LOAD ----------------
 
+
+function loadCategoryForm(category){
+
+
+const formBox =
+document.getElementById("dynamicForm");
+
+
+
+const forms = {
+
+
+
+"apparel":`
+
+<div class="category-form">
+
+
+<h2>
+Customize Apparel
+</h2>
+
+
+<label>
+Size
+</label>
+
+<select>
+
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+
+</select>
+
+
+
+<label>
+Colour
+</label>
+
+<select>
+
+<option>Black</option>
+<option>White</option>
+<option>Blue</option>
+
+</select>
+
+
+
+<label>
+Quantity
+</label>
+
+<input type="number" value="1">
+
+
+
+<label>
+Upload Design
+</label>
+
+<input type="file">
+
+
+<button>
+Design Your Product
+</button>
+
+
+</div>
+
+`,
+
+
+
+
+"Personalised Gifts":`
+
+<div class="category-form">
+
+
+<h2>
+Customize Gift
+</h2>
+
+
+<label>
+Gift Colour
+</label>
+
+
+<select>
+
+<option>White</option>
+<option>Black</option>
+
+</select>
+
+
+
+<label>
+Printing Type
+</label>
+
+
+<select>
+
+<option>
+Single Side
+</option>
+
+<option>
+Double Side
+</option>
+
+
+</select>
+
+
+
+<label>
+Quantity
+</label>
+
+
+<input type="number" value="1">
+
+
+<label>
+Upload Design
+</label>
+
+<input type="file">
+
+
+<button>
+Design Your Product
+</button>
+
+
+</div>
+
+`
+
+};
+
+
+
+if(forms[category]){
+
+
+formBox.innerHTML =
+forms[category];
+
+
+}
+
+else{
+
+
+formBox.innerHTML="";
+
+}
+
+
+
+}
 // ---------- Reviews ----------
 
 function loadReviews(){
@@ -1873,57 +2084,128 @@ p=>p._id!==selectedProduct._id
 
 // ---------- Render Related ----------
 
+// ---------------- RENDER RELATED PRODUCTS ----------------
+
 function renderRelatedProducts(){
 
-    const box=
-    document.getElementById("relatedProducts");
 
-    if(!box) return;
+const box =
+document.getElementById("relatedProducts");
 
-    box.innerHTML=
-    relatedProducts.map(p=>{
 
-        const img=
-        p.images?.[0]||"";
+if(!box) return;
 
-        const price=
-        Number(p.price);
 
-        return`
+
+if(!relatedProducts || relatedProducts.length===0){
+
+    box.innerHTML =
+    "<p>No Related Products Found</p>";
+
+    return;
+
+}
+
+
+
+
+box.innerHTML = relatedProducts.map(p=>{
+
+
+const img =
+p.images?.[0] ||
+"images/no-image.webp";
+
+
+
+const price =
+Number(p.price || 0);
+
+
+
+const oldPrice =
+Math.round(price * 1.30);
+
+
+
+const discount =
+Math.round(
+((oldPrice-price)/oldPrice)*100
+);
+
+
+
+return `
+
 
 <div class="relatedCard"
 
 onclick="location.href='product.html?id=${p._id}'">
 
-<img src="${img}">
+
+<img 
+src="${img}"
+onerror="this.src='images/no-image.webp'">
+
+
 
 <div class="relatedInfo">
 
-<div style="font-size:15px;
-font-weight:600;">
 
-${p.productName}
+
+<div class="relatedName">
+
+${p.productName || "Product"}
+
+</div>
+
+
+
+<div class="relatedCategory">
+
+${p.category || ""}
 
 </div>
 
-<div style="color:#777;
-font-size:13px;">
 
-${p.category||""}
-
-</div>
 
 <div class="relatedPrice">
 
+
+<span class="newPrice">
+
 ₹${price}
 
-</div>
+</span>
+
+
+<span class="oldPrice">
+
+₹${oldPrice}
+
+</span>
+
+
+<span class="discount">
+
+${discount}% OFF
+
+</span>
+
 
 </div>
 
+
+
 </div>
+
+
+</div>
+
 
 `;
+
+
 
 }).join("");
 
