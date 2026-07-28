@@ -1894,7 +1894,48 @@ window.onload=function(){
 loadProduct();
 
 };
+// ============================
+// QUANTITY PRICE CALCULATOR
+// ============================
 
+
+function calculatePrice(){
+
+
+const qty =
+Number(
+document.getElementById("productQty").value
+|| 1
+);
+
+
+
+const price =
+Number(selectedProduct.price || 0);
+
+
+
+const total =
+price * qty;
+
+
+
+document.getElementById("totalPriceBox")
+.innerHTML =
+
+`
+
+Total Price:
+
+<strong>
+₹${total}
+</strong>
+
+`;
+
+
+
+}
 // ======================================
 // PRODUCT PAGE - PART 2
 // Related Products
@@ -2113,14 +2154,42 @@ Design Your Product
 
 
 
+
 if(forms[category]){
 
 
-formBox.innerHTML =
-forms[category];
+    formBox.innerHTML =
+    forms[category];
+
+
+
+    setTimeout(()=>{
+
+
+        const qtyInput =
+        document.getElementById("productQty");
+
+
+
+        if(qtyInput){
+
+
+            qtyInput.addEventListener(
+                "input",
+                calculatePrice
+            );
+
+
+            calculatePrice();
+
+
+        }
+
+
+    },100);
+
 
 }
-
 else{
 
 
