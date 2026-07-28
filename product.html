@@ -2280,13 +2280,44 @@ Design Your Product
 
 if(forms[category]){
 
+
     formBox.innerHTML =
     forms[category];
 
 
-    // DESIGN PREVIEW CODE START
+
+    // ==========================
+    // QUANTITY PRICE CALCULATOR
+    // ==========================
+
 
     setTimeout(()=>{
+
+
+        const qtyInput =
+        document.getElementById("productQty");
+
+
+
+        if(qtyInput){
+
+
+            qtyInput.addEventListener(
+            "input",
+            calculatePrice
+            );
+
+
+            calculatePrice();
+
+
+        }
+
+
+
+        // ==========================
+        // DESIGN PREVIEW
+        // ==========================
 
 
         const fileInput =
@@ -2346,10 +2377,8 @@ if(forms[category]){
         }
 
 
+
     },100);
-
-
-    // DESIGN PREVIEW CODE END
 
 
 }
