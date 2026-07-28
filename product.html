@@ -1105,6 +1105,85 @@ border-radius:10px;
 border:1px solid #ddd;
 
         }
+        .header{
+
+height:60px;
+background:#ffffff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 15px;
+position:sticky;
+top:0;
+z-index:1000;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+
+}
+
+
+
+.backBtn,
+.headerIcons button{
+
+background:none;
+border:none;
+font-size:22px;
+cursor:pointer;
+color:#0A1F44;
+
+}
+
+
+
+.title{
+
+font-size:18px;
+font-weight:600;
+color:#0A1F44;
+
+}
+
+
+
+.headerIcons{
+
+display:flex;
+align-items:center;
+gap:15px;
+
+}
+
+
+
+.headerIcons button{
+
+position:relative;
+
+}
+
+
+
+#cartCount{
+
+position:absolute;
+top:-8px;
+right:-10px;
+
+background:#FF6B00;
+color:white;
+
+font-size:11px;
+
+width:18px;
+height:18px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
 </style>
 </head>
 <body>
@@ -2201,36 +2280,76 @@ Design Your Product
 
 if(forms[category]){
 
-
     formBox.innerHTML =
     forms[category];
 
 
+    // DESIGN PREVIEW CODE START
 
     setTimeout(()=>{
 
 
-        const qtyInput =
-        document.getElementById("productQty");
+        const fileInput =
+        document.getElementById("designUpload");
 
 
 
-        if(qtyInput){
+        if(fileInput){
 
 
-            qtyInput.addEventListener(
-                "input",
-                calculatePrice
-            );
+            fileInput.addEventListener(
+            "change",
+            function(){
 
 
-            calculatePrice();
+                const file =
+                this.files[0];
+
+
+                if(!file) return;
+
+
+
+                const reader =
+                new FileReader();
+
+
+
+                reader.onload = function(e){
+
+
+                    uploadedDesign =
+                    e.target.result;
+
+
+
+                    document.getElementById(
+                    "designPreview"
+                    ).innerHTML =
+
+
+                    `
+                    <img src="${uploadedDesign}">
+                    `;
+
+
+                }
+
+
+
+                reader.readAsDataURL(file);
+
+
+            });
 
 
         }
 
 
     },100);
+
+
+    // DESIGN PREVIEW CODE END
 
 
 }
