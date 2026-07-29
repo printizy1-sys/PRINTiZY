@@ -2183,12 +2183,16 @@ const forms={
 
 <label>Quantity</label>
 
-<input
-type="number"
-id="productQty"
-value="1"
-min="1">
+<select id="productQty">
 
+<option value="100">100</option>
+<option value="250">250</option>
+<option value="500">500</option>
+<option value="1000">1000</option>
+<option value="2000">2000</option>
+<option value="5000">5000</option>
+
+</select>
 
 <div id="totalPriceBox">
 
@@ -2445,12 +2449,14 @@ Add To Cart
 
 <label>Quantity</label>
 
-<input
-type="number"
-id="productQty"
-value="1"
-min="1">
+<select id="productQty">
 
+<option value="100">100</option>
+<option value="250">250</option>
+<option value="500">500</option>
+<option value="1000">1000</option>
+
+</select>
 
 <div id="totalPriceBox">
 
@@ -2539,11 +2545,15 @@ Add To Cart
 
 <label>Quantity</label>
 
-<input
-type="number"
-id="productQty"
-value="1"
-min="1">
+<select id="productQty">
+
+<option value="100">100</option>
+<option value="250">250</option>
+<option value="500">500</option>
+<option value="1000">1000</option>
+<option value="2000">2000</option>
+
+</select>
 
 
 <div id="totalPriceBox">
@@ -2716,11 +2726,8 @@ Add To Cart
 
         if(qtyInput){
 
-            qtyInput.addEventListener(
-            "input",
-            calculatePrice
-            );
-
+            qtyInput.addEventListener("input", calculatePrice);
+qtyInput.addEventListener("change", calculatePrice);
             calculatePrice();
 
         }
