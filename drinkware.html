@@ -558,13 +558,12 @@ async function loadProducts() {
 function renderProducts(products) {
 
      const containers = {
-        "Coffee Mug": document.getElementById("roundNeckProducts"),
-        "Steel Bottle": document.getElementById("poloProducts"),
-        "Tumblers": document.getElementById("fullSleeveProducts"),
-        "Hoodies": document.getElementById("hoodiesProducts"),
-         "Travel Mug": document.getElementById("jacketsProducts")
-          
-    };
+    "coffee mug": document.getElementById("roundNeckProducts"),
+    "steel bottle": document.getElementById("poloProducts"),
+    "tumblers": document.getElementById("fullSleeveProducts"),
+    "hoodies": document.getElementById("hoodiesProducts"),
+    "travel mug": document.getElementById("jacketsProducts")
+};
 
     // Clear all containers
     Object.values(containers).forEach(container => {
