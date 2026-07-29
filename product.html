@@ -3133,113 +3133,136 @@ let lastDeliveryCharge = 0;
 // ===============================
 
 
+// ======================================
+// ADD TO CART (FINAL)
+// ======================================
+
 function addToCart(){
 
+    if(!selectedProduct){
+
+        alert("Product Not Found");
+
+        return;
+
+    }
+
+    const qty =
+    Number(
+        document.getElementById("productQty")?.value || 1
+    );
+
+    const totalPrice =
+    Number(selectedProduct.price || 0) * qty;
 
 
-if(!selectedProduct){
+    // ===========================
+    // GET ALL FORM VALUES
+    // ===========================
 
-alert("Product not found");
+    const cartItem={
 
-return;
+        productId:selectedProduct._id,
 
-}
+        productName:selectedProduct.productName,
 
+        category:selectedProduct.category,
 
+        price:Number(selectedProduct.price),
 
+        quantity:qty,
 
-const qty =
+        totalPrice:totalPrice,
 
-Number(
-document.getElementById("productQty").value || 1
-);
-
-
-
-
-const totalPrice =
-
-Number(selectedProduct.price || 0)
-*
-qty;
+        design:uploadedDesign || "",
 
 
+        // Common Fields
 
+        size:
+        document.getElementById("size")?.value || "",
 
-const cartItem = {
+        colour:
+        document.getElementById("colour")?.value ||
 
+        document.getElementById("giftColour")?.value ||
 
-productId:
-selectedProduct._id,
+        "",
 
+        paperType:
+        document.getElementById("paperType")?.value || "",
 
-productName:
-selectedProduct.productName,
+        cardSize:
+        document.getElementById("cardSize")?.value || "",
 
+        finish:
+        document.getElementById("finish")?.value || "",
 
-category:
-selectedProduct.category,
+        material:
+        document.getElementById("material")?.value || "",
 
+        shape:
+        document.getElementById("shape")?.value || "",
 
-quantity:
-qty,
+        boardSize:
+        document.getElementById("boardSize")?.value || "",
 
+        capacity:
+        document.getElementById("capacity")?.value || "",
 
-price:
-totalPrice,
+        paperSize:
+        document.getElementById("paperSize")?.value || "",
 
+        inkColour:
+        document.getElementById("inkColour")?.value || "",
 
-design:
-uploadedDesign
+        printingType:
+        document.getElementById("printingType")?.value || "",
 
+        printSide:
+        document.getElementById("printSide")?.value || "",
 
-};
+        printPosition:
+        document.getElementById("printPosition")?.value || ""
 
-
-
-
-
-let cart =
-
-JSON.parse(
-localStorage.getItem("cart")
-)
-||
-[];
-
-
-
-
-
-cart.push(cartItem);
-
-
-
-
-
-localStorage.setItem(
-"cart",
-JSON.stringify(cart)
-);
-
-
-
-
-
-alert(
-"Product Added To Cart"
-);
+    };
 
 
 
+    // ===========================
+    // SAVE CART
+    // ===========================
+
+    let cart =
+
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
 
 
-// Checkout Page Open
 
-window.location.href =
-"checkout.html";
+    cart.push(cartItem);
 
 
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+
+
+    updateCartBadge();
+
+
+
+    alert(
+        "Product Added To Cart"
+    );
+
+
+
+    location.href="checkout.html";
 
 }
 
