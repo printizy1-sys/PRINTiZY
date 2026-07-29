@@ -2122,59 +2122,68 @@ function loadRating(){
 
 function loadCategoryForm(category){
 
-
 const formBox =
 document.getElementById("dynamicForm");
 
+const forms={
 
 
-const forms = {
+// =====================================
+// VISITING CARDS
+// =====================================
 
-
-
-"apparel":`
+"visiting cards":`
 
 <div class="category-form">
 
+<h2>Customize Visiting Card</h2>
 
-<h2>
-Customize Apparel
-</h2>
+<label>Paper Type</label>
 
+<select id="paperType">
 
-<label>
-Size
-</label>
-
-<select>
-
-<option>S</option>
-<option>M</option>
-<option>L</option>
-<option>XL</option>
+<option>300 GSM</option>
+<option>350 GSM</option>
+<option>400 GSM</option>
 
 </select>
 
 
+<label>Card Size</label>
 
-<label>
-Colour
-</label>
+<select id="cardSize">
 
-<select>
-
-<option>Black</option>
-<option>White</option>
-<option>Blue</option>
+<option>Standard</option>
+<option>Square</option>
 
 </select>
 
 
+<label>Finish</label>
 
-<label>
-Quantity
-</label>
-<input 
+<select id="finish">
+
+<option>Matte</option>
+<option>Glossy</option>
+<option>Velvet</option>
+
+</select>
+
+
+<label>Print Side</label>
+
+<select id="printSide">
+
+<option>Front</option>
+<option>Back</option>
+<option>Front & Back</option>
+
+</select>
+
+
+<label>Quantity</label>
+
+<input
 type="number"
 id="productQty"
 value="1"
@@ -2183,14 +2192,14 @@ min="1">
 
 <div id="totalPriceBox">
 
-Total Price: ₹0
+Total Price : ₹0
 
 </div>
-<label>
-Upload Design
-</label>
 
-<input 
+
+<label>Upload Design</label>
+
+<input
 type="file"
 id="designUpload"
 accept="image/*">
@@ -2210,195 +2219,566 @@ Add To Cart
 `,
 
 
+// =====================================
+// APPAREL
+// =====================================
 
-
-"Personalised Gifts":`
+"apparel":`
 
 <div class="category-form">
 
-
-<h2>
-Customize Gift
-</h2>
+<h2>Customize Apparel</h2>
 
 
-<label>
-Gift Colour
-</label>
+<label>Size</label>
+
+<select id="size">
+
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+<option>XXL</option>
+
+</select>
 
 
-<select>
+
+<label>Colour</label>
+
+<select id="colour">
+
+<option>Black</option>
+<option>White</option>
+<option>Blue</option>
+<option>Red</option>
+
+</select>
+
+
+
+<label>Print Position</label>
+
+<select id="printPosition">
+
+<option>Front</option>
+<option>Back</option>
+<option>Front & Back</option>
+
+</select>
+
+
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="productQty"
+value="1"
+min="1">
+
+
+<div id="totalPriceBox">
+
+Total Price : ₹0
+
+</div>
+
+
+
+<label>Upload Design</label>
+
+<input
+type="file"
+id="designUpload"
+accept="image/*">
+
+
+<div id="designPreview"></div>
+
+
+<button onclick="addToCart()">
+
+Add To Cart
+
+</button>
+
+</div>
+
+`,
+   // =====================================
+// PERSONALISED GIFTS
+// =====================================
+
+"personalised gifts":`
+
+<div class="category-form">
+
+<h2>Customize Gift</h2>
+
+<label>Product Colour</label>
+
+<select id="giftColour">
 
 <option>White</option>
 <option>Black</option>
+<option>Red</option>
+<option>Blue</option>
 
 </select>
 
 
+<label>Printing Type</label>
 
-<label>
-Printing Type
-</label>
+<select id="printingType">
 
-
-<select>
-
-<option>
-Single Side
-</option>
-
-<option>
-Double Side
-</option>
-
+<option>Single Side</option>
+<option>Double Side</option>
+<option>UV Print</option>
+<option>Laser Engraving</option>
 
 </select>
 
 
+<label>Print Position</label>
 
-<label>
-Quantity
-</label>
+<select id="printPosition">
 
+<option>Front</option>
+<option>Back</option>
+<option>Front & Back</option>
 
-<input type="number" value="1">
-
-
-<label>
-Upload Design
-</label>
-
-<input type="file">
+</select>
 
 
-<button>
-Design Your Product
+<label>Quantity</label>
+
+<input
+type="number"
+id="productQty"
+value="1"
+min="1">
+
+
+<div id="totalPriceBox">
+
+Total Price : ₹0
+
+</div>
+
+
+<label>Upload Design</label>
+
+<input
+type="file"
+id="designUpload"
+accept="image/*">
+
+
+<div id="designPreview"></div>
+
+
+<button onclick="addToCart()">
+
+Add To Cart
+
 </button>
 
+</div>
+
+`,
+
+
+// =====================================
+// STATIONERY & STAMPS
+// =====================================
+
+"stationery & stamps":`
+
+<div class="category-form">
+
+<h2>Customize Stationery</h2>
+
+<label>Paper Type</label>
+
+<select id="paperType">
+
+<option>Normal</option>
+<option>Premium</option>
+<option>Recycled</option>
+
+</select>
+
+
+<label>Paper Size</label>
+
+<select id="paperSize">
+
+<option>A4</option>
+<option>A5</option>
+<option>Letter</option>
+
+</select>
+
+
+<label>Ink Colour</label>
+
+<select id="inkColour">
+
+<option>Black</option>
+<option>Blue</option>
+<option>Red</option>
+
+</select>
+
+
+<label>Print Side</label>
+
+<select id="printSide">
+
+<option>Front</option>
+<option>Back</option>
+<option>Front & Back</option>
+
+</select>
+
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="productQty"
+value="1"
+min="1">
+
+
+<div id="totalPriceBox">
+
+Total Price : ₹0
+
+</div>
+
+
+<label>Upload Design</label>
+
+<input
+type="file"
+id="designUpload"
+accept="image/*">
+
+
+<div id="designPreview"></div>
+
+
+<button onclick="addToCart()">
+
+Add To Cart
+
+</button>
+
+</div>
+
+`,
+
+
+// =====================================
+// LABELS & PACKAGING
+// =====================================
+
+"labels & packaging":`
+
+<div class="category-form">
+
+<h2>Customize Packaging</h2>
+
+<label>Material</label>
+
+<select id="material">
+
+<option>Paper</option>
+<option>Vinyl</option>
+<option>PVC</option>
+<option>Kraft</option>
+
+</select>
+
+
+<label>Shape</label>
+
+<select id="shape">
+
+<option>Rectangle</option>
+<option>Square</option>
+<option>Round</option>
+<option>Custom</option>
+
+</select>
+
+
+<label>Finish</label>
+
+<select id="finish">
+
+<option>Matte</option>
+<option>Glossy</option>
+<option>Lamination</option>
+
+</select>
+
+
+<label>Print Side</label>
+
+<select id="printSide">
+
+<option>Front</option>
+<option>Back</option>
+<option>Front & Back</option>
+
+</select>
+
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="productQty"
+value="1"
+min="1">
+
+
+<div id="totalPriceBox">
+
+Total Price : ₹0
+
+</div>
+
+
+<label>Upload Design</label>
+
+<input
+type="file"
+id="designUpload"
+accept="image/*">
+
+
+<div id="designPreview"></div>
+
+
+<button onclick="addToCart()">
+
+Add To Cart
+
+</button>
+
+</div>
+
+`, 
+    // =====================================
+// SIGNAGE
+// =====================================
+
+"signage":`
+
+<div class="category-form">
+
+<h2>Customize Signage</h2>
+
+<label>Material</label>
+
+<select id="material">
+<option>ACP Board</option>
+<option>Sunboard</option>
+<option>Acrylic</option>
+<option>Foam Board</option>
+</select>
+
+<label>Size</label>
+
+<select id="boardSize">
+<option>1 x 1 ft</option>
+<option>2 x 2 ft</option>
+<option>3 x 2 ft</option>
+<option>Custom Size</option>
+</select>
+
+<label>Print Side</label>
+
+<select id="printSide">
+<option>Front</option>
+<option>Back</option>
+<option>Front & Back</option>
+</select>
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="productQty"
+value="1"
+min="1">
+
+<div id="totalPriceBox">
+Total Price : ₹0
+</div>
+
+<label>Upload Design</label>
+
+<input
+type="file"
+id="designUpload"
+accept="image/*">
+
+<div id="designPreview"></div>
+
+<button onclick="addToCart()">
+Add To Cart
+</button>
+
+</div>
+
+`,
+
+
+
+// =====================================
+// DRINKWARE
+// =====================================
+
+"drinkware":`
+
+<div class="category-form">
+
+<h2>Customize Drinkware</h2>
+
+<label>Product Colour</label>
+
+<select id="colour">
+<option>White</option>
+<option>Black</option>
+<option>Blue</option>
+<option>Red</option>
+</select>
+
+<label>Capacity</label>
+
+<select id="capacity">
+<option>300 ml</option>
+<option>500 ml</option>
+<option>750 ml</option>
+<option>1000 ml</option>
+</select>
+
+<label>Print Position</label>
+
+<select id="printPosition">
+<option>Front</option>
+<option>Back</option>
+<option>Wrap Around</option>
+</select>
+
+<label>Quantity</label>
+
+<input
+type="number"
+id="productQty"
+value="1"
+min="1">
+
+<div id="totalPriceBox">
+Total Price : ₹0
+</div>
+
+<label>Upload Design</label>
+
+<input
+type="file"
+id="designUpload"
+accept="image/*">
+
+<div id="designPreview"></div>
+
+<button onclick="addToCart()">
+Add To Cart
+</button>
 
 </div>
 
 `
+    };
+    if(forms[category]){
 
-};
-
-
-
-
-if(forms[category]){
-
-
-    formBox.innerHTML =
-    forms[category];
-
-
-
-    // ==========================
-    // QUANTITY PRICE CALCULATOR
-    // ==========================
-
+    formBox.innerHTML = forms[category];
 
     setTimeout(()=>{
-
 
         const qtyInput =
         document.getElementById("productQty");
 
-
-
         if(qtyInput){
-
 
             qtyInput.addEventListener(
             "input",
             calculatePrice
             );
 
-
             calculatePrice();
 
-
         }
-
-
-
-        // ==========================
-        // DESIGN PREVIEW
-        // ==========================
 
 
         const fileInput =
         document.getElementById("designUpload");
 
-
-
         if(fileInput){
-
 
             fileInput.addEventListener(
             "change",
             function(){
 
-
                 const file =
                 this.files[0];
 
-
                 if(!file) return;
-
-
 
                 const reader =
                 new FileReader();
 
-
-
-                reader.onload = function(e){
-
+                reader.onload=function(e){
 
                     uploadedDesign =
                     e.target.result;
 
-
-
                     document.getElementById(
                     "designPreview"
-                    ).innerHTML =
+                    ).innerHTML=
 
+                    `<img src="${uploadedDesign}" style="width:120px;height:120px;border-radius:10px;object-fit:cover;">`;
 
-                    `
-                    <img src="${uploadedDesign}">
-                    `;
-
-
-                }
-
-
+                };
 
                 reader.readAsDataURL(file);
 
-
             });
-
 
         }
 
-
-
     },100);
-
 
 }
 else{
 
-
-formBox.innerHTML="";
-
-}
-
-
+    formBox.innerHTML="";
 
 }
+
+
+
+
+
+
+
+
+        
 // ---------- Reviews ----------
 
 function loadReviews(){
