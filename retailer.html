@@ -1477,38 +1477,23 @@ background:#f2f2f2;
 
 .business-list{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:12px;
+    width:100%;
 }
 
 .business-card{
-    background:#fff;
-    border-radius:16px;
-    padding:12px;
-    text-decoration:none;
-    text-align:center;
-    color:#222;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-    transition:.3s;
-    aspect-ratio:1/1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-}
-
-.business-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    width:100%;
+    box-sizing:border-box;
 }
 
 .business-card img{
     width:100%;
-    aspect-ratio:1/1;
+    height:140px;
     object-fit:cover;
     border-radius:12px;
-    margin-bottom:10px;
 }
+
 
 .business-card span{
     display:block;
