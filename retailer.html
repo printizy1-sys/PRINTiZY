@@ -1462,46 +1462,7 @@ background:#f2f2f2;
     margin-bottom:20px;
 }
 
-.business-list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-}
-
-.business-card{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    background:#fff;
-    padding:15px;
-    border-radius:15px;
-    text-decoration:none;
-    color:#222;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-    transition:.3s;
-}
-
-.business-card img{
-    width:100%;
-    max-width:120px;
-    height:100px;
-    object-fit:cover;
-    border-radius:12px;
-    margin-bottom:10px;
-}
-
-.business-card span{
-    font-size:16px;
-    font-weight:600;
-}
-
-.business-card span{
-    font-size:18px;
-    font-weight:600;
-}
-        .trending-categories{
+.trending-categories{
     padding:20px;
     background:#f8f9fc;
 }
@@ -1523,12 +1484,17 @@ background:#f2f2f2;
 .business-card{
     background:#fff;
     border-radius:16px;
-    padding:15px;
+    padding:12px;
     text-decoration:none;
     text-align:center;
     color:#222;
     box-shadow:0 4px 12px rgba(0,0,0,.08);
-    transition:0.3s;
+    transition:.3s;
+    aspect-ratio:1/1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
 }
 
 .business-card:hover{
@@ -1538,7 +1504,7 @@ background:#f2f2f2;
 
 .business-card img{
     width:100%;
-    height:120px;
+    aspect-ratio:1/1;
     object-fit:cover;
     border-radius:12px;
     margin-bottom:10px;
@@ -1546,7 +1512,7 @@ background:#f2f2f2;
 
 .business-card span{
     display:block;
-    font-size:16px;
+    font-size:18px;
     font-weight:600;
     line-height:1.4;
 }
