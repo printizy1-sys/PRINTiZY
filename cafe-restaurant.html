@@ -823,11 +823,16 @@ font-size:18px;
 HERO
 ========================== */
 
+/*==========================
+HOTEL HERO
+==========================*/
+
 .hotel-hero{
     width:100%;
     margin:0;
     padding:0;
     overflow:hidden;
+    position:relative;
     line-height:0;
 }
 
@@ -837,16 +842,19 @@ HERO
     display:block;
 }
 
+/*==========================
+HERO OVERLAY
+==========================*/
+
 .hero-overlay{
     position:absolute;
     left:0;
     right:0;
     bottom:0;
-    padding:25px;
-    background:linear-gradient(
-        transparent,
-        rgba(0,0,0,.75)
-    );
+    padding:20px;
+    background:linear-gradient(to top,
+    rgba(0,0,0,.65),
+    transparent);
 }
 
 .hero-overlay h1{
@@ -862,15 +870,16 @@ HERO
     line-height:1.6;
 }
 
-/* ==========================
-CATEGORY
-========================== */
+/*==========================
+HOTEL CATEGORIES
+==========================*/
 
 .hotel-categories{
-    padding:20px;
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:16px;
+    gap:14px;
+    padding:14px;
+    margin:0;
 }
 
 .category-card{
@@ -888,79 +897,81 @@ CATEGORY
 
 .category-card img{
     width:100%;
-    aspect-ratio:1/1;
+    height:170px;
     object-fit:cover;
     display:block;
 }
 
 .category-card h3{
-    padding:14px;
-    text-align:center;
-    font-size:18px;
-    line-height:1.4;
+    padding:12px;
+    font-size:16px;
     font-weight:600;
     color:#222;
+    text-align:center;
+    line-height:1.4;
 }
 
-/* ==========================
+/*==========================
 MOBILE
-========================== */
+==========================*/
 
 @media(max-width:768px){
 
-    html,
-    body{
-        margin:0;
-        padding:0;
-    }
+html,
+body{
+    margin:0;
+    padding:0;
+}
+
+.header{
+    margin:0;
+    padding:10px 15px;
+}
 
 .hotel-hero{
     width:100%;
-    aspect-ratio:1/1;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#fff;
+    margin:0;
+    padding:0;
 }
 
 .hotel-hero img{
-    max-width:100%;
-    max-height:100%;
-    object-fit:contain;
+    width:100%;
+    height:auto;
+    display:block;
 }
 
-    .hero-overlay{
-        padding:16px;
-    }
+.hero-overlay{
+    padding:15px;
+}
 
-    .hero-overlay h1{
-        font-size:20px;
-    }
+.hero-overlay h1{
+    font-size:20px;
+}
 
-    .hero-overlay p{
-        font-size:13px;
-    }
+.hero-overlay p{
+    font-size:13px;
+}
 
-    .hotel-categories{
-        padding:12px;
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
+.hotel-categories{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    padding:10px;
+}
 
-    .category-card{
-        border-radius:12px;
-    }
+.category-card{
+    border-radius:12px;
+}
 
-    .category-card img{
-        aspect-ratio:1/1;
-    }
+.category-card img{
+    height:110px;
+}
 
-    .category-card h3{
-        font-size:14px;
-        padding:10px;
-    }
+.category-card h3{
+    font-size:13px;
+    padding:8px;
+}
 
- }
+}
 
  </style>
 </head>
