@@ -141,12 +141,11 @@ font-size:26px;
       SECTION TITLE
 ==================================*/
 
-section{
+section:not(.hotel-hero){
 
-padding:70px 6%;
+    padding:70px 6%;
 
 }
-
 section h2{
 
 font-size:34px;
@@ -256,9 +255,9 @@ padding:12px 28px;
 
 }
 
-section{
+section:not(.hotel-hero){
 
-padding:50px 5%;
+    padding:50px 5%;
 
 }
 
@@ -833,11 +832,10 @@ HERO
 ========================== */
 
 .hotel-hero{
-    display:block;
     width:100%;
-    margin:0 !important;
-    margin-top:0 !important;
-    padding:0 !important;
+    margin:0;
+    padding:0;
+    overflow:hidden;
     line-height:0;
 }
 
