@@ -1477,43 +1477,36 @@ background:#f2f2f2;
 .business-list{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:15px;
+    gap:20px 16px;
+    padding:0 10px;
 }
 
 .business-card{
-    aspect-ratio:1/1;      /* पूरा card square */
-    background:#fff;
-    border-radius:16px;
-    padding:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:flex-start;
     text-align:center;
     text-decoration:none;
     color:#222;
-    overflow:hidden;
+    background:transparent;
+    box-shadow:none;
+    padding:0;
 }
 
 .business-card img{
     width:100%;
-    height:65%;            /* Image छोटी ताकि text पूरा आए */
+    aspect-ratio:1/1;
     object-fit:cover;
-    border-radius:12px;
+    border-radius:8px;
 }
 
 .business-card span{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    padding:8px 4px 0;
-    font-size:16px;
+    margin-top:12px;
+    font-size:17px;
     font-weight:600;
-    line-height:1.25;
+    line-height:1.35;
     text-align:center;
+    color:#222;
 }
         .best-grid{
     display:grid;
