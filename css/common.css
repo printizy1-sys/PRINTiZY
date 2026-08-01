@@ -153,42 +153,44 @@ color:#333;
 /* CATEGORY */
 
 .category-scroll{
-display:flex;
-overflow-x:auto;
-gap:15px;
-scrollbar-width:none;
+    display:flex;
+    overflow-x:auto;
+    gap:15px;
+    scrollbar-width:none;
 }
 
 .category-scroll::-webkit-scrollbar{
-display:none;
+    display:none;
 }
 
 .category-card{
-min-width:130px;
-background:#fff;
-border-radius:18px;
-padding:10px;
-text-align:center;
-box-shadow:0 5px 18px rgba(0,0,0,.08);
-transition:.3s;
-cursor:pointer;
+    min-width:150px;
+    background:#fff;
+    border-radius:18px;
+    padding:10px;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    transition:.3s;
+    cursor:pointer;
 }
 
 .category-card:hover{
-transform:translateY(-5px);
+    transform:translateY(-5px);
 }
 
 .category-card img{
-width:100%;
-height:120px;
-object-fit:cover;
-border-radius:15px;
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;      /* Poora square fill karega */
+    /* object-fit:contain; */ /* Agar poori image bina crop dikhani ho */
+    border-radius:15px;
+    display:block;
 }
 
 .category-card p{
-margin-top:10px;
-font-size:15px;
-font-weight:600;
+    margin-top:10px;
+    font-size:15px;
+    font-weight:600;
 }
 
 /* PRODUCTS */
