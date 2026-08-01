@@ -284,48 +284,110 @@ font-size:15px;
 ==================================*/
 
 .products-grid{
-
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:25px;
-
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
 }
 
 .product-card{
-
-background:#fff;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 8px 25px rgba(0,0,0,.08);
-transition:.35s;
-cursor:pointer;
-
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    overflow:hidden;
+    cursor:pointer;
 }
 
 .product-card:hover{
-
-transform:translateY(-8px);
-
+    transform:translateY(-5px);
 }
 
 .product-card img{
-
-width:100%;
-height:220px;
-object-fit:cover;
-display:block;
-
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+    border-radius:20px;
 }
 
 .product-card h3{
-
-padding:18px;
-font-size:18px;
-text-align:center;
-font-weight:600;
-color:#222;
-
+    display:none;
 }
+  @media (max-width:768px){
+
+.products{
+    padding:20px 15px;
+}
+
+.products-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    padding:0 12px;
+}
+
+.product-card{
+    background:transparent;
+    border:none;
+    box-shadow:none;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.product-card img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+    border-radius:16px;
+}
+
+.product-card h3{
+    display:none;
+}
+
+.features-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+}
+
+.feature-card{
+    padding:25px 18px;
+}
+
+.feature-card i{
+    font-size:42px;
+}
+
+.feature-card h3{
+    font-size:18px;
+}
+
+.feature-card p{
+    font-size:14px;
+}
+
+.bulk-order{
+    grid-template-columns:1fr;
+    text-align:center;
+    padding:40px 5%;
+    gap:30px;
+    margin:40px 5%;
+}
+
+.bulk-content h2{
+    font-size:28px;
+}
+
+.bulk-content p{
+    font-size:16px;
+}
+
+.bulk-btn{
+    padding:12px 28px;
+    font-size:16px;
+}
+
+  }
 
 /*==================================
    RESTAURANT ESSENTIALS
@@ -463,81 +525,6 @@ display:block;
         MOBILE
 ==================================*/
 
-@media(max-width:768px){
-
-.products{
-    padding:20px 15px;
-}
-
-.products-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    padding:0 12px;      /* Left & Right Gap */
-}
-
-.product-card{
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-.product-card img{
-    width:100%;
-    height:150px;
-    object-fit:cover;
-    display:block;
-}
-
-.product-card h3{
-    font-size:15px;
-    padding:12px 10px;
-    line-height:1.4;
-}
-
-.features-grid{
-    grid-template-columns:1fr;
-    gap:18px;
-}
-
-.feature-card{
-    padding:25px 18px;
-}
-
-.feature-card i{
-    font-size:42px;
-}
-
-.feature-card h3{
-    font-size:18px;
-}
-
-.feature-card p{
-    font-size:14px;
-}
-
-.bulk-order{
-    grid-template-columns:1fr;
-    text-align:center;
-    padding:40px 5%;
-    gap:30px;
-    margin:40px 5%;
-}
-
-.bulk-content h2{
-    font-size:28px;
-}
-
-.bulk-content p{
-    font-size:16px;
-}
-
-.bulk-btn{
-    padding:12px 28px;
-    font-size:16px;
-}
-
-}
 /*==================================
         REVIEWS
 ==================================*/
@@ -1086,67 +1073,33 @@ SHOP BY CATEGORY
 <!--=========================
 POPULAR PRODUCTS
 ==========================-->
+<!--=========================
+POPULAR PRODUCTS
+==========================-->
 
-<section
-class="products"
-id="cafe-section">
+<section class="products" id="cafe-section">
 
-<h2>
+    <h2>Restaurant Essentials</h2>
 
-Restaurant Essentials
-</h2>
+    <div class="products-grid">
 
-<div class="products-grid">
+        <div class="product-card">
+            <img src="images/hotel/menu.webp" alt="Restaurant Menu">
+        </div>
 
-<div class="product-card">
+        <div class="product-card">
+            <img src="images/hotel/apron.webp" alt="Chef Aprons">
+        </div>
 
-<img src="images/hotel/menu.webp">
+        <div class="product-card">
+            <img src="images/hotel/tshirt.webp" alt="Staff T-Shirts">
+        </div>
 
-<h3>
+        <div class="product-card">
+            <img src="images/hotel/idcard.webp" alt="ID Cards">
+        </div>
 
-Restaurant Menu
-
-</h3>
-
-</div>
-
-<div class="product-card">
-
-<img src="images/hotel/apron.webp">
-
-<h3>
-
-Chef Aprons
-
-</h3>
-
-</div>
-
-<div class="product-card">
-
-<img src="images/hotel/tshirt.webp">
-
-<h3>
-
-Staff T-Shirts
-
-</h3>
-
-</div>
-
-<div class="product-card">
-
-<img src="images/hotel/idcard.webp">
-
-<h3>
-
-ID Cards
-
-</h3>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 <!--=========================
