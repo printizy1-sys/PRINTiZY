@@ -2684,6 +2684,17 @@ CUSTOMER REVIEWS
     }
 
 }
+        .profile-input[readonly]{
+    background:#f5f5f5;
+    color:#555;
+    cursor:default;
+    border:1px solid #ddd;
+}
+
+.profile-input[readonly]:focus{
+    outline:none;
+    box-shadow:none;
+}
 
     </style>
 </head>
@@ -3780,12 +3791,14 @@ India's most trusted Print & Corporate Gifting Brand
       <div class="profile-user">
 
         <input id="profileName"
-               class="profile-input"
-               placeholder="Shop Name">
+       class="profile-input"
+       placeholder="Shop Name"
+       readonly>
 
-        <input id="profileMobile"
-               class="profile-input"
-               placeholder="Mobile Number">
+<input id="profileMobile"
+       class="profile-input"
+       placeholder="Mobile Number"
+       readonly>
 
       </div>
 
