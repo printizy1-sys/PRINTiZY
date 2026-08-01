@@ -294,14 +294,15 @@ font-size:15px;
     grid-template-columns:repeat(4,1fr);
     gap:25px;
 }
-
 .product-card{
     background:transparent;
     border:none;
     box-shadow:none;
     overflow:hidden;
     cursor:pointer;
+    width:100%;
     aspect-ratio:1/1;
+    border-radius:0;
 }
 
 .product-card:hover{
@@ -310,10 +311,11 @@ font-size:15px;
 
 .product-card img{
     width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
+    height:100%;
     display:block;
-    border-radius:0px;
+    object-fit:cover;
+    object-position:center;
+    border-radius:0;
 }
 
 .product-card h3{
