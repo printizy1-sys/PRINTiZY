@@ -105,83 +105,88 @@ Grow your business with premium signage and branding solutions.
 
 
 
+<!-- ================= SIGNAGE PRODUCTS ================= -->
+<section class="products">
 
-<!--=========================
-SHOP BY APPAREL
-==========================-->
+    <h2>Shop by Signage</h2>
 
-<section class="top-categories">
+    <div class="products-grid">
 
-<h2>Shop by Signage</h2>
+        <div class="product-card" onclick="openProduct('SIGN001')">
+            <img src="images/signage/hanging-acrylic.webp" alt="Custom Hanging Acrylic Sign Board">
+            <h3>Custom Hanging Acrylic Sign Board</h3>
+            <p class="price">Starts from ₹326</p>
+        </div>
 
-<div class="category-scroll">
+        <div class="product-card" onclick="openProduct('SIGN002')">
+            <img src="images/signage/acrylic-ds.webp" alt="Custom Acrylic Sign Board with D/S Tape">
+            <h3>Custom Acrylic Sign Board with D/S Tape</h3>
+            <p class="price">Starts from ₹236</p>
+        </div>
 
-<div class="category-card"
-onclick="document.getElementById('round-neck').scrollIntoView({behavior:'smooth'})">
-<img src="images/apparel/round-neck.webp">
-<p>Flex Banner</p>
-</div>
+        <div class="product-card" onclick="openProduct('SIGN003')">
+            <img src="images/signage/acrylic-studs.webp" alt="Custom Acrylic Sign Board with Studs">
+            <h3>Custom Acrylic Sign Board with Studs</h3>
+            <p class="price">Starts from ₹648</p>
+        </div>
 
-<div class="category-card"
-onclick="document.getElementById('polo').scrollIntoView({behavior:'smooth'})">
-<img src="images/apparel/polo.webp">
-<p>Standee</p>
-</div>
+        <div class="product-card" onclick="openProduct('SIGN004')">
+            <img src="images/signage/stick-on.webp" alt="Stick On Signs">
+            <h3>Stick On Signs</h3>
+            <p class="price">Starts from ₹190</p>
+        </div>
 
-<div class="category-card"
-onclick="document.getElementById('full-sleeve').scrollIntoView({behavior:'smooth'})">
-<img src="images/apparel/full-sleeve.webp">
-<p>Acrylic Board</p>
-</div>
+        <div class="product-card" onclick="openProduct('SIGN005')">
+            <img src="images/signage/hanging-display.webp" alt="Hanging Display Boards">
+            <h3>Hanging Display Boards</h3>
+            <p class="price">Starts from ₹254</p>
+        </div>
 
-<div class="category-card"
-onclick="document.getElementById('hoodies').scrollIntoView({behavior:'smooth'})">
-<img src="images/apparel/hoodie.webp">
-<p>Vinyl Prints</p>
-</div>
+        <div class="product-card" onclick="openProduct('SIGN006')">
+            <img src="images/signage/wall-mount.webp" alt="Wall Mount Signs">
+            <h3>Wall Mount Signs</h3>
+            <p class="price">Starts from ₹415</p>
+        </div>
 
+        <div class="product-card" onclick="openProduct('SIGN007')">
+            <img src="images/signage/standees.webp" alt="Standees">
+            <h3>Standees</h3>
+            <p class="price">Starts from ₹1851</p>
+        </div>
 
+        <div class="product-card" onclick="openProduct('SIGN008')">
+            <img src="images/signage/name-plate.webp" alt="Name Plate">
+            <h3>Name Plate</h3>
+            <p class="price">Starts from ₹507</p>
+        </div>
 
-</div>
+        <div class="product-card" onclick="openProduct('SIGN009')">
+            <img src="images/signage/sun-board-posters.webp" alt="Sun Board Posters">
+            <h3>Sun Board Posters</h3>
+            <p class="price">Starts from ₹1433</p>
+        </div>
+
+        <div class="product-card" onclick="openProduct('SIGN010')">
+            <img src="images/signage/large-format-stickers.webp" alt="Large Format Stickers">
+            <h3>Large Format Stickers</h3>
+            <p class="price">Starts from ₹2296</p>
+        </div>
+
+        <div class="product-card" onclick="openProduct('SIGN011')">
+            <img src="images/signage/decals.webp" alt="Decals">
+            <h3>Decals</h3>
+            <p class="price">Starts from ₹156</p>
+        </div>
+
+        <div class="product-card" onclick="openProduct('SIGN012')">
+            <img src="images/signage/banners.webp" alt="Banners">
+            <h3>Banners</h3>
+            <p class="price">Starts from ₹199</p>
+        </div>
+
+    </div>
 
 </section>
-
-<!-- ROUND NECK -->
-<section class="products" id="round-neck">
-
-    <h2>Flex Banner</h2>
-
-    <div class="products-grid" id="roundNeckProducts"></div>
-
-</section>
-
-<!-- POLO T-SHIRTS -->
-<section class="products" id="polo">
-
-    <h2>Standee</h2>
-
-    <div class="products-grid" id="poloProducts"></div>
-
-</section>
-
-<!-- FULL SLEEVE -->
-<section class="products" id="full-sleeve">
-
-    <h2>Acrylic Board</h2>
-
-    <div class="products-grid" id="fullSleeveProducts"></div>
-
-</section>
-
-<!-- HOODIES -->
-<section class="products" id="hoodies">
-
-    <h2>Vinyl Prints</h2>
-
-    <div class="products-grid" id="hoodiesProducts"></div>
-
-</section>
-
 
 
 
@@ -466,7 +471,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-
+function openProduct(productId) {
+    window.location.href = "product.html?id=" + productId;
+}
 /* =========================
    LOAD PRODUCTS
 ========================= */
