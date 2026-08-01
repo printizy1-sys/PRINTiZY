@@ -2609,6 +2609,81 @@ CUSTOMER REVIEWS
 .offer-slider .offer.active{
     display:block;
 }
+        /* Auth Buttons */
+#authButtons,
+#userButtons{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+#authButtons button,
+#userButtons button{
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+/* Login Button */
+#authButtons button:first-child{
+    background:#2563eb;
+    color:#fff;
+}
+
+#authButtons button:first-child:hover{
+    background:#1d4ed8;
+}
+
+/* Signup Button */
+#authButtons button:last-child{
+    background:#16a34a;
+    color:#fff;
+}
+
+#authButtons button:last-child:hover{
+    background:#15803d;
+}
+
+/* Profile Button */
+#userButtons button:first-child{
+    background:#0ea5e9;
+    color:#fff;
+}
+
+#userButtons button:first-child:hover{
+    background:#0284c7;
+}
+
+/* Logout Button */
+#userButtons button:last-child{
+    background:#ef4444;
+    color:#fff;
+}
+
+#userButtons button:last-child:hover{
+    background:#dc2626;
+}
+
+/* Mobile Responsive */
+@media(max-width:768px){
+
+    #authButtons,
+    #userButtons{
+        width:100%;
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    #authButtons button,
+    #userButtons button{
+        width:48%;
+    }
+
+}
 
     </style>
 </head>
@@ -3834,7 +3909,15 @@ India's most trusted Print & Corporate Gifting Brand
 </button>
 
   </div>
+<div id="authButtons">
+    <button onclick="window.location.href='index.html#login'">Login</button>
+    <button onclick="window.location.href='index.html#signup'">Sign Up</button>
+</div>
 
+<div id="userButtons" style="display:none;">
+    <button onclick="window.location.href='profile.html'">Profile</button>
+    <button onclick="logout()">Logout</button>
+</div>
 </div>
 
     <!-- Order Status Modal -->
@@ -4044,7 +4127,24 @@ item.querySelector("span").innerHTML="−";
 /*=========================
       FOOTER ACCORDION
 =========================*/
+const token = localStorage.getItem("token");
 
+if (token) {
+    document.getElementById("authButtons").style.display = "none";
+    document.getElementById("userButtons").style.display = "block";
+} else {
+    document.getElementById("authButtons").style.display = "block";
+    document.getElementById("userButtons").style.display = "none";
+}
+
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
+
+    alert("Logged out successfully");
+    window.location.href = "index.html";
+        }
 /*==========================
       PRINTiZY FOOTER
 ==========================*/
