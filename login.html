@@ -414,66 +414,94 @@ async function getFCMToken(){
   }
 }
 
-(function autoLoginCheck() {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
 
-  // Wholesaler के लिए auto login नहीं
-  if (token && role && role !== "wholesaler") {
-    window.location.href = role + ".html";
-  }
+(function autoLoginCheck() {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if(token && role){
+        if(role === "retailer"){
+            window.location.href = "index.html";
+        }else if(role !== "wholesaler"){
+            window.location.href = role + ".html";
+        }
+    }
 })();
-    
+
 /* ================= SIGNUP ================= */
 async function signupUser(type,data){
-  try{
-    const res = await fetch(`${SERVER_URL}/api/signup`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({...data,role:type})
-    });
-    const json = await res.json();
-    if(json.success){
-      localStorage.setItem("token",json.token);
-      localStorage.setItem("userId",json.userId);
-      localStorage.setItem("role",type);
-      alert(type+" signup success");
-      window.location.href = type+".html";
-    }else alert(json.message);
-  }catch(err){ alert("Server error: "+err.message); }
+    try{
+        const res = await fetch(`${SERVER_URL}/api/signup`,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({...data,role:type})
+        });
+
+        const json = await res.json();
+
+        if(json.success){
+            localStorage.setItem("token",json.token);
+            localStorage.setItem("userId",json.userId);
+            localStorage.setItem("role",type);
+
+            alert(type + " signup success");
+
+            if(type === "retailer"){
+                window.location.href = "index.html";
+            }else{
+                window.location.href = type + ".html";
+            }
+
+        }else{
+            alert(json.message);
+        }
+
+    }catch(err){
+        alert("Server error: " + err.message);
+    }
 }
 
 /* ================= LOGIN + FCM ================= */
 async function loginUser(type,mobile,password){
-  try{
-    const res = await fetch(`${SERVER_URL}/api/login`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({mobile,password,role:type})
-    });
-    const json = await res.json();
-    if(!json.success) return alert(json.message);
+    try{
 
-    localStorage.setItem("token",json.token);
-    localStorage.setItem("userId",json.userId);
-    localStorage.setItem("role",type);
+        const res = await fetch(`${SERVER_URL}/api/login`,{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({mobile,password,role:type})
+        });
 
-    /* 🔥 FCM TOKEN SEND */
-    const fcmToken = await getFCMToken();
-    if(fcmToken){
-      await fetch(`${SERVER_URL}/api/notifications/saveToken`,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          userId: json.userId,
-          role: type,
-          fcmToken
-        })
-      });
+        const json = await res.json();
+
+        if(!json.success) return alert(json.message);
+
+        localStorage.setItem("token",json.token);
+        localStorage.setItem("userId",json.userId);
+        localStorage.setItem("role",type);
+
+        const fcmToken = await getFCMToken();
+
+        if(fcmToken){
+            await fetch(`${SERVER_URL}/api/notifications/saveToken`,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    userId: json.userId,
+                    role: type,
+                    fcmToken
+                })
+            });
+        }
+
+        if(type === "retailer"){
+            window.location.href = "index.html";
+        }else{
+            window.location.href = type + ".html";
+        }
+
+    }catch(err){
+        alert("Server error: " + err.message);
     }
-
-    window.location.href = type+".html";
-  }catch(err){ alert("Server error: "+err.message); }
 }
 
 /* ================= BUTTON HANDLERS ================= */
