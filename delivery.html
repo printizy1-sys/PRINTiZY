@@ -56,35 +56,83 @@ href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.m
   --card-muted: #d0deed;
 }
 
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-html{
-  scroll-behavior:smooth;
-  width:100%;
-  overflow-x:hidden;
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-body{
-  width:100%;
-  overflow-x:hidden;
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #fbfdff 55%,
-      #f3f8ff 100%
-    );
-  color:var(--text);
-  font-size:15px;
-  line-height:1.6;
+body {
+  width: 100%;
+  overflow-x: hidden;
+  background: #ffffff;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
+/* DARK BLUE CARDS — CLEAR TEXT */
+.category-card,
+.product-card,
+.feature-card,
+.faq-item,
+.hotel-categories .category-card {
+  color: var(--card-text);
+  background: linear-gradient(145deg, #102b4c, #071a32);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* CARD HEADINGS */
+.category-card h3,
+.product-card h3,
+.feature-card h3,
+.faq-item h3,
+.hotel-categories .category-card h3 {
+  color: #ffffff;
+}
+
+/* CARD PARAGRAPHS */
+.feature-card p,
+.faq-content,
+.product-card p,
+.category-card p {
+  color: var(--card-muted);
+}
+
+/* FAQ BUTTON TEXT */
+.faq-btn {
+  color: #ffffff;
+}
+
+/* LIGHT BODY SECTION HEADINGS */
+section h2 {
+  color: #10243b;
+}
+
+/* BODY LINKS */
+body a {
+  text-decoration: none;
+}
+
+/* INPUT TEXT */
+input,
+textarea,
+select {
+  color: #10243b;
+}
+
+/* INPUT PLACEHOLDER */
+input::placeholder,
+textarea::placeholder {
+  color: #718198;
+}
 img{
   max-width:100%;
   display:block;
