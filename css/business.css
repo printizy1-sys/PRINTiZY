@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 :root{
-  --bg: #071c2e;
-  --bg-2: #0d253d;
-  --panel: #112d45;
-  --panel-2: #12314d;
-  --panel-3: #143c63;
+  --bg: #f6fbff;
+  --bg-2: #edf7ff;
+  --panel: #ffffff;
+  --panel-2: #f8fbff;
+  --panel-3: #f3f9ff;
   --soft: #ebf6ff;
-  --primary: #4db6ff;
-  --primary-2: #1c8cff;
+  --primary: #168fe5;
+  --primary-2: #0d75d1;
   --primary-3: #ff8a2b;
   --accent: #ffb347;
-  --text: #edf8ff;
-  --muted: #a7c2d8;
-  --line: rgba(151, 208, 255, 0.15);
-  --shadow: 0 12px 30px rgba(6, 18, 30, 0.24);
+  --text: #0d2338;
+  --muted: #58708a;
+  --line: rgba(13, 35, 56, 0.10);
+  --shadow: 0 10px 24px rgba(13, 35, 56, 0.06);
   --radius: 18px;
 }
 
@@ -35,9 +35,9 @@ body{
   width:100%;
   overflow-x:hidden;
   background:
-    radial-gradient(circle at top left, rgba(61,149,255,0.15), transparent 26%),
-    radial-gradient(circle at top right, rgba(77,182,255,0.12), transparent 32%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    radial-gradient(circle at top left, rgba(61,149,255,0.08), transparent 26%),
+    radial-gradient(circle at top right, rgba(77,182,255,0.05), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #f5fbff 100%);
   color:var(--text);
 }
 
@@ -65,7 +65,7 @@ HEADER
   left:0;
   width:100%;
   z-index:999;
-  background:rgba(10,25,39,0.8);
+  background:rgba(10,25,39,0.85);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
   display:flex;
@@ -86,7 +86,7 @@ HEADER
   display:flex;
   align-items:center;
   margin:0 18px;
-  background:linear-gradient(180deg, rgba(16,39,60,0.95), rgba(13,30,46,0.9));
+  background:linear-gradient(180deg, #ffffff, #f6fbff);
   border:1px solid var(--line);
   border-radius:50px;
   padding:12px 18px;
@@ -94,7 +94,7 @@ HEADER
 }
 
 .search-box i{
-  color:#b9d9f6;
+  color:#4d6d8c;
   margin-right:10px;
   font-size:18px;
 }
@@ -169,7 +169,7 @@ section h2::after{
   display:block;
   width:70px;
   height:2px;
-  background:linear-gradient(90deg, transparent, rgba(77,182,255,0.9), transparent);
+  background:linear-gradient(90deg, transparent, rgba(78,181,255,0.8), transparent);
   border-radius:999px;
 }
 
@@ -191,12 +191,12 @@ CATEGORY GRID
 }
 
 .category-card{
-  background:linear-gradient(180deg, rgba(17,42,62,0.94), rgba(10,24,38,0.95));
-  border:1px solid var(--line);
+  background:linear-gradient(180deg, #000000, #111111);
+  border:1px solid rgba(255,255,255,0.06);
   border-radius:20px;
   padding:18px;
   text-align:center;
-  box-shadow:var(--shadow);
+  box-shadow:0 8px 18px rgba(0,0,0,0.12);
   transition:0.35s ease;
   cursor:pointer;
   position:relative;
@@ -214,7 +214,7 @@ CATEGORY GRID
 
 .category-card:hover{
   transform:translateY(-8px);
-  box-shadow:0 18px 30px rgba(22,86,148,0.26);
+  box-shadow:0 18px 30px rgba(0,0,0,0.18);
 }
 
 .category-card:hover::before{
@@ -233,7 +233,7 @@ CATEGORY GRID
 
 .category-card h3{
   font-size:17px;
-  color:var(--text);
+  color:#ffffff;
   font-weight:600;
   letter-spacing:-0.02em;
 }
@@ -249,7 +249,7 @@ PRODUCTS
 }
 
 .product-card{
-  background:linear-gradient(180deg, rgba(17,42,62,0.96), rgba(11,24,38,0.92));
+  background:linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
   border:1px solid var(--line);
   border-radius:16px;
   overflow:hidden;
@@ -261,7 +261,7 @@ PRODUCTS
 
 .product-card:hover{
   transform:translateY(-3px);
-  box-shadow:0 16px 28px rgba(22,86,148,0.25);
+  box-shadow:0 16px 28px rgba(13,35,56,0.08);
 }
 
 .product-card img{
@@ -269,7 +269,7 @@ PRODUCTS
   height:180px;
   object-fit:contain;
   display:block;
-  background:linear-gradient(180deg, rgba(12,30,45,0.66), rgba(11,24,38,0.9));
+  background:linear-gradient(180deg, rgba(12,30,45,0.04), rgba(11,24,38,0.03));
   padding:12px;
 }
 
@@ -293,7 +293,7 @@ FEATURES / WHY PRINTIZY
 }
 
 .feature-card{
-  background:linear-gradient(180deg, rgba(17,42,62,0.95), rgba(11,24,38,0.9));
+  background:linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
   border:1px solid var(--line);
   border-radius:20px;
   text-align:center;
@@ -304,7 +304,7 @@ FEATURES / WHY PRINTIZY
 
 .feature-card:hover{
   transform:translateY(-8px);
-  box-shadow:0 18px 34px rgba(21,91,155,0.24);
+  box-shadow:0 18px 34px rgba(21,91,155,0.12);
 }
 
 .feature-card i{
@@ -398,7 +398,7 @@ REVIEWS
 .review-photo{
   width:100%;
   border-radius:20px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.12);
+  box-shadow:0 10px 20px rgba(0,0,0,0.08);
   border:1px solid var(--line);
   transition:0.3s ease;
   cursor:pointer;
@@ -413,7 +413,7 @@ TRUSTED BRANDS
 ========================= */
 
 .trusted-brands{
-  background:rgba(13,28,41,0.5);
+  background:rgba(13,28,41,0.02);
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
   padding:70px 6%;
@@ -430,11 +430,11 @@ TRUSTED BRANDS
   width:100%;
   height:90px;
   object-fit:contain;
-  background:linear-gradient(180deg, rgba(17,42,62,0.95), rgba(11,24,38,0.9));
+  background:linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
   padding:15px;
   border-radius:15px;
   border:1px solid var(--line);
-  box-shadow:0 10px 20px rgba(0,0,0,0.12);
+  box-shadow:0 10px 20px rgba(0,0,0,0.05);
 }
 
 /* =========================
@@ -447,7 +447,7 @@ FAQ
 }
 
 .faq-item{
-  background:linear-gradient(180deg, rgba(17,42,62,0.92), rgba(11,24,38,0.9));
+  background:linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
   border:1px solid var(--line);
   border-radius:12px;
   margin-bottom:15px;
@@ -670,21 +670,21 @@ HOTEL CATEGORIES
   margin:0;
 }
 
-.category-card{
-  background:linear-gradient(180deg, rgba(17,42,62,0.96), rgba(11,24,38,0.9));
-  border:1px solid var(--line);
+.hotel-categories .category-card{
+  background:linear-gradient(180deg, #000000, #111111);
+  border:1px solid rgba(255,255,255,0.06);
   border-radius:16px;
   overflow:hidden;
   cursor:pointer;
   transition:0.3s ease;
-  box-shadow:var(--shadow);
+  box-shadow:0 8px 18px rgba(0,0,0,0.12);
 }
 
-.category-card:hover{
+.hotel-categories .category-card:hover{
   transform:translateY(-5px);
 }
 
-.category-card img{
+.hotel-categories .category-card img{
   width:100%;
   height:170px;
   object-fit:cover;
@@ -692,11 +692,11 @@ HOTEL CATEGORIES
   background:#0d1d2a;
 }
 
-.category-card h3{
+.hotel-categories .category-card h3{
   padding:12px;
   font-size:16px;
   font-weight:600;
-  color:var(--text);
+  color:#ffffff;
   text-align:center;
   line-height:1.4;
 }
