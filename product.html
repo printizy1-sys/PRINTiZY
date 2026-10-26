@@ -1578,452 +1578,459 @@
     }
 
     function loadCategoryForm(category){
-      const formBox = document.getElementById("dynamicForm");
-      const forms = {
-        "Visiting Cards": `
-          <div class="category-form">
-            <h2>Customize Visiting Card</h2>
+  const formBox = document.getElementById("dynamicForm");
+  const forms = {
+    "Visiting Cards": `
+      <div class="category-form">
+        <h2>Customize Visiting Card</h2>
 
-            <div class="field">
-              <label>Paper Type</label>
-              <select id="paperType">
-                <option>300 GSM</option>
-                <option>350 GSM</option>
-                <option>400 GSM</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Paper Type</label>
+          <select id="paperType">
+            <option>300 GSM</option>
+            <option>350 GSM</option>
+            <option>400 GSM</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Card Size</label>
-              <select id="cardSize">
-                <option>Standard</option>
-                <option>Square</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Card Size</label>
+          <select id="cardSize">
+            <option>Standard</option>
+            <option>Square</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Finish</label>
-              <select id="finish">
-                <option>Matte</option>
-                <option>Glossy</option>
-                <option>Velvet</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Finish</label>
+          <select id="finish">
+            <option>Matte</option>
+            <option>Glossy</option>
+            <option>Velvet</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Print Side</label>
-              <select id="printSide">
-                <option>Front</option>
-                <option>Back</option>
-                <option>Front & Back</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Print Side</label>
+          <select id="printSide">
+            <option>Front</option>
+            <option>Back</option>
+            <option>Front & Back</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Quantity</label>
-              <select id="productQty">
-                <option value="100">100</option>
-                <option value="250">250</option>
-                <option value="500">500</option>
-                <option value="1000">1000</option>
-                <option value="2000">2000</option>
-                <option value="5000">5000</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Quantity</label>
+          <select id="productQty">
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="2000">2000</option>
+            <option value="5000">5000</option>
+          </select>
+        </div>
 
-            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
 
-            <div class="field">
-              <label>Upload Design</label>
-              <input type="file" id="designUpload" accept="image/*">
-            </div>
+        <div class="field">
+          <label>Upload Design</label>
+          <input type="file" id="designUpload" accept="image/*">
+        </div>
 
-            <div id="designPreview"></div>
+        <div id="designPreview"></div>
 
-            <button class="cart-submit" onclick="addToCart()">Add To Cart</button>
-          </div>
-        `,
-        "Apparel": `
-          <div class="category-form">
-            <h2>Customize Apparel</h2>
+        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+      </div>
+    `,
+    "Apparel": `
+      <div class="category-form">
+        <h2>Customize Apparel</h2>
 
-            <div class="field">
-              <label>Size</label>
-              <select id="size">
-                <option>S</option>
-                <option>M</option>
-                <option>L</option>
-                <option>XL</option>
-                <option>XXL</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Size</label>
+          <select id="size">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>XXL</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Colour</label>
-              <select id="colour">
-                <option>Black</option>
-                <option>White</option>
-                <option>Blue</option>
-                <option>Red</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Colour</label>
+          <select id="colour">
+            <option>Black</option>
+            <option>White</option>
+            <option>Blue</option>
+            <option>Red</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Print Position</label>
-              <select id="printPosition">
-                <option>Front</option>
-                <option>Back</option>
-                <option>Front & Back</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Print Position</label>
+          <select id="printPosition">
+            <option>Front</option>
+            <option>Back</option>
+            <option>Front & Back</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Quantity</label>
-              <input type="number" id="productQty" value="1" min="1">
-            </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" id="productQty" value="1" min="1">
+        </div>
 
-            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
 
-            <div class="field">
-              <label>Upload Design</label>
-              <input type="file" id="designUpload" accept="image/*">
-            </div>
+        <div class="field">
+          <label>Upload Design</label>
+          <input type="file" id="designUpload" accept="image/*">
+        </div>
 
-            <div id="designPreview"></div>
-            
-            <button class="cart-submit" onclick="addToCart()">Add To Cart</button>
-          </div>
-        `,
-        "Personalised Gifts": `
-          <div class="category-form">
-            <h2>Customize Gift</h2>
+        <div id="designPreview"></div>
 
-            <div class="field">
-              <label>Product Colour</label>
-              <select id="giftColour">
-                <option>White</option>
-                <option>Black</option>
-                <option>Red</option>
-                <option>Blue</option>
-              </select>
-            </div>
+        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+      </div>
+    `,
+    "Personalised Gifts": `
+      <div class="category-form">
+        <h2>Customize Gift</h2>
 
-            <div class="field">
-              <label>Printing Type</label>
-              <select id="printingType">
-                <option>Single Side</option>
-                <option>Double Side</option>
-                <option>UV Print</option>
-                <option>Laser Engraving</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Product Colour</label>
+          <select id="giftColour">
+            <option>White</option>
+            <option>Black</option>
+            <option>Red</option>
+            <option>Blue</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Print Position</label>
-              <select id="printPosition">
-                <option>Front</option>
-                <option>Back</option>
-                <option>Front & Back</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Printing Type</label>
+          <select id="printingType">
+            <option>Single Side</option>
+            <option>Double Side</option>
+            <option>UV Print</option>
+            <option>Laser Engraving</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Quantity</label>
-              <input type="number" id="productQty" value="1" min="1">
-            </div>
+        <div class="field">
+          <label>Print Position</label>
+          <select id="printPosition">
+            <option>Front</option>
+            <option>Back</option>
+            <option>Front & Back</option>
+          </select>
+        </div>
 
-            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" id="productQty" value="1" min="1">
+        </div>
 
-            <div class="field">
-              <label>Upload Design</label>
-              <input type="file" id="designUpload" accept="image/*">
-            </div>
+        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
 
-            <div id="designPreview"></div>
+        <div class="field">
+          <label>Upload Design</label>
+          <input type="file" id="designUpload" accept="image/*">
+        </div>
 
-            <button class="cart-submit" onclick="addToCart()">Add To Cart</button>
-          </div>
-        `,
-        "Stationery & Stamps": `
-          <div class="category-form">
-            <h2>Customize Stationery</h2>
+        <div id="designPreview"></div>
 
-            <div class="field">
-              <label>Paper Type</label>
-              <select id="paperType">
-                <option>Normal</option>
-                <option>Premium</option>
-                <option>Recycled</option>
-              </select>
-            </div>
+        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+      </div>
+    `,
+    "Stationery & Stamps": `
+      <div class="category-form">
+        <h2>Customize Stationery</h2>
 
-            <div class="field">
-              <label>Paper Size</label>
-              <select id="paperSize">
-                <option>A4</option>
-                <option>A5</option>
-                <option>Letter</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Paper Type</label>
+          <select id="paperType">
+            <option>Normal</option>
+            <option>Premium</option>
+            <option>Recycled</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Ink Colour</label>
-              <select id="inkColour">
-                <option>Black</option>
-                <option>Blue</option>
-                <option>Red</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Paper Size</label>
+          <select id="paperSize">
+            <option>A4</option>
+            <option>A5</option>
+            <option>Letter</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Print Side</label>
-              <select id="printSide">
-                <option>Front</option>
-                <option>Back</option>
-                <option>Front & Back</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Ink Colour</label>
+          <select id="inkColour">
+            <option>Black</option>
+            <option>Blue</option>
+            <option>Red</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Quantity</label>
-              <select id="productQty">
-                <option value="100">100</option>
-                <option value="250">250</option>
-                <option value="500">500</option>
-                <option value="1000">1000</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Print Side</label>
+          <select id="printSide">
+            <option>Front</option>
+            <option>Back</option>
+            <option>Front & Back</option>
+          </select>
+        </div>
 
-            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+        <div class="field">
+          <label>Quantity</label>
+          <select id="productQty">
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Upload Design</label>
-              <input type="file" id="designUpload" accept="image/*">
-            </div>
+        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
 
-            <div id="designPreview"></div>
+        <div class="field">
+          <label>Upload Design</label>
+          <input type="file" id="designUpload" accept="image/*">
+        </div>
 
-            <button class="cart-submit" onclick="addToCart()">Add To Cart</button>
-          </div>
-        `,
-        "Labels & Packaging": `
-          <div class="category-form">
-            <h2>Customize Packaging</h2>
+        <div id="designPreview"></div>
 
-            <div class="field">
-              <label>Material</label>
-              <select id="material">
-                <option>Paper</option>
-                <option>Vinyl</option>
-                <option>PVC</option>
-                <option>Kraft</option>
-              </select>
-            </div>
+        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+      </div>
+    `,
+    "Labels & Packaging": `
+      <div class="category-form">
+        <h2>Customize Packaging</h2>
 
-            <div class="field">
-              <label>Shape</label>
-              <select id="shape">
-                <option>Rectangle</option>
-                <option>Square</option>
-                <option>Round</option>
-                <option>Custom</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Material</label>
+          <select id="material">
+            <option>Paper</option>
+            <option>Vinyl</option>
+            <option>PVC</option>
+            <option>Kraft</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Finish</label>
-              <select id="finish">
-                <option>Matte</option>
-                <option>Glossy</option>
-                <option>Lamination</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Shape</label>
+          <select id="shape">
+            <option>Rectangle</option>
+            <option>Square</option>
+            <option>Round</option>
+            <option>Custom</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Print Side</label>
-              <select id="printSide">
-                <option>Front</option>
-                <option>Back</option>
-                <option>Front & Back</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Finish</label>
+          <select id="finish">
+            <option>Matte</option>
+            <option>Glossy</option>
+            <option>Lamination</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Quantity</label>
-              <select id="productQty">
-                <option value="100">100</option>
-                <option value="250">250</option>
-                <option value="500">500</option>
-                <option value="1000">1000</option>
-                <option value="2000">2000</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Print Side</label>
+          <select id="printSide">
+            <option>Front</option>
+            <option>Back</option>
+            <option>Front & Back</option>
+          </select>
+        </div>
 
-            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+        <div class="field">
+          <label>Quantity</label>
+          <select id="productQty">
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="2000">2000</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Upload Design</label>
-              <input type="file" id="designUpload" accept="image/*">
-            </div>
+        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
 
-            <div id="designPreview"></div>
+        <div class="field">
+          <label>Upload Design</label>
+          <input type="file" id="designUpload" accept="image/*">
+        </div>
 
-            <button class="cart-submit" onclick="addToCart()">Add To Cart</button>
-          </div>
-        `,
-        "Signage": `
-          <div class="category-form">
-            <h2>Customize Signage</h2>
+        <div id="designPreview"></div>
 
-            <div class="field">
-              <label>Material</label>
-              <select id="material">
-                <option>ACP Board</option>
-                <option>Sunboard</option>
-                <option>Acrylic</option>
-                <option>Foam Board</option>
-              </select>
-            </div>
+        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+      </div>
+    `,
+    "Signage": `
+      <div class="category-form">
+        <h2>Customize Signage</h2>
 
-            <div class="field">
-              <label>Size</label>
-              <select id="boardSize">
-                <option>1 x 1 ft</option>
-                <option>2 x 2 ft</option>
-                <option>3 x 2 ft</option>
-                <option>Custom Size</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Material</label>
+          <select id="material">
+            <option>ACP Board</option>
+            <option>Sunboard</option>
+            <option>Acrylic</option>
+            <option>Foam Board</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Print Side</label>
-              <select id="printSide">
-                <option>Front</option>
-                <option>Back</option>
-                <option>Front & Back</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Size</label>
+          <select id="boardSize">
+            <option>1 x 1 ft</option>
+            <option>2 x 2 ft</option>
+            <option>3 x 2 ft</option>
+            <option>Custom Size</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Quantity</label>
-              <input type="number" id="productQty" value="1" min="1">
-            </div>
+        <div class="field">
+          <label>Print Side</label>
+          <select id="printSide">
+            <option>Front</option>
+            <option>Back</option>
+            <option>Front & Back</option>
+          </select>
+        </div>
 
-            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" id="productQty" value="1" min="1">
+        </div>
 
-            <div class="field">
-              <label>Upload Design</label>
-              <input type="file" id="designUpload" accept="image/*">
-            </div>
+        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
 
-            <div id="designPreview"></div>
+        <div class="field">
+          <label>Upload Design</label>
+          <input type="file" id="designUpload" accept="image/*">
+        </div>
 
-            <button class="cart-submit" onclick="addToCart()">Add To Cart</button>
-          </div>
-        `,
-        "Drinkware": `
-          <div class="category-form">
-            <h2>Customize Drinkware</h2>
+        <div id="designPreview"></div>
 
-            <div class="field">
-              <label>Product Colour</label>
-              <select id="colour">
-                <option>White</option>
-                <option>Black</option>
-                <option>Blue</option>
-                <option>Red</option>
-              </select>
-            </div>
+        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+      </div>
+    `,
+    "Drinkware": `
+      <div class="category-form">
+        <h2>Customize Drinkware</h2>
 
-            <div class="field">
-              <label>Capacity</label>
-              <select id="capacity">
-                <option>300 ml</option>
-                <option>500 ml</option>
-                <option>750 ml</option>
-                <option>1000 ml</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Product Colour</label>
+          <select id="colour">
+            <option>White</option>
+            <option>Black</option>
+            <option>Blue</option>
+            <option>Red</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Print Position</label>
-              <select id="printPosition">
-                <option>Front</option>
-                <option>Back</option>
-                <option>Wrap Around</option>
-              </select>
-            </div>
+        <div class="field">
+          <label>Capacity</label>
+          <select id="capacity">
+            <option>300 ml</option>
+            <option>500 ml</option>
+            <option>750 ml</option>
+            <option>1000 ml</option>
+          </select>
+        </div>
 
-            <div class="field">
-              <label>Quantity</label>
-              <input type="number" id="productQty" value="1" min="1">
-            </div>
+        <div class="field">
+          <label>Print Position</label>
+          <select id="printPosition">
+            <option>Front</option>
+            <option>Back</option>
+            <option>Wrap Around</option>
+          </select>
+        </div>
 
-            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" id="productQty" value="1" min="1">
+        </div>
 
-            <div class="field">
-              <label>Upload Design</label>
-              <input type="file" id="designUpload" accept="image/*">
-            </div>
+        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
 
-            <div id="designPreview"></div>
+        <div class="field">
+          <label>Upload Design</label>
+          <input type="file" id="designUpload" accept="image/*">
+        </div>
 
-            <button class="cart-submit" onclick="addToCart()">Add To Cart</button>
-          </div>
-        `
+        <div id="designPreview"></div>
+
+        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+      </div>
+    `
+  };
+
+  const categoryAliases = {
+    "visiting cards": "Visiting Cards",
+    "visiting card": "Visiting Cards",
+    "visiting-cards": "Visiting Cards",
+    "apparel": "Apparel",
+    "personalised gifts": "Personalised Gifts",
+    "personalized gifts": "Personalised Gifts",
+    "stationery and stamps": "Stationery & Stamps",
+    "stationery stamps": "Stationery & Stamps",
+    "labels and packaging": "Labels & Packaging",
+    "labels packaging": "Labels & Packaging",
+    "drinkware": "Drinkware",
+    "signage": "Signage"
+  };
+
+  const normalizedInput = normalizeCategory(category);
+  let matchedKey = Object.keys(forms).find(key => normalizeCategory(key) === normalizedInput);
+
+  if (!matchedKey && categoryAliases[normalizedInput]) {
+    matchedKey = categoryAliases[normalizedInput];
+  }
+
+  if (!matchedKey) {
+    matchedKey = "Apparel";
+  }
+
+  const selected = forms[matchedKey] || forms["Apparel"] || "";
+  formBox.innerHTML = selected;
+
+  const qtyInput = document.getElementById("productQty");
+  if (qtyInput) {
+    qtyInput.addEventListener("input", calculatePrice);
+    qtyInput.addEventListener("change", calculatePrice);
+  }
+
+  const fileInput = document.getElementById("designUpload");
+  if (fileInput) {
+    fileInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        uploadedDesign = e.target.result;
+        const preview = document.getElementById("designPreview");
+        preview.innerHTML = `<img src="${uploadedDesign}" alt="Design Preview">`;
       };
+      reader.readAsDataURL(file);
+    });
+  }
 
-      const categoryAliases = {
-  "visiting cards": "Visiting Cards",
-  "visiting card": "Visiting Cards",
-  "visiting-cards": "Visiting Cards",
-  "apparel": "Apparel",
-  "personalised gifts": "Personalised Gifts",
-  "personalized gifts": "Personalised Gifts",
-  "stationery and stamps": "Stationery & Stamps",
-  "stationery stamps": "Stationery & Stamps",
-  "labels and packaging": "Labels & Packaging",
-  "labels packaging": "Labels & Packaging",
-  "drinkware": "Drinkware",
-  "signage": "Signage"
-};
-
-const normalizedInput = normalizeCategory(category);
-let matchedKey = Object.keys(forms).find(key => normalizeCategory(key) === normalizedInput);
-
-if (!matchedKey && categoryAliases[normalizedInput]) {
-  matchedKey = categoryAliases[normalizedInput];
+  calculatePrice();
 }
+    
+                              
 
-if (!matchedKey) {
-  matchedKey = "Apparel";
-}
 
-const selected = forms[matchedKey] || forms["Apparel"] || "";
-      const qtyInput = document.getElementById("productQty");
-      if (qtyInput) {
-        qtyInput.addEventListener("input", calculatePrice);
-        qtyInput.addEventListener("change", calculatePrice);
-      }
-
-      const fileInput = document.getElementById("designUpload");
-      if (fileInput) {
-        fileInput.addEventListener("change", function () {
-          const file = this.files[0];
-          if (!file) return;
-
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            uploadedDesign = e.target.result;
-            const preview = document.getElementById("designPreview");
-            preview.innerHTML = `<img src="${uploadedDesign}" alt="Design Preview">`;
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-
-      calculatePrice();
-    }
+      
 
     function calculatePrice(){
       const productQty = document.getElementById("productQty");
