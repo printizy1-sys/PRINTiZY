@@ -1973,9 +1973,33 @@
         `
       };
 
-      const selected = forms[category] || forms["Apparel"] || "";
-      formBox.innerHTML = selected;
+      const categoryAliases = {
+  "visiting cards": "Visiting Cards",
+  "visiting card": "Visiting Cards",
+  "visiting-cards": "Visiting Cards",
+  "apparel": "Apparel",
+  "personalised gifts": "Personalised Gifts",
+  "personalized gifts": "Personalised Gifts",
+  "stationery and stamps": "Stationery & Stamps",
+  "stationery stamps": "Stationery & Stamps",
+  "labels and packaging": "Labels & Packaging",
+  "labels packaging": "Labels & Packaging",
+  "drinkware": "Drinkware",
+  "signage": "Signage"
+};
 
+const normalizedInput = normalizeCategory(category);
+let matchedKey = Object.keys(forms).find(key => normalizeCategory(key) === normalizedInput);
+
+if (!matchedKey && categoryAliases[normalizedInput]) {
+  matchedKey = categoryAliases[normalizedInput];
+}
+
+if (!matchedKey) {
+  matchedKey = "Apparel";
+}
+
+const selected = forms[matchedKey] || forms["Apparel"] || "";
       const qtyInput = document.getElementById("productQty");
       if (qtyInput) {
         qtyInput.addEventListener("input", calculatePrice);
