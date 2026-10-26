@@ -2184,7 +2184,7 @@
         if (uploadedDesign.length < 1800) {
           lines.push(`Design Preview Data: ${uploadedDesign.slice(0, 500)}`);
         } else {
-          lines.push("Design Preview: File uploaded in browser session but too large to include fully in WhatsApp text.");
+          lines.push("design upload ki hai agar aapko nahin Mili to dobara WhatsApp per bhijwa sakte ho.");
         }
       } else {
         lines.push("Design Upload: No");
@@ -2199,11 +2199,9 @@
       lines.push(`Address: ${buyAddress}`);
       lines.push(`Notes: ${buyNotes}`);
       lines.push("");
-      lines.push("Please confirm this order and share the final quotation and delivery details.");
+      
       lines.push("");
-      lines.push("Aapke diye gaye details ke basis par order WhatsApp ke through send ho raha hai.");
-      lines.push("Aapko complete response WhatsApp par milega.");
-
+      
       return lines.join("\n");
     }
 
