@@ -639,6 +639,7 @@
       font-weight: 600;
     }
 
+    .proceed-btn,
     .cart-submit{
       width: 100%;
       border: none;
@@ -653,53 +654,48 @@
       box-shadow: 0 12px 24px rgba(255,118,0,0.22);
     }
 
+    .proceed-btn:hover,
     .cart-submit:hover{
       transform: translateY(-2px);
     }
 
-.bottom-bar {
-    position: static;
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    padding: 12px 14px 18px;
-    background: rgba(8, 18, 29, 0.82);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-top: 1px solid var(--line);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.18);
-    box-sizing: border-box;
-    z-index: 1;
-  margin-top: 25px;
-    margin-bottom: 20px;
-}
+    .bottom-bar{
+      position: static;
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      padding: 12px 14px 18px;
+      background: rgba(8, 18, 29, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--line);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.18);
+      box-sizing: border-box;
+      z-index: 1;
+      margin-top: 25px;
+      margin-bottom: 20px;
+    }
 
-.bottom-bar button {
-    flex: 1;
-    min-height: 56px;
-    border: none;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.25s ease;
-}
+    .bottom-bar button{
+      flex: 1;
+      min-height: 56px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
 
-.cart-btn {
-    background: linear-gradient(135deg, #4ec0ff, #2286eb);
-    color: white;
-    box-shadow: 0 12px 24px rgba(34, 134, 235, 0.24);
-}
+    .buy-btn{
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(255, 118, 0, 0.24);
+    }
 
-.buy-btn {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: #fff;
-    box-shadow: 0 12px 24px rgba(255, 118, 0, 0.24);
-}
-
-.bottom-bar button:hover {
-    transform: translateY(-2px);
-}
+    .bottom-bar button:hover{
+      transform: translateY(-2px);
+    }
 
     .footer{
       background: linear-gradient(180deg, #091b2b, #0a2238);
@@ -1167,11 +1163,11 @@
     </div>
 
     <div id="dynamicForm"></div>
-    
-  <div class="bottom-bar">
 
-    <button class="buy-btn" onclick="buyNow()">⚡ Buy Now</button>
-  </div>
+    <div class="bottom-bar">
+      <button class="buy-btn" onclick="buyNow()">⚡ Buy Now</button>
+    </div>
+
     <div class="desc-card fade">
       <div class="desc-title">✔ Highlights</div>
       <ul class="highlight-list">
@@ -1226,7 +1222,6 @@
       <div class="related-grid" id="relatedProducts"></div>
     </div>
   </div>
-
 
   <a href="https://wa.me/919920978766" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
     <i class="bi bi-whatsapp"></i>
@@ -1327,7 +1322,8 @@
 
         <div class="buy-actions">
           <button class="buy-cancel" type="button" onclick="closeBuyModal()">Cancel</button>
-          <button class="buy-submit" type="button" onclick="sendOrderOnWhatsApp()">Send Order on WhatsApp</button>
+          <button class="buy-submit" type="button" onclick="addToCartFromModal()">Add to Cart</button>
+          <button class="buy-submit" type="button" onclick="sendOrderOnWhatsApp()">Buy Now</button>
         </div>
       </div>
     </div>
@@ -1357,15 +1353,26 @@
     const pDesc = document.getElementById("pDesc");
     const pShop = document.getElementById("pShop");
 
-    function showToast(msg){
+    function normalizeCategory(value) {
+      return (value || "")
+        .toLowerCase()
+        .trim()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]+/g, " ")
+        .trim();
+    }
+
+    function showToast(msg) {
       const toast = document.getElementById("toast");
       if (!toast) return;
       toast.textContent = msg;
       toast.style.display = "block";
-      setTimeout(() => toast.style.display = "none", 2000);
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 2000);
     }
 
-    function updateCartBadge(){
+    function updateCartBadge() {
       const cart = JSON.parse(localStorage.getItem("cart") || "[]");
       let total = 0;
       cart.forEach(item => total += Number(item.quantity || 1));
@@ -1373,33 +1380,64 @@
       if (badge) badge.textContent = total;
     }
 
-    async function loadProduct(){
+    async function loadProduct() {
       if (!productId) {
-        alert("Product ID missing");
-        history.back();
+        console.warn("Product ID missing in URL");
+        selectedProduct = {
+          _id: "fallback-product",
+          productName: "Custom Product",
+          price: 499,
+          category: "Apparel",
+          detail: "Fallback product loaded because server is unavailable.",
+          images: ["images/no-image.webp"],
+          shopName: "PRINTiZY"
+        };
+        renderProduct();
         return;
       }
 
-      try{
+      try {
         const res = await fetch(`${API}/api/products/${productId}`);
-        const data = await res.json();
+        const text = await res.text();
 
-        if (!data.success) {
-          alert("Product not found");
-          history.back();
-          return;
+        let data = null;
+        try {
+          data = JSON.parse(text);
+        } catch (err) {
+          console.error("Server response is not JSON:", text);
+          throw new Error("Invalid server response");
+        }
+
+        if (!res.ok || !data || !data.success) {
+          throw new Error(data?.message || `HTTP ${res.status}`);
         }
 
         selectedProduct = data.product;
+
+        console.log("RAW CATEGORY:", selectedProduct.category);
+        console.log("NORMALIZED CATEGORY:", normalizeCategory(selectedProduct.category));
+
         renderProduct();
         loadRelatedProducts(selectedProduct.category || "");
-      }catch(err){
-        console.error(err);
-        alert("Server Error. Please try again.");
+      } catch (err) {
+        console.error("loadProduct error:", err);
+
+        selectedProduct = {
+          _id: productId || "fallback-product",
+          productName: "Custom Product",
+          price: 499,
+          category: "Apparel",
+          detail: "Server unavailable. Using fallback form.",
+          images: ["images/no-image.webp"],
+          shopName: "PRINTiZY"
+        };
+
+        renderProduct();
+        showToast("Fallback form loaded");
       }
     }
 
-    function renderProduct(){
+    function renderProduct() {
       if (!selectedProduct) return;
 
       const price = Number(selectedProduct.price || 0);
@@ -1420,7 +1458,7 @@
       updateCartBadge();
     }
 
-    function renderImages(){
+    function renderImages() {
       const images = selectedProduct && selectedProduct.images && selectedProduct.images.length
         ? selectedProduct.images
         : ["images/no-image.webp"];
@@ -1441,8 +1479,10 @@
       let cycle = 0;
       setInterval(() => {
         if (!selectedProduct || !imageSlider.querySelectorAll("img").length) return;
+
         const imgs = imageSlider.querySelectorAll("img");
         cycle = (cycle + 1) % imgs.length;
+
         imageSlider.scrollTo({
           left: imageSlider.clientWidth * cycle,
           behavior: "smooth"
@@ -1454,7 +1494,7 @@
       }, 3000);
     }
 
-    function openImagePreview(src){
+    function openImagePreview(src) {
       const preview = document.getElementById("imagePreview");
       const previewImg = document.getElementById("previewImage");
       previewImg.src = src;
@@ -1465,14 +1505,15 @@
       document.getElementById("imagePreview").style.display = "none";
     });
 
-    function searchProduct(){
+    function searchProduct() {
       const q = prompt("Search product:", "");
       if (!q || !q.trim()) return;
       window.location.href = `index.html?search=${encodeURIComponent(q.trim())}`;
     }
 
-    function toggleWishlist(){
+    function toggleWishlist() {
       if (!selectedProduct) return;
+
       let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
       const exists = wishlist.find(item => item._id === selectedProduct._id);
 
@@ -1485,31 +1526,30 @@
       }
 
       localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
       const wishIcon = document.getElementById("wishIcon");
       if (wishIcon) {
         wishIcon.className = exists ? "bi bi-heart" : "bi bi-heart-fill";
       }
     }
 
-    function shareProduct(){
+    function shareProduct() {
       document.getElementById("shareModal").style.display = "flex";
     }
 
-    function closeShare(){
+    function closeShare() {
       document.getElementById("shareModal").style.display = "none";
     }
 
-    function copyLink(){
-      navigator.clipboard.writeText(location.href).then(() => {
-        showToast("Product link copied");
-      }).catch(() => {
-        showToast("Copy failed");
-      });
+    function copyLink() {
+      navigator.clipboard.writeText(location.href)
+        .then(() => showToast("Product link copied"))
+        .catch(() => showToast("Copy failed"));
       closeShare();
     }
 
-    async function nativeShare(){
-      try{
+    async function nativeShare() {
+      try {
         if (navigator.share) {
           await navigator.share({
             title: selectedProduct?.productName || "PRINTiZY Product",
@@ -1519,33 +1559,35 @@
         } else {
           copyLink();
         }
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
       closeShare();
     }
 
-    function shareWhatsApp(){
+    function shareWhatsApp() {
       const text = encodeURIComponent(`Check this product: ${location.href}`);
       window.open(`https://wa.me/?text=${text}`, "_blank");
       closeShare();
     }
 
-    async function loadRelatedProducts(category){
+    async function loadRelatedProducts(category) {
       if (!category) return;
-      try{
+
+      try {
         const res = await fetch(`${API}/api/products/category/${encodeURIComponent(category)}`);
         const data = await res.json();
+
         if (!data.success) return;
 
         relatedProducts = (data.products || []).filter(p => p._id !== selectedProduct._id).slice(0, 4);
         renderRelatedProducts();
-      }catch(err){
+      } catch (err) {
         console.error(err);
       }
     }
 
-    function renderRelatedProducts(){
+    function renderRelatedProducts() {
       const box = document.getElementById("relatedProducts");
       if (!box) return;
 
@@ -1577,462 +1619,465 @@
       }).join("");
     }
 
-    function loadCategoryForm(category){
-  const formBox = document.getElementById("dynamicForm");
-  const forms = {
-    "Visiting Cards": `
-      <div class="category-form">
-        <h2>Customize Visiting Card</h2>
-
-        <div class="field">
-          <label>Paper Type</label>
-          <select id="paperType">
-            <option>300 GSM</option>
-            <option>350 GSM</option>
-            <option>400 GSM</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Card Size</label>
-          <select id="cardSize">
-            <option>Standard</option>
-            <option>Square</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Finish</label>
-          <select id="finish">
-            <option>Matte</option>
-            <option>Glossy</option>
-            <option>Velvet</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Print Side</label>
-          <select id="printSide">
-            <option>Front</option>
-            <option>Back</option>
-            <option>Front & Back</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantity</label>
-          <select id="productQty">
-            <option value="100">100</option>
-            <option value="250">250</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-            <option value="2000">2000</option>
-            <option value="5000">5000</option>
-          </select>
-        </div>
-
-        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
-
-        <div class="field">
-          <label>Upload Design</label>
-          <input type="file" id="designUpload" accept="image/*">
-        </div>
-
-        <div id="designPreview"></div>
-
-        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
-      </div>
-    `,
-    "Apparel": `
-      <div class="category-form">
-        <h2>Customize Apparel</h2>
-
-        <div class="field">
-          <label>Size</label>
-          <select id="size">
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-            <option>XXL</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Colour</label>
-          <select id="colour">
-            <option>Black</option>
-            <option>White</option>
-            <option>Blue</option>
-            <option>Red</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Print Position</label>
-          <select id="printPosition">
-            <option>Front</option>
-            <option>Back</option>
-            <option>Front & Back</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantity</label>
-          <input type="number" id="productQty" value="1" min="1">
-        </div>
-
-        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
-
-        <div class="field">
-          <label>Upload Design</label>
-          <input type="file" id="designUpload" accept="image/*">
-        </div>
-
-        <div id="designPreview"></div>
-
-        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
-      </div>
-    `,
-    "Personalised Gifts": `
-      <div class="category-form">
-        <h2>Customize Gift</h2>
-
-        <div class="field">
-          <label>Product Colour</label>
-          <select id="giftColour">
-            <option>White</option>
-            <option>Black</option>
-            <option>Red</option>
-            <option>Blue</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Printing Type</label>
-          <select id="printingType">
-            <option>Single Side</option>
-            <option>Double Side</option>
-            <option>UV Print</option>
-            <option>Laser Engraving</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Print Position</label>
-          <select id="printPosition">
-            <option>Front</option>
-            <option>Back</option>
-            <option>Front & Back</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantity</label>
-          <input type="number" id="productQty" value="1" min="1">
-        </div>
-
-        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
-
-        <div class="field">
-          <label>Upload Design</label>
-          <input type="file" id="designUpload" accept="image/*">
-        </div>
-
-        <div id="designPreview"></div>
-
-        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
-      </div>
-    `,
-    "Stationery & Stamps": `
-      <div class="category-form">
-        <h2>Customize Stationery</h2>
-
-        <div class="field">
-          <label>Paper Type</label>
-          <select id="paperType">
-            <option>Normal</option>
-            <option>Premium</option>
-            <option>Recycled</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Paper Size</label>
-          <select id="paperSize">
-            <option>A4</option>
-            <option>A5</option>
-            <option>Letter</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Ink Colour</label>
-          <select id="inkColour">
-            <option>Black</option>
-            <option>Blue</option>
-            <option>Red</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Print Side</label>
-          <select id="printSide">
-            <option>Front</option>
-            <option>Back</option>
-            <option>Front & Back</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantity</label>
-          <select id="productQty">
-            <option value="100">100</option>
-            <option value="250">250</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-          </select>
-        </div>
-
-        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
-
-        <div class="field">
-          <label>Upload Design</label>
-          <input type="file" id="designUpload" accept="image/*">
-        </div>
-
-        <div id="designPreview"></div>
-
-        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
-      </div>
-    `,
-    "Labels & Packaging": `
-      <div class="category-form">
-        <h2>Customize Packaging</h2>
-
-        <div class="field">
-          <label>Material</label>
-          <select id="material">
-            <option>Paper</option>
-            <option>Vinyl</option>
-            <option>PVC</option>
-            <option>Kraft</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Shape</label>
-          <select id="shape">
-            <option>Rectangle</option>
-            <option>Square</option>
-            <option>Round</option>
-            <option>Custom</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Finish</label>
-          <select id="finish">
-            <option>Matte</option>
-            <option>Glossy</option>
-            <option>Lamination</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Print Side</label>
-          <select id="printSide">
-            <option>Front</option>
-            <option>Back</option>
-            <option>Front & Back</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantity</label>
-          <select id="productQty">
-            <option value="100">100</option>
-            <option value="250">250</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-            <option value="2000">2000</option>
-          </select>
-        </div>
-
-        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
-
-        <div class="field">
-          <label>Upload Design</label>
-          <input type="file" id="designUpload" accept="image/*">
-        </div>
-
-        <div id="designPreview"></div>
-
-        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
-      </div>
-    `,
-    "Signage": `
-      <div class="category-form">
-        <h2>Customize Signage</h2>
-
-        <div class="field">
-          <label>Material</label>
-          <select id="material">
-            <option>ACP Board</option>
-            <option>Sunboard</option>
-            <option>Acrylic</option>
-            <option>Foam Board</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Size</label>
-          <select id="boardSize">
-            <option>1 x 1 ft</option>
-            <option>2 x 2 ft</option>
-            <option>3 x 2 ft</option>
-            <option>Custom Size</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Print Side</label>
-          <select id="printSide">
-            <option>Front</option>
-            <option>Back</option>
-            <option>Front & Back</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantity</label>
-          <input type="number" id="productQty" value="1" min="1">
-        </div>
-
-        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
-
-        <div class="field">
-          <label>Upload Design</label>
-          <input type="file" id="designUpload" accept="image/*">
-        </div>
-
-        <div id="designPreview"></div>
-
-        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
-      </div>
-    `,
-    "Drinkware": `
-      <div class="category-form">
-        <h2>Customize Drinkware</h2>
-
-        <div class="field">
-          <label>Product Colour</label>
-          <select id="colour">
-            <option>White</option>
-            <option>Black</option>
-            <option>Blue</option>
-            <option>Red</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Capacity</label>
-          <select id="capacity">
-            <option>300 ml</option>
-            <option>500 ml</option>
-            <option>750 ml</option>
-            <option>1000 ml</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Print Position</label>
-          <select id="printPosition">
-            <option>Front</option>
-            <option>Back</option>
-            <option>Wrap Around</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantity</label>
-          <input type="number" id="productQty" value="1" min="1">
-        </div>
-
-        <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
-
-        <div class="field">
-          <label>Upload Design</label>
-          <input type="file" id="designUpload" accept="image/*">
-        </div>
-
-        <div id="designPreview"></div>
-
-        <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
-      </div>
-    `
-  };
-
-  const categoryAliases = {
-    "visiting cards": "Visiting Cards",
-    "visiting card": "Visiting Cards",
-    "visiting-cards": "Visiting Cards",
-    "apparel": "Apparel",
-    "personalised gifts": "Personalised Gifts",
-    "personalized gifts": "Personalised Gifts",
-    "stationery and stamps": "Stationery & Stamps",
-    "stationery stamps": "Stationery & Stamps",
-    "labels and packaging": "Labels & Packaging",
-    "labels packaging": "Labels & Packaging",
-    "drinkware": "Drinkware",
-    "signage": "Signage"
-  };
-
-  const normalizedInput = normalizeCategory(category);
-  let matchedKey = Object.keys(forms).find(key => normalizeCategory(key) === normalizedInput);
-
-  if (!matchedKey && categoryAliases[normalizedInput]) {
-    matchedKey = categoryAliases[normalizedInput];
-  }
-
-  if (!matchedKey) {
-    matchedKey = "Apparel";
-  }
-
-  const selected = forms[matchedKey] || forms["Apparel"] || "";
-  formBox.innerHTML = selected;
-
-  const qtyInput = document.getElementById("productQty");
-  if (qtyInput) {
-    qtyInput.addEventListener("input", calculatePrice);
-    qtyInput.addEventListener("change", calculatePrice);
-  }
-
-  const fileInput = document.getElementById("designUpload");
-  if (fileInput) {
-    fileInput.addEventListener("change", function () {
-      const file = this.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        uploadedDesign = e.target.result;
-        const preview = document.getElementById("designPreview");
-        preview.innerHTML = `<img src="${uploadedDesign}" alt="Design Preview">`;
+    function loadCategoryForm(category) {
+      const formBox = document.getElementById("dynamicForm");
+
+      const forms = {
+        "Visiting Cards": `
+          <div class="category-form">
+            <h2>Customize Visiting Card</h2>
+
+            <div class="field">
+              <label>Paper Type</label>
+              <select id="paperType">
+                <option>300 GSM</option>
+                <option>350 GSM</option>
+                <option>400 GSM</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Card Size</label>
+              <select id="cardSize">
+                <option>Standard</option>
+                <option>Square</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Finish</label>
+              <select id="finish">
+                <option>Matte</option>
+                <option>Glossy</option>
+                <option>Velvet</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Print Side</label>
+              <select id="printSide">
+                <option>Front</option>
+                <option>Back</option>
+                <option>Front & Back</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <select id="productQty">
+                <option value="100">100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="5000">5000</option>
+              </select>
+            </div>
+
+            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+
+            <div class="field">
+              <label>Upload Design</label>
+              <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <div id="designPreview"></div>
+
+            <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+          </div>
+        `,
+        "Apparel": `
+          <div class="category-form">
+            <h2>Customize Apparel</h2>
+
+            <div class="field">
+              <label>Size</label>
+              <select id="size">
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>XXL</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Colour</label>
+              <select id="colour">
+                <option>Black</option>
+                <option>White</option>
+                <option>Blue</option>
+                <option>Red</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Print Position</label>
+              <select id="printPosition">
+                <option>Front</option>
+                <option>Back</option>
+                <option>Front & Back</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <input type="number" id="productQty" value="1" min="1">
+            </div>
+
+            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+
+            <div class="field">
+              <label>Upload Design</label>
+              <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <div id="designPreview"></div>
+
+            <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+          </div>
+        `,
+        "Personalised Gifts": `
+          <div class="category-form">
+            <h2>Customize Gift</h2>
+
+            <div class="field">
+              <label>Product Colour</label>
+              <select id="giftColour">
+                <option>White</option>
+                <option>Black</option>
+                <option>Red</option>
+                <option>Blue</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Printing Type</label>
+              <select id="printingType">
+                <option>Single Side</option>
+                <option>Double Side</option>
+                <option>UV Print</option>
+                <option>Laser Engraving</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Print Position</label>
+              <select id="printPosition">
+                <option>Front</option>
+                <option>Back</option>
+                <option>Front & Back</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <input type="number" id="productQty" value="1" min="1">
+            </div>
+
+            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+
+            <div class="field">
+              <label>Upload Design</label>
+              <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <div id="designPreview"></div>
+
+            <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+          </div>
+        `,
+        "Stationery & Stamps": `
+          <div class="category-form">
+            <h2>Customize Stationery</h2>
+
+            <div class="field">
+              <label>Paper Type</label>
+              <select id="paperType">
+                <option>Normal</option>
+                <option>Premium</option>
+                <option>Recycled</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Paper Size</label>
+              <select id="paperSize">
+                <option>A4</option>
+                <option>A5</option>
+                <option>Letter</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Ink Colour</label>
+              <select id="inkColour">
+                <option>Black</option>
+                <option>Blue</option>
+                <option>Red</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Print Side</label>
+              <select id="printSide">
+                <option>Front</option>
+                <option>Back</option>
+                <option>Front & Back</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <select id="productQty">
+                <option value="100">100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+              </select>
+            </div>
+
+            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+
+            <div class="field">
+              <label>Upload Design</label>
+              <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <div id="designPreview"></div>
+
+            <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+          </div>
+        `,
+        "Labels & Packaging": `
+          <div class="category-form">
+            <h2>Customize Packaging</h2>
+
+            <div class="field">
+              <label>Material</label>
+              <select id="material">
+                <option>Paper</option>
+                <option>Vinyl</option>
+                <option>PVC</option>
+                <option>Kraft</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Shape</label>
+              <select id="shape">
+                <option>Rectangle</option>
+                <option>Square</option>
+                <option>Round</option>
+                <option>Custom</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Finish</label>
+              <select id="finish">
+                <option>Matte</option>
+                <option>Glossy</option>
+                <option>Lamination</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Print Side</label>
+              <select id="printSide">
+                <option>Front</option>
+                <option>Back</option>
+                <option>Front & Back</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <select id="productQty">
+                <option value="100">100</option>
+                <option value="250">250</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+              </select>
+            </div>
+
+            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+
+            <div class="field">
+              <label>Upload Design</label>
+              <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <div id="designPreview"></div>
+
+            <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+          </div>
+        `,
+        "Signage": `
+          <div class="category-form">
+            <h2>Customize Signage</h2>
+
+            <div class="field">
+              <label>Material</label>
+              <select id="material">
+                <option>ACP Board</option>
+                <option>Sunboard</option>
+                <option>Acrylic</option>
+                <option>Foam Board</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Size</label>
+              <select id="boardSize">
+                <option>1 x 1 ft</option>
+                <option>2 x 2 ft</option>
+                <option>3 x 2 ft</option>
+                <option>Custom Size</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Print Side</label>
+              <select id="printSide">
+                <option>Front</option>
+                <option>Back</option>
+                <option>Front & Back</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <input type="number" id="productQty" value="1" min="1">
+            </div>
+
+            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+
+            <div class="field">
+              <label>Upload Design</label>
+              <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <div id="designPreview"></div>
+
+            <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+          </div>
+        `,
+        "Drinkware": `
+          <div class="category-form">
+            <h2>Customize Drinkware</h2>
+
+            <div class="field">
+              <label>Product Colour</label>
+              <select id="colour">
+                <option>White</option>
+                <option>Black</option>
+                <option>Blue</option>
+                <option>Red</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Capacity</label>
+              <select id="capacity">
+                <option>300 ml</option>
+                <option>500 ml</option>
+                <option>750 ml</option>
+                <option>1000 ml</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Print Position</label>
+              <select id="printPosition">
+                <option>Front</option>
+                <option>Back</option>
+                <option>Wrap Around</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <input type="number" id="productQty" value="1" min="1">
+            </div>
+
+            <div class="total-box" id="totalPriceBox">Total Price: ₹0</div>
+
+            <div class="field">
+              <label>Upload Design</label>
+              <input type="file" id="designUpload" accept="image/*">
+            </div>
+
+            <div id="designPreview"></div>
+
+            <button class="proceed-btn" type="button" onclick="openBuyModal()">Proceed to Checkout</button>
+          </div>
+        `
       };
-      reader.readAsDataURL(file);
-    });
-  }
 
-  calculatePrice();
-}
-    
-                              
+      const categoryAliases = {
+        "visiting cards": "Visiting Cards",
+        "visiting card": "Visiting Cards",
+        "visiting-cards": "Visiting Cards",
+        "apparel": "Apparel",
+        "personalised gifts": "Personalised Gifts",
+        "personalized gifts": "Personalised Gifts",
+        "stationery and stamps": "Stationery & Stamps",
+        "stationery stamps": "Stationery & Stamps",
+        "labels and packaging": "Labels & Packaging",
+        "labels packaging": "Labels & Packaging",
+        "drinkware": "Drinkware",
+        "signage": "Signage"
+      };
 
+      const normalizedInput = normalizeCategory(category);
 
-      
+      let matchedKey =
+        Object.keys(forms).find(key => normalizeCategory(key) === normalizedInput) ||
+        Object.keys(forms).find(key => {
+          const keyNorm = normalizeCategory(key);
+          return keyNorm.includes(normalizedInput) || normalizedInput.includes(keyNorm);
+        }) ||
+        (categoryAliases[normalizedInput] || "Apparel");
 
-    function calculatePrice(){
+      if (!forms[matchedKey] && categoryAliases[normalizedInput]) {
+        matchedKey = categoryAliases[normalizedInput];
+      }
+
+      if (!forms[matchedKey]) {
+        matchedKey = "Apparel";
+      }
+
+      const selected = forms[matchedKey] || forms["Apparel"];
+      formBox.innerHTML = selected;
+
+      const qtyInput = document.getElementById("productQty");
+      if (qtyInput) {
+        qtyInput.addEventListener("input", calculatePrice);
+        qtyInput.addEventListener("change", calculatePrice);
+      }
+
+      const fileInput = document.getElementById("designUpload");
+      if (fileInput) {
+        fileInput.addEventListener("change", function () {
+          const file = this.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            uploadedDesign = e.target.result;
+            const preview = document.getElementById("designPreview");
+            preview.innerHTML = `<img src="${uploadedDesign}" alt="Design Preview">`;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      calculatePrice();
+    }
+
+    function calculatePrice() {
       const productQty = document.getElementById("productQty");
       const totalBox = document.getElementById("totalPriceBox");
       if (!productQty || !totalBox || !selectedProduct) return;
@@ -2061,28 +2106,37 @@
       return result;
     }
 
-    function formatKey(key){
+    function formatKey(key) {
       return key
         .replace(/([a-z])([A-Z])/g, "$1 $2")
         .replace(/_/g, " ")
         .replace(/\b\w/g, ch => ch.toUpperCase());
     }
 
-    function openBuyModal(){
+    function openBuyModal() {
       if (!selectedProduct) {
         alert("Product not found");
         return;
       }
       const modal = document.getElementById("buyModal");
-      if (modal) modal.classList.add("show");
+      if (modal) {
+        modal.classList.add("show");
+      }
     }
 
-    function closeBuyModal(){
+    function closeBuyModal() {
       const modal = document.getElementById("buyModal");
-      if (modal) modal.classList.remove("show");
+      if (modal) {
+        modal.classList.remove("show");
+      }
     }
 
-    function buildWhatsAppMessage(){
+    function addToCartFromModal() {
+      addToCart();
+      closeBuyModal();
+    }
+
+    function buildWhatsAppMessage() {
       if (!selectedProduct) return "";
 
       const buyName = document.getElementById("buyName")?.value.trim() || "Not provided";
@@ -2093,8 +2147,8 @@
       const buyNotes = document.getElementById("buyNotes")?.value.trim() || "No extra note";
       const productUrl = location.href;
 
-      const quantities = document.getElementById("productQty");
-      const qty = quantities ? Number(quantities.value || 1) : 1;
+      const qtyNode = document.getElementById("productQty");
+      const qty = qtyNode ? Number(qtyNode.value || 1) : 1;
       const price = Number(selectedProduct.price || 0);
       const total = price * qty;
 
@@ -2150,7 +2204,7 @@
       return lines.join("\n");
     }
 
-    function sendOrderOnWhatsApp(){
+    function sendOrderOnWhatsApp() {
       if (!selectedProduct) {
         alert("Product not found");
         return;
@@ -2174,7 +2228,7 @@
       showToast("Order details sent on WhatsApp");
     }
 
-    function addToCart(){
+    function addToCart() {
       if (!selectedProduct) {
         alert("Product not found");
         return;
@@ -2212,14 +2266,14 @@
       cart.push(cartItem);
       localStorage.setItem("cart", JSON.stringify(cart));
       updateCartBadge();
-      showToast("Added to cart");
 
+      showToast("Added to cart");
       setTimeout(() => {
         window.location.href = "checkout.html";
       }, 500);
     }
 
-    function buyNow(){
+    function buyNow() {
       openBuyModal();
     }
 
