@@ -657,48 +657,47 @@
       transform: translateY(-2px);
     }
 
-    .bottom-bar{
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      gap: 10px;
-      padding: 12px 14px 18px;
-      background: rgba(8, 18, 29, 0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-top: 1px solid var(--line);
-      box-shadow: 0 -12px 30px rgba(0,0,0,0.18);
-      z-index: 999;
-    }
+.bottom-bar {
+    position: static;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px 18px;
+    background: rgba(8, 18, 29, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.18);
+    box-sizing: border-box;
+    z-index: 1;
+}
 
-    .bottom-bar button{
-      flex: 1;
-      min-height: 56px;
-      border: none;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
+.bottom-bar button {
+    flex: 1;
+    min-height: 56px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
 
-    .cart-btn{
-      background: linear-gradient(135deg, #4ec0ff, #2286eb);
-      color: white;
-      box-shadow: 0 12px 24px rgba(34,134,235,0.24);
-    }
+.cart-btn {
+    background: linear-gradient(135deg, #4ec0ff, #2286eb);
+    color: white;
+    box-shadow: 0 12px 24px rgba(34, 134, 235, 0.24);
+}
 
-    .buy-btn{
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #fff;
-      box-shadow: 0 12px 24px rgba(255,118,0,0.24);
-    }
+.buy-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    box-shadow: 0 12px 24px rgba(255, 118, 0, 0.24);
+}
 
-    .bottom-bar button:hover{
-      transform: translateY(-2px);
-    }
+.bottom-bar button:hover {
+    transform: translateY(-2px);
+}
 
     .footer{
       background: linear-gradient(180deg, #091b2b, #0a2238);
