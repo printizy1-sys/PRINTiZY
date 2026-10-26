@@ -1270,14 +1270,7 @@
       window.location.href = url;
     }
 
-    function visitSeller(){
-      if (!selectedProduct) return;
-      if (selectedProduct.shopUrl) {
-        window.open(selectedProduct.shopUrl, "_blank");
-      } else {
-        showToast("Shop detail not available");
-      }
-    }
+    
 
     function toggleWishlist(){
       if (!selectedProduct) return;
